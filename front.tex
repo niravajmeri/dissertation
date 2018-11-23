@@ -1,0 +1,106 @@
+%% ------------------------------ Abstract ---------------------------------- %%
+\begin{abstract}
+
+% \paragraph*{Research Theme:} 
+A socially intelligent personal agent
+understands and helps its user navigate the norms governing the user's
+interaction in a society. This research addresses the research question
+of how can we engineer social intelligence in a personal agent such 
+that it selects ethically appropriate actions and delivers a pleasant and 
+privacy-preserving social experience. Addressing this research question,
+we develop multiagent system techniques to engineer such socially
+intelligent and ethical personal agents.
+
+% \paragraph*{Methods:} 
+This research develops 
+\begin{enuminline}
+\item \frameworkA, an
+agent-oriented software engineering (AOSE) method to model social
+intelligence in privacy-aware personal agents, 
+\item \frameworkB, an
+approach that enables personal agents to reason about shared contexts,
+and learn contextually relevant social norms that preserve privacy, and
+\item \frameworkAinur, a decision-making framework to design agents that can reason about values, and act ethically. 
+\end{enuminline}
+
+
+\frameworkA goes beyond traditional AOSE methods to engineer personal
+agents by systematically capturing interactions that influence social
+experience.
+
+A personal agent may deviate from norms in certain contexts.
+\frameworkB 
+\begin{enuminline}
+\item enables personal agents deviating from norms to share
+deviation contexts with other agents in the agent society, and 
+\item
+provides personal agents the ability to reason about shared contexts.
+\end{enuminline}
+
+Complying to social norms require agents to
+perform or not perform certain actions. 
+\frameworkAinur equips a personal agent with an understanding of 
+values such as pleasure, privacy, recognition, and security, its actions promote or demote. This understanding of values 
+helps personal agents to select ethically appropriate actions especially 
+in scenarios where either the norms conflict or the value preferences of the users are not aligned.
+
+% \paragraph*{Claims:} 
+We claim that 
+\begin{enuminline}
+\item \frameworkA supports developers
+in engineering personal agents, and 
+\item personal agents engineered using
+\frameworkA provide a better privacy-preserving social experience than agents
+engineered using a traditional AOSE method.
+\end{enuminline}
+We evaluate \frameworkA via
+a developer study, and a set of simulation experiments, and measure the
+social experience via metrics of norm compliance and sanction
+proportion.
+
+We make two claims about the impact of context sharing and reasoning in
+\frameworkB. First, an ability to reason about deviation contexts helps
+personal agents accurately infer contextually relevant norms.
+Second, by acting according to such contextually relevant norms that
+preserve privacy, a personal agent can provide its users a more
+satisfying social experience than an agent that does not reason about
+shared contexts. We demonstrate these claims via social simulations
+involving agent societies of varying sizes and diverse characteristics
+reflecting pragmatic, considerate, and selfish agents.
+
+We claim that the ability to understand and reason about value preferences in a personal agent designed via \frameworkAinur helps the agent select 
+fair actions, and yield a better overall social experience.  
+We evaluate \frameworkAinur via multiple simulation experiments 
+with agent societies varying in privacy attitudes. Our experiments are grounded in real data from users. 
+
+\end{abstract}
+
+
+%% ---------------------------- Copyright page ------------------------------ %%
+%% Comment the next line if you don't want the copyright page included.
+\makecopyrightpage
+
+%% -------------------------------- Title page ------------------------------ %%
+\maketitlepage
+
+%% -------------------------------- Dedication ------------------------------ %%
+% \begin{dedication}
+%  \centering To my parents.
+% \end{dedication}
+
+%% -------------------------------- Biography ------------------------------- %%
+% \begin{biography}
+% The author was born in a small town \ldots
+% \end{biography}
+
+%% ----------------------------- Acknowledgements --------------------------- %%
+% \begin{acknowledgements}
+% I would like to thank my advisor for his help.
+% \end{acknowledgements}
+
+
+\thesistableofcontents
+
+\thesislistoftables
+
+\thesislistoffigures
