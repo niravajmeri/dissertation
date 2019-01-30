@@ -1,1128 +1,660 @@
 %------------------------------%
-% \chapter{Privacy and Ethics in Web of Socially Intelligent Agents}
-\chapter{Incorporating Values and Ethics}
-\label{chap:ainur}
+\chapter[Enhancing Social Experience via Context Sharing]{Enhancing Social Experience in Normative Agents via Context Sharing}
+\label{chap:poros}
 %------------------------------%
 
-This chapter describes \frameworkAinur, our approach to 
-design ethical SIPAs that understand value preferences and
-reason about them, and its empirical evaluation.
+This chapter describes \frameworkB, our approach for building
+personal agents that carry out enriched interactions where deviating
+agents share selected elements of their contexts, and others
+respond appropriately, and its empirical evaluation via 
+simulation experiments. It is based on a paper ``Robust Norm 
+Emergence by Revealing and Reasoning about Context: Socially 
+Intelligent Agents for Enhancing Privacy'' that appears in 
+\emph{ Proceedings of the 27th International Joint Conference 
+on Artificial Intelligence (IJCAI)}.
 
 \section{Introduction}
+\label{sec:Poros-intro}
 
-A \emph{social machine} is characterized as a sociotechnical system comprising
-of social entities such as humans and technical components such as
-software jointly involved in the physical realization of processes \citep{Smart+14:social-machines,WWW-16:IOSE}. In the original
-conception of social machines, humans engage in
-the creative elements of this realization process, whereas technical components  administer the process \citep{Berners-Lee-99:Weaving}.
+Social \emph{norms} provide a robust means to regulate interactions in 
+human society. Our everyday actions tend to \emph{comply} with social norms. For example, \fsl{ignoring a phone call during a 
+meeting} and \fsl{remaining silent in a public library} are expected 
+behaviors that accord with social norms. However,  we often \emph{deviate} from the applicable social norms, for 
+instance, when \fsl{stepping out of a meeting to answer a phone call}.
 
-The conception of social machines has been gaining significant attention from academia and industry in recent years. Early versions of social machines have emerged in the likes of prominent social web applications such as Wikipedia, Facebook, Twitter, Instagram, and Snapchat. The very nature of social machines dictates that privacy be a key concern in their design. Whereas current methods for designing privacy into (social) web applications emphasize technology centric notions such as authentication \citep{Ruoti-WWW2015-AuthenticationMelee} and access control \citep{Paci-CSUR2018-CollaborativeAccessControl}, they struggle to incorporate social mechanisms to control the threats to privacy \citep{Hendler-AI2010-SocialMachine}. Such social mechanisms are of paramount importance in realizing true social machines.
+The ability to deviate from norms is crucial for autonomy. We 
+may \emph{sanction} each other based on how we
+are interacting. In particular, negative sanctions in response to
+deviations are a means for establishing norms \citep{Andrighetto-2013-PunishVoice}. 
+For example, when a meeting attendee's phone rings, a \fsl{scowl} on other attendees'
+faces hints at a norm of \fsl{keeping one's phone silent
+during meetings}.
 
-\citet{schwartz2012overview} defines values as guiding principles of humans. Ethicists subsume ethics in the theory of values. Privacy is 
-regarded as a value with an ethical import \citep{Langheinrich-01:privacy,Taylor-2002-PrivacyAutonomy}. 
-% 
-Social machines facilitate natural interactions among autonomous parties (humans and organizations) as opposed to the predominant style of supporting social interactions via centralized servers (ranging from email servers to social network sites).
-Privacy considerations will be far more nuanced than what
-they are today if we are to realize the web as a social machine.
-
-On the backdrop of privacy concerns and a rising number of privacy breach incidents, new regulations and standards such as the General Data Protection Regulation (GDPR)\footnote{GDPR, \url{https://eur-lex.europa.eu/eli/reg/2016/679/oj}} are being introduced. 
-\citet{spiekermann2009enggprivacy} suggest that to ensure effective implementation of privacy standards, it is necessary for engineers to design privacy-preserving systems that they allow their users to control access to their private information. 
-However, giving control to users raises two key concerns. 
-\begin{enuminline} 
-\item Does the information the users share on the web accord with their value? 
-\item Does this shared information promote or demote any values for any other users concerned with the information? 
-\end{enuminline}
-% More often than not these concerns are not addressed when sharing
-% decisions are made today as users have little sense of privacy (and other values) when they share information on the web. \mps{Blames users. You mean today's approaches do not provide awareness of privacy consequence?} \nsa{Spiekermann suggests giving control to users but we argue users are not capable of making good decisions. }\mps{Sounds intense to say users are incapable but maybe an argument that the decision making burden is excessive and so SIPAs can help users and sometimes automate decision}
-More often than not these concerns are not addressed when sharing decisions are made today, as there is an excessive burden of decision making on users. SIPAs can help users in decision making and sometimes automate it. 
-
-We seek to design a social machine in which each user is supported by an (artificial) personal agent \citep{Murukannaiah-AAMAS14-Xipho}. These agents interact with each other to facilitate creativity in social machines. We refer to such an agent as a socially intelligent personal agent (SIPA). Importantly, SIPAs in our setting understand values and act ethically. We specifically emphasize privacy as a value in our examples and experiments, as privacy has an ethical import \citep{Friedman-2008-value-sensitive-design}. Whereas much of the existing literature on artificial intelligence focuses on rational decision-making by agents, we consider the problem of designing agents that act according to users' values and preferences among values.
-
-\subsection{Values}
-
-The concept of \fsl{value} has two different connotations: one is about economic worth of something and the other, much broader, meaning refers to what people consider as important in their lives \citep{Friedman-2008-value-sensitive-design}. 
-We adopt the later connotation in this work.
-
-Values are mostly universal across human societies as stated by \citet{schwartz2012overview}
-and \citet{rokeach1973nature}. The values in Schwartz's \shortcite{schwartz2012overview} work are broad motivational goals such as stimulation, achievement, security, and benevolence. \citet{rokeach1973nature} proposes two types of values---\fsl{terminal} and \fsl{instrumental}. Terminal values  such as security, freedom, happiness, and recognition, refer to defined-end states of existence. Instrumental values refer to modes of behavior or means to achieve the terminal values. 
+Existing approaches for norms provide simplified interactions: a deviation or not, followed by a sanction or not. But real-life interactions are more complex. Whether a deviation leads to a positive or negative sanction depends on 
+how others perceive its \emph{context} or circumstances of occurrence. 
+When we deviate from a norm, we may offer an apology, describing the 
+context. One, revealing context may soften a deviation and help avert 
+negative sanctions. Suppose, upon receiving a call during a meeting, 
+Alice says that the call was from her sick father. As a result, the meeting attendees may excuse Alice for taking 
+the call. A deviation may result in a positive sanction. For instance, 
+a physician who reveals a patient's private data to save the patient's life 
+would receive a positive sanction despite violating a norm. 
+Even in the phone call setting, a positive sanction may ensue for deviating from a norm. For
+example, a user who hesitantly takes a call from his nine-month
+pregnant wife during a lab meeting would generally receive positive
+comments from coworkers.
 %
-We recognize an ability to understand these values as an important aspect in a SIPA for it to deliver a ethical experience.
-\citet{Dechesne-AIL13-Norms+Values} define values as
-ideals worth pursuing and suggest that these ideals could conflict since
-they may not be preferred equally by each individual (or each SIPA user, in our work).
+Two, context helps refine the relevant norms. For example, Alice's 
+revelation may help refine the norm from \fsl{ignoring a phone call 
+during a meeting} to \fsl{ignoring a phone call during a meeting, unless 
+the call is urgent}. In essence, deviation context and any ensuing 
+sanction help characterize the boundaries of a norm in play.
 
-
-\subsection{Privacy as a Value}
-Privacy is inherently a human value \citep{spiekermann2009enggprivacy,smith2007privacy}. 
-% We consider privacy as a desired state where people \mps{all people together? not privacy of an individual but of everyone together? That's a mistake the legal types talk about because they are interested in policy and law; our approach is much more fine grained} have control over the concealing or revelation of their personal information. 
-Privacy has been considered a right, and is protected by regulations. \citet{Prosser-60:Privacy} discusses the right of privacy from a legal perspective. \citet{westin2003social} dissects the values of privacy in modern societies from political, sociocultural, and personal dimensions. He defines privacy as a claim of an individual and, when recognized by law and social convention, a right, to determine the revelation of his or her information.
-
-% Privacy is an ancient concept, but new information technologies are consistently reforming its implications \mps{these words don't sound like your normal language}, requiring the implementation of new regulations. 
-\citet{solove-2006-taxonomy} provides a taxonomy of activities that can violate privacy. The purpose of this taxonomy is to aid the development of privacy laws, in protecting the right of privacy.
-\citet{Spiekermann-2012-Challenges+PrivacyDesign} lists the challenges of Privacy by Design, a proposed solution to the regulation of privacy, including the differentiation between privacy and security and detailed methods to integrate privacy into systems. 
-
-\subsection{Values and Social Norms}
-Representing and reasoning about social norms (in context) is essential to producing an ethical SIPA. 
-That is, an ethical SIPA acts in compliance with contextually relevant social norms (but it may choose to break some norms intentionally, e.g., when the norms conflict) \citep{Ajmeri-AAMAS17-Arnor}. 
-Even in the case of privacy, social norms are the centerpiece according to Nissenbaum's prominent theory of privacy as \emph{contextual integrity} \citep{Nissenbaum-04:integrity,Nissenbaum-11:online}, where privacy violations occur when information flows do not respect contextual norms.
-
-In general terms, social norms describe interactions between a subject and an object in terms of what they ought to be, or as reactions to behaviors, including attempts to apply sanctions. 
-We adopt Singh's \shortcite{Singh-2013-Norms} representation of social norms, in which a norm is directed from a subject to an object and is constructed as a conditional relationship involving an antecedent (which brings an instance of the norm in force) and a consequent (which brings the norm instance to completion). A norm generates a new instance each time it applies. 
-This representation yields clarity on who is accountable to whom, when, and for what. 
-We consider two main norm types in the present study: commitment and prohibition. 
-A commitment norm means its subject is committed to its object to bring about a consequent if an antecedent holds, and a prohibition norm means its subject is forbidden by its object to bring about a consequent if an antecedent holds. For instance, \fsl{Frank} (subject), a high school student is \fsl{committed} (norm) to \fsl{Grace} (object), his mother, that he \fsl{will keep Grace updated about his location} (consequent) when he is \fsl{away from home} (antecedent).
-
-%\subsection*{Values and Norms}
-Whereas norms require agents to perform or not perform certain actions, values provide a reason to pursue or not pursue those actions \citep{Dechesne-AIL13-Norms+Values}. 
-Each of a SIPA's actions promotes or demotes certain values. 
-For instance, in the phone ringer SIPA example described by in \citet{Ajmeri-AAMAS17-Arnor}, a callee's action of answering an urgent phone call during a meeting may promote the value of safety (for the caller), but demote the value of privacy (of the meeting attendees) .
-
-Only a few previous works have attempted to relate values with norms.
-\citet{Murukannaiah-IC16-Engineering} model actors, context, and social expectations via norms to engineer privacy respecting agents. 
-\citet{DaSilvaFigueiredo-COIN13} propose an algorithm to identify conflicts between norms based on values. 
-A conflict occurs when
-\begin{enuminline}[label=(\arabic*)]
-\item a consequent action of a commitment norm demotes a value, or
-\item a consequent action of a prohibition norm promotes a value important to a SIPA user.
-\end{enuminline}
+Accordingly, we propose \frameworkB, an approach for building agents that carry out enriched interactions where deviating agents share selected elements of their contexts, and others respond appropriately. A socially intelligent personal agent (SIPA) is an agent who acts in accordance with (but may deviate from) social norms \citep{Ajmeri-AAMAS17-Arnor}.  
 %
-\citet{Dechesne-AIL13-Norms+Values} develop a model of norms and culture,
-represented by values, to study compliance of norms. They concur that
-values are important in deciding whether or not a norm should be
-introduced. \citet{kayal13coin} present a model in which norms and 
-context are centered on values. Such a model could be employed
-to govern a SIPA by identifying value preferences of the SIPA's
-users.
+We imagine an artificial agent society in which SIPAs of three main types act and interact on behalf of (human) users, as a basis for empirically investigating the emergence and quality of norms. 
 
-\subsection{Contribution}
-A SIPA's actions may promote or demote certain values of its users. 
-Performing actions that promote values preferred by the users is essential to providing a pleasant experience. 
+This research applies in developing privacy-supporting SIPAs. Norms provide a basis for understanding privacy \citep{Nissenbaum-11:online}. Regulations about information disclosure, as in healthcare, are context-dependent norms \citep{Ajmeri-IJCAI16-Coco}, as are social practices. Privacy involves control over when and what information to disclose \citep{westin1967privacy}. In some construals, actions that intrude upon one's solitude or bring disapprobation are privacy violations. In essence, all privacy-relevant interactions are modulated by norms.  Therefore, social intelligence in making decisions cognizant of norms while preserving social cohesion is crucial.
+
+%\paragraph{Contribution}
 %
-If a SIPA understands its users' value preferences
-and reasons about the values promoted or demoted by each of its actions, it 
-could select ethically appropriate actions that provide a pleasant social experience to its stakeholders.
-Accordingly, we consider the following research question: 
+Our main contribution is to study two research questions in light of a specific decision by a SIPA, namely, whether to reveal its context to others when it deviates from a norm:
 
 \begin{description}
-\item[RQ] Does an ability to reason about values promoted or demoted by actions and an understanding of preferences among these values help a SIPA deliver a fair and value-driven (``pleasing'') social experience to all its users? 
+\item[Q$_1$ Norm:] Does revealing context and reasoning about revealed context promote emergence of robust social norms? 
+\item[Q$_2$ Goal:] Does acting in accordance to such robust norms result in an improved goal satisfaction?
 \end{description}
 
-To address the research question above, we propose \frameworkAinur, an
-approach to design ethical personal agents that can reason about values.
-Importantly, \frameworkAinur considers multiparty privacy 
-\begin{enuminline}
-\item in reference to users having distinct value preferences, and 
-\item based on ethical decision-making in light of other user's preferences \citep{TOCHI-17:Multiuser}.
-\end{enuminline} 
+Our results show that (1) norms that emerge in \frameworkB are robust, implying improved social cohesion and (2) SIPAs yield higher goal satisfaction to their users when acting in \frameworkB than when acting in a conventional setting (just sanctions). 
 
-% \frameworkAinur involves group \mps{you said you removed it?} decision-making. 
-Compared to earlier works \citep{TOCHI-17:Multiuser} that 
-consider the majority opinion for decision-making or select actions considering negative or 
-positive consequences, \frameworkAinur adapts a multicriteria decision
-making approach \citep{opricovic2004compromise} to produce a consensus action.  
-These actions adhere to Rawl's moral theory of justice 
-that suggests Maximin as a basis of fairness \citep{rawls1985justice}. 
+\section{Related Work}
+\label{sec:Poros-related-work}
 
-We evaluate \frameworkAinur via
-multiple simulation experiments with agent societies varying in privacy
-attitudes. Our simulation experiments are grounded on 
-data from an immersive survey wherein participants select a location check-in policy 
-for a given context.
+Research on normative systems has addressed the problems of conflict, 
+compliance, and emergence of norms. We sample some of the literature from the following themes.
 
-We find that \frameworkAinur SIPAs that understand the value-preferences of their
-stakeholders act ethically. 
-That is a SIPA selects fair actions that maximize the minimum (i.e., worst-case) experience for each stakeholder involved in interactions with the SIPA, and yields a better overall social experience, i.e., higher mean experience for all stakeholders.
-
-\subsection{Organization}
-The chapter is structured as follows. Chapter~\ref{sec:example} provides a
-motivating example from the domain of mobile social applications.
-Chapter~\ref{sec:method} describes our approach, including a conceptual
-model to design ethical SIPAs that understand value preferences and
-reason about them. Chapter~\ref{sec:simulations} details our simulation
-setup and the human-subject study we conduct to collect data about real
-users' attitudes and value preferences. We use this data to seed the
-simulation. Chapter~\ref{sec:results} describes the simulation
-experiments we conduct to evaluate \frameworkAinur, and their results.
-Chapter~\ref{sec:discussion} concludes with a discussion of relevant
-related works and future directions.
-
-\section{Motivating Example}
-\label{sec:example}
-
-For concreteness, we consider the domain of mobile social applications where privacy is an important value \citep{spiekermann2009enggprivacy, Taylor-2002-PrivacyAutonomy}, and present an example SIPA to demonstrate our ideas. 
-Consider \locationapp, a location sharing application, as a SIPA that enables its user to stay connected with his or her friends and family. 
-A \locationapp user can share his or her location publicly, with common friends, with companions, with specific people, or with no one. 
-Here, the common friends situation arises when the user is accompanied by someone, and revealing the user's own location would indirectly reveal the accompanying person's location. 
-\locationapp suggests a sharing policy to its user. 
-To produce a policy, it relies upon multiple contextual attributes, such as the place where the user is, the user's companions, the activity the user and companions are engaged in, and so on. 
-Additionally, if there are companions, \locationapp must understand the
-preferences of the user's companions and act ethically.
-
-\begin{example}[Olympiad] 
-\label{ex:frank-safety} 
-Frank, a \locationapp user, is a high school student in New York who values pleasure and social recognition. 
-Also, he is committed (a norm) to his mother Grace that he will share his location with her when he is not at home. 
-Sharing location promotes security but demotes privacy. 
-He travels to University of Illinois at Urbana-Champaign to participate in
-the National Science Olympiad. 
-\locationapp shares publicly that Frank is at University of Illinois at Urbana-Champaign participating in the Science Olympiad, and thus satisfies Frank's commitment to his mother, and promotes pleasure and social recognition for him. 
-\end{example}
-
-\begin{example}[Pizza at Giordano's] 
-\label{ex:harold-privacy} 
-When returning from Urbana-Champaign, Frank visits his uncle Harold in Chicago. 
-Harold is an Intelligence analyst with the National Security Agency and values privacy. 
-He and Frank visit Giordano's, a famous pizzeria for lunch. 
-% Fearing a negative sanction from Harold to Frank, 
-\locationapp prefers Harold's privacy over Frank's pleasure and social recognition, and shares only with Grace that Frank is at Giordano's with Harold. 
-Doing also satisfies Frank's commitment to his mother without harming Harold. 
-\end{example}
-
-% \begin{example}{}
-% \nsa{continue here.}
-% \end{example}
-
-The \locationapp examples illustrate some of the opportunities for SIPAs to reason about values and act ethically. 
-Note that \locationapp is an example SIPA, and not the only application of \frameworkAinur. 
-We use \locationapp as a running example to explain \frameworkAinur.
-
-\section{\frameworkAinur}
-\label{sec:method}
-
-We propose \frameworkAinur to design ethical SIPAs that understand and reason about preferences among values to make policy decisions as explained in Chapter~\ref{sec:example}.
-
-A SIPA should be aware of its users, their goals, and relevant
-actions to bring about the goals, which may vary with the social
-context. A SIPA should choose and execute actions, especially when
-there are conflicts among goals and social expectations, based on
-its users' contextual preferences of the applicable social norms
-\citep{Ajmeri-AAMAS17-Arnor}. Users' preferences among values
-provide a strong basis for choosing which goal to bring about or which
-norm to satisfy. In \frameworkAinur, a SIPA selects ethically appropriate
-actions by learning its users' preferences across the various
-values.
-
-\subsection{Conceptual Model}
-
-Figure~\ref{fig:valar} shows a conceptual model of a \frameworkAinur SIPA. 
-Each SIPA maintains a copy of this model internally. 
-The conceptual model includes a world model, a social model, 
-a stakeholder model, and a decision module to assist in 
-ethical decision-making. 
-
-\begin{figure}[!tb]
-\centering
-\begin{tikzpicture}
-\tikzstyle{every text node part/.style}=[align=center]
-
-\tikzstyle{module}=[minimum width=88,inner sep=4,font=\small\sffamily,text=black,fill=blue!10,align=center,sharp corners,minimum height=20] 
-
-\tikzstyle{wide}=[minimum width=88,inner sep=0,font=\small\sffamily,text=white,fill=blue!50!black,align=center,sharp corners,minimum height=20] 
-
-  \tikzstyle{emptybox}=[draw=none,fill=none]
-
-  \tikzstyle{framing}=[draw=blue!50!black, thick,inner sep=4]
-
-\matrix[row sep=4,column sep=12.5,anchor=center] {
-
- \node [wide] (tl) {World Model}; &
- \node [wide] (tm) {Social Model}; &
- \node [wide] (tr) {Stakeholder Model}; 
-\\
-
-  \node [module] (state) {Context};
-& \node [module] (norms) {Norms};
-& \node [module] (goals) {Goals};
- \\
-
-  \node [module] (actions) {Actions};
-& \node [module] (sanctions) {Sanctions};
-& \node [module] (values) {Values};
- \\[30]
-
- \node [emptybox] (ml) {}; &&
- \node [emptybox] (mr) {}; 
-\\[37]
-
- \node [emptybox] (left) {}; &&
- \node [emptybox] (right) {}; 
- \\
+%\paragraph{Social Norms and Multiagent Systems}
+\emph{Social norms} regulate agent interactions by characterizing
+what behavior one agent may legitimately expect from another in a particular 
+setting \citep{Kafali-IS16-Revani,Singh-2013-Norms}. 
 %
-};
+We adopt Singh's \shortcite{Singh-2013-Norms} computational representation 
+of social norms. A norm is directed from a subject (stakeholder) to an 
+object (stakeholder), and is constructed
+as a conditional relationship involving an antecedent (which brings the
+norm into force) and a consequent (which brings the norm to satisfaction
+or violation). 
+Ajmeri {\etal} \shortcite{Ajmeri-AAMAS17-Arnor} 
+introduce Arnor, a method to model social intelligence in personal agents. 
+They argue that personal agents who understand 
+the intricacies of social norms, deviations, and associated arguments can 
+provide a privacy-preserving social experience to their users. 
 
-\node [wide,fit=(ml.north-|tl.west)(mr.south-|tr.east)] (dec-spot) {};
-\node [wide] at (dec-spot) (decision) {Decision Module};
-\node [framing,fit=(dec-spot)] (dec) {};
+%\paragraph{Context Sharing}
+Works on designing \emph{context-aware} agents emphasize modeling \citep{Murukannaiah-AAMAS14-Xipho} and sharing \citep{Ajmeri-AAMAS17-Arnor}. 
+\frameworkB is novel in the way it helps SIPAs infer social norms by 
+revealing deviation context and reasoning about context revealed by others. \frameworkB
+examines the effect of revealing context by agents after norm
+deviations. K{\"o}kciyan and Yolum \shortcite{Kokciyan-IJCAI17-Privacy} 
+propose an argumentation-based approach to enable agents to reason about context and reveal information based on it. Whereas their focus is on understanding the context to make a privacy decision, we demonstrate the benefits of revealing context. 
+%
+Naively revealing context could violate user privacy. However, a SIPA 
+would reveal selectively by evaluating the tradeoff between privacy lost by revealing and sanctioning faced by not revealing. (For simplicity, in our experiments, the context model is simple and the SIPAs always reveal---to demonstrate the benefit of revelation.)
 
-\node [wide,fit=(left.north-|tl.west)(right.south-|tr.east)] (rec-spot) {};
-\node [wide] at (rec-spot) (recommendation) {Ethically Appropriate Action};
-\node [framing,fit=(rec-spot)] (rec) {};
+%\paragraph{Norm Conflicts and Compliance}
+The study of \emph{norm conflicts and compliance} has drawn much interest.
+An agent may face conflicts between multiple applicable norms \citep{Ajmeri-IJCAI16-Coco}, or 
+between norms and its own goals. 
+Van Riemsdijk {\etal} \shortcite{vanRiemsdijk-AAMAS15-SociallyAdaptive} develop a norm compliance
+framework to design socially adaptive agents in which agents 
+identify and adopt new norms, and determine execution mechanisms to comply with those norms. 
+Van Riemsdijk {\etal} argue that a personal agent needs explicit norms. 
+Aldewereld {\etal} \shortcite{Aldewereld-TAAS16-GroupNorms} present a formalism and mechanism to
+comply with group norms. Ajmeri {\etal} \shortcite{Ajmeri-IJCAI16-Coco} present a formalism to represent normative conflicts and dominance relationships among conflicting norms.  
+Sugawara \shortcite{Sugawara-IJCAI11-Emergence} uses
+reinforcement learning to resolve norm conflicts and shows how social conventions
+for resolving conflicts emerge. However, the efficiency and stability of the results
+differ across agents. These works give us insights into defining agents'
+decision-making processes.
 
-\node [framing,fit=(tl)(state)(actions)] (world) {};
-\node [framing,fit=(tm)(norms)(sanctions)] (context) {};
-\node [framing,fit=(tr)(goals)(values)] (stakeholder) {};
+%\paragraph{Norm Emergence and Evolution}
+%Research on \emph{norm emergence and evolution} tackles the changing social organization.
+Agent interactions lead to dynamic \emph{norm emergence and evolution} \citep{Savarimuthu2009NormEmergence}. 
+Boella {\etal} \shortcite{Boella2009Change} propose a normative framework to evaluate and classify normative system change. Mashayekhi {\etal} \shortcite{Mashayekhi-IJCAI16-Silk} propose a hybrid mechanism for norm emergence and conflict resolution in sociotechnical systems. Villatoro {\etal} \shortcite{Villatoro-TAAS13-Robust} present social instruments
+such as ``rewiring'' and ``observation'' to assist norm emergence. Yu {\etal} \shortcite{Yu-AAMAS13-Emergence} suggest using collective, instead of pairwise, learning for norm emergence. 
+%
+%\frameworkB differs from these works in 
+\frameworkB is novel in that it supports revealing and reasoning 
+about contextual information to facilitate understanding of contextually relevant norms. 
 
-\draw[framing,->] (world.south) -- (world.south|-dec.north);
-\draw[framing,->] (context.south) -- (context.south|-dec.north);
-\draw[framing,->] (stakeholder.south) -- (stakeholder.south|-dec.north);
-\draw[framing,->] (dec.south) -- (rec.north);
+%\paragraph{Deviation and Sanctions}
+\emph{Sanctions} are mechanisms to achieve social coherence.
+An agent decides whether to comply with or deviate from a norm. A sanction, negative or positive, is associated with 
+the reaction of other agents to this decision. Previous works adopt
+sanctions as a way to promote norm compliance \citep{Noussair2005SanctionsAndCooperation,Egas2008AltruisticPunishment}. 
+Alechina {\etal} \shortcite{Alechina-AAMAS2012-Programming} present
+a programming language for norm-aware agents who might deviate from norms and
+expect sanctions.  
+Nardin {\etal} \shortcite{Nardin-KER16-Classifying}
+develop a sanction typology and introduce a conceptual sanctioning
+process model to promote governance in sociotechnical systems. 
+Recent works explore combining norm communication with sanctions to 
+promote cooperation \citep{Andrighetto-2013-PunishVoice}. 
+Van Riemsdijk {\etal} \shortcite{vanRiemsdijk-AAMAS15-SociallyAdaptive} emphasize 
+understanding norm violations as a basis for designing socially adaptive agents. 
+\frameworkB differs from these works in addressing the problem of understanding a deviation by modeling the context in which a deviation occurs.
 
-\end{tikzpicture}
-\caption[A conceptual model of an \frameworkAinur SIPA]{A conceptual model of an \frameworkAinur SIPA.}
-\label{fig:valar}
+\section{Interaction in a SIPA Society}% \nsa{Rename section as \frameworkB?}
+\label{sec:Poros-framework}
+
+A SIPA society we seek to engineer consists of stakeholders, a social architecture, and SIPAs acting on behalf of stakeholders. Figure~\ref{fig:Poros-model} shows a conceptual model of a SIPA society. %\nsa{we seek to engineer} 
+
+\begin{figure}[!tb] \centering
+
+\includegraphics[width=0.6\columnwidth]{poros-nsa-v18-figure0}
+\caption[A society of SIPAs and stakeholders]{A society of SIPAs and stakeholders.}
+\label{fig:Poros-model} 
 \end{figure}
 
+\fbf{The stakeholders} are users, \emph{primary} or \emph{secondary}, depending on the context (defined later).
+The \emph{primary} stakeholder of a SIPA is the user who directly interacts with it, and on whose behalf the SIPA acts and interacts.
+A \emph{secondary} stakeholder is the user who may not directly interact with the SIPA, but is affected by the SIPA's actions \citep{Ajmeri-AAMAS17-Arnor}. 
+Each stakeholder has goals and plans.
 
-\subsubsection{Stakeholder Model}
-includes a SIPA's stakeholders, and the goals and values of the stakeholders. 
-
-\begin{itemize}
-\item \emph{Stakeholders} are users who either interact with a SIPA directly---\emph{primary stakeholders}, or are affected by a SIPA's actions---\emph{secondary stakeholders} \citep{Friedman-2008-value-sensitive-design}. For example, Frank is the primary stakeholder, and Grace and Harold are the secondary stakeholders of Frank's \locationapp SIPA in Examples~\ref{ex:frank-safety} and \ref{ex:harold-privacy}.
-\item A \emph{goal} defines the preferable states of the world for a SIPA's stakeholder. For example, Frank's goal is to \fsl{be connected with his family and friends}. 
-\item A \emph{value} for a stakeholder is an ideal worth pursuing in a given context. For instance, in Examples~\ref{ex:frank-safety} and \ref{ex:harold-privacy}, Frank has a preference for values of pleasure, recognition, and security over other values, and Harold values privacy over other values. 
+\begin{itemize}[nosep]
+  \item A \emph{goal} of a stakeholder describes a state the stakeholder would prefer; a stakeholder may have multiple goals.
+  \item A \emph{plan} of a stakeholder is a set of actions that can bring about one or more goals.
 \end{itemize}
 
-\subsubsection{World model}
-includes the context in which a SIPA acts. 
-\begin{itemize}
-\item A \emph{context} is the circumstance in which a SIPA takes an action \citep{Murukannaiah-AAMAS14-Xipho}. For instance, Frank's context in Example~\ref{ex:frank-safety} is \fsl{participating in the National Science Olympiad at the University of Urbana Champaign}.
-\item An \emph{action} represents the steps a SIPA takes to bring about its stakeholders' goals. 
-For instance, in Example~\ref{ex:frank-safety},  Frank's \locationapp SIPA's action of publicly sharing Frank's context \fsl{participating in the National Science Olympiad at the University of Illinois at Urbana Champaign}, helps Frank achieve his goal of \fsl{being connected with his mother}. 
-% \mps{Sudden para. Not clear how it relate to context} \nsa{Revised}
+\fbf{The social architecture} of a society captures its structure; it comprises social norms and the sanctions that promote or ensure compliance with norms.
+
+\begin{itemize}[nosep]
+  \item A \emph{norm} is a tuple of $\langle$subject, object, antecedent, consequent, context$\rangle$ \citep{Singh-2013-Norms}. 
+    Norms characterize the social architecture that promotes prosocial behavior. 
+  \item A \emph{deviation} from a norm occurs when a stakeholder, or \emph{deviant}, performs an action that does not comply with it.
+  \item A \emph{sanction} is a set of actions a stakeholder may take toward a deviant on observing a deviation. A sanction may be positive or negative \citep{Nardin-KER16-Classifying}.
 \end{itemize}
 
-\subsubsection{Social model} includes norms governing a SIPA's interactions in a society and the associated sanctions. 
-\begin{itemize}
-\item \emph{Norms} characterize the social architecture that promotes prosocial behavior. In the \locationapp examples, Frank's commitment of sharing his location with Grace, his mother, is one such norm that \locationapp SIPA should adhere to. 
-\item A \emph{sanction} is an action that a SIPA stakeholder may take against another stakeholder when he or she satisfies (positive sanction) or violates (negative sanction) a norm \citep{Nardin-KER16-Classifying}. For instance, in the \locationapp example, some resulting sanctions could be Grace appreciation for Frank on keeping her informed, and Harold scolding Frank if he publicly shared his location tagging Harold. 
+\fbf{A SIPA} acts and interacts on behalf of a stakeholder and
+is aware of the social architecture of the society.
+
+\begin{itemize}[nosep]
+  \item An \emph{action} is a step a SIPA takes to execute its
+    stakeholder's plan, thereby bringing about the corresponding goal.
+    An action may satisfy or violate a norm. SIPAs in a society can
+    observe each other's actions. 
+
+  \item A \emph{context} captures the circumstances under which a SIPA acts \citep{Dey-2001-Context}. In our approach, the context is social and incorporates whether a norm is satisfied or violated. 
+     Context includes social relationships between stakeholders and spatiotemporal parameters relevant to describing interactions between a SIPA and its stakeholders. We adopt Murukannaiah and Singh's \shortcite{IC-Platys-12} notion of \fsl{place} as a location such as home, library, meeting, or party understood in conceptual terms. Parameters describing a place may include physical conditions (e.g., noise level), expected activities (e.g., reading a book), social interactions (e.g., having a discussion), and temporal information (e.g., during office hours on a weekday). 
+
 \end{itemize}
 
-\subsubsection{Decision Module, Ethically Appropriate Action, and Social Experience}
+\fbf{The social experience} a SIPA delivers reflects the extent to which the SIPA promotes its primary and secondary stakeholders' goals. It relates to how a SIPA's stakeholders perceive a norm deviation, and the sanctions they apply. Our objective is to promote each SIPA to act toward maximizing the overall social experience, despite competing interests. 
 
-A SIPA's \emph{Decision module} is responsible for producing an \emph{ethically appropriate action} that yields a (fair) social experience to the SIPA's stakeholders, 
-especially in scenarios where either the norms conflict or the value preferences 
-of stakeholders are not aligned. 
+We define social experience ($E$) as the weighted aggregation of payoffs perceived by a SIPA's stakeholders for each action executed by the SIPA. That is, for each potential action, a SIPA determines the payoffs for its primary and secondary stakeholders, and computes an aggregation as a weighted sum of the payoffs.
+%
+A SIPA's aggregation method reflects its primary user's preferences and privacy attitudes. For instance, a pragmatic user's SIPA may aggregate payoffs by giving equal weight to all stakeholders, whereas a selfish user's SIPA may give a smaller weight to secondary stakeholders.
 
-A SIPA's stakeholders perceive a utility for each alternative action available to a SIPA in a given context. The decision module adapts VIKOR \citep{opricovic2004compromise}, a multicriteria decision-making approach, to aggregate these utilities and produce a consensus action. VIKOR is based on closeness to the ideal solution. It prioritizes social utility over individual utility. Our experiments, which we describe in Chapter~\ref{sec:results}, show that solutions obtained by \frameworkAinur adapting VIKOR exhibit the Rawlsian property of justice in terms of maximizing the minimum experience across a SIPA's users \citep{rawls1985justice, Leben2017Rawls}. 
+% Was \paragraph
+\subsubsection{\frameworkB Explained with an Example SIPA} 
+%
+We now describe \frameworkB, a framework to build SIPAs, using \ringer, an example SIPA who answers or ignores phone calls on behalf of its primary stakeholder by ringing the phone or keeping it silent. \ringer is a privacy-enhancing technology that acts on behalf of its primary stakeholder; it determines when to allow intrusions, and when to risk being overheard in a phone call (and thus when to intrude on others' solitude).
 
-\emph{Social experience} is the aggregated utility perceived by a SIPA's stakeholders. It characterizes the extent to which an action of a SIPA is perceived as ethical by its stakeholders in a given context. For instance, understanding Frank's and Harold's value preferences, and Frank's commitment to Grace, Frank's \locationapp SIPA sharing only with Grace that Frank is with Harold at Giordano's is ethically more appropriate than sharing it with no one or sharing with public. 
+\ringer's primary stakeholder is the \fsl{callee} with privacy goals of \fsl{being reachable by phone}, \fsl{to work uninterrupted}, and \fsl{to not disturb neighbors}. \ringer's secondary stakeholders are (1) a \fsl{caller} with the goal \fsl{to reach the callee}; and (2) a \fsl{neighbor} with a privacy goal \fsl{to not be disturbed}. \ringer observes other SIPAs' actions and potentially sanctions them based on their actions and the context as revealed by them.
 
+Each SIPA in \frameworkB maintains a history of interactions and the associated experience. The actual experience is determined after each interaction based on the revealed context and any resulting sanctions. The history helps a SIPA determine the action that would maximize its stakeholder's predicted social experience. 
 
-% The satisfaction or violation of a norm could promote or demote certain
-% values. There could be conflicts---values promoted by norms conflict
-% with values promoted by agents goals. Agents can choose to satisfy or
-% violate norms by identifying stakeholders' contextual preferences of
-% values that these norms promote or demote. 
+We define a SIPA's history ($H$) as a set of tuples $h_i = \langle c_i, g, p, N, s_i \rangle$, each of which describes an interaction $i$, including context $c_i$ describing the circumstances in which goal $g$ is brought about via plan $p$ under a set of applicable norms $N$, and all resulting sanctions $\{s_i\}$. 
+%
+For \ringer, $c_i$ includes the places where the stakeholders are, their social relationships, and urgency of the incoming call.
 
-% \nsa{\citet{rawls1985justice}
-% \citet{Leben2017Rawls}
-% \citet{leben2018ethics}}
+Each SIPA maintains its history locally, and scans it when selecting a plan. In a conflict situation, SIPAs look up their history to predict social experience and decide which norms or goals to prefer over which others in a given context; thus infer contextually relevant norms.
 
-\subsection{\frameworkAinur SIPA Society}
-We now describe a SIPA society consisting of \locationapp SIPAs exemplified in Chapter~\ref{sec:example}. 
+A SIPA's behaviors include acting on behalf of its stakeholder, deciding whether to reveal its context, reasoning about the contexts revealed by others, and issuing sanctions to others. It does so based on knowledge of its context, its stakeholder's goals, associated plan, and applicable norms.
 
-\subsubsection{Society.} A SIPA society in \frameworkAinur is defined as a tuple $S$ = $(A, P, R, G, F, V, C, N)$, where $A$ is the
-set of SIPAs $\{a_1, a_2, \ldots, a_n\}$ in the society, $P$ is a set of their primary stakeholders, $R$ is the set of
-relationship edges that exists between the stakeholders of the SIPAs, $V$ is the
-set of values that the stakeholders have, $C$ is the set of
-social contexts in which the SIPAs interact, and $N$ is the set of norms
-that govern the SIPAs' interactions in these contexts.
+\begin{itemize}
+    \item \fsl{Plan selection.} A SIPA selects a plan (and its associated actions) that would achieve its primary stakeholder's goals. In the \ringer example, it selects to ring or keep silent for an incoming phone call. If more than one plan are available, from the history (if available) it identifies the one that maximizes the social experience, or chooses a random plan from the applicable plans with a small probability $\alpha$.  
+    
+    \item \fsl{Revealing context.} When a SIPA chooses and executes a plan, it might deviate from some applicable norms. It decides which norms to prefer in the current context and whether to reveal unobserved context to other SIPAs. For instance, if \ringer decides to prefer the \fsl{family norm}---\fsl{always answer calls from family} over the \fsl{meeting norm}---\fsl{never answer calls during meetings} by ringing during a meeting for an urgent phone call from a sick family member, it reveals the unobserved context, i.e., urgency of the call and the caller's sickness to other meeting attendees. Ideally, a SIPA should selectively reveal context to others according to its stakeholder's goals and privacy attitude. 
+    
+    \item \fsl{Sanctions.} A SIPA observes other SIPAs' actions, and sanctions them when its stakeholder is affected by their actions. On receiving the context revealed by a deviating SIPA, the SIPA of an affected stakeholder evaluates whether the observed action would be norm compliant in the revealed context. In the \ringer example, \fsl{neighbors'} and \fsl{caller's} SIPAs decide whether they would ring for an urgent phone call from a sick family member during a meeting and accordingly sanction the \fsl{callee's} SIPA. 
+\end{itemize}
 
-Each stakeholder $p$ $\in$ $P$ has a set of goals $G$, that $p$'s SIPA helps bring about via actions in $F$. 
-% 
-For instance, in a society of \locationapp SIPAs, when a stakeholder moves to a new place or meets new people, his or her SIPA may share the context to bring about the stakeholder's goal $g$ of \fsl{staying connected}. The context includes the place where a stakeholder is and the people who he or she is with. 
-A SIPA selects one of the following three actions, $F$ = \{share with all, share with common friends, share only with companions\} in each context. 
-% When sharing the context, the SIPA may also tag companions. 
-
-\subsubsection{Relationship}
-SIPA stakeholders in a SIPA society are connected via a relationship edge. 
-Each relationship edge $r_{ij}$ in $R$ is a tuple $r_{ij}$ = $(a_i, a_j,
-rt \mid a_i, a_j \in A, rt \in RT)$.
-
-RT is set of
-relationship types, RT = \{$rt_1, rt_2, \ldots, rt_n$\}. In the \locationapp SIPA society, RT includes co-worker, family, friend, and so on. 
-
-\subsubsection{Context}
-At any given instance $t$, a SIPA $a$ with its stakeholders is in a context $c$ which is defined by a
-tuple $(l, B \mid l \in L, B \subseteq A \setminus a)$, where $l$ is a place from $L$ = \{$l_1, l_2, \ldots, l_n$\}. A place is a location such as home, office, meeting, or a restaurant as understood in conceptual terms. $L$ in \locationapp includes conference, hiking, restaurant, and so on.
-Each place $l$ is defined by attributes such as physical conditions (e.g., rainy), expected activities (e.g., hiking), social interactions (e.g., having a discussion), and temporal information (e.g., at late night).
-% Each place $l$ can be defined by attributes such as safety or sensitivity. 
-
-$B$ is a set of other SIPAs at $l$ such that in the current context $c$, primary stakeholders of SIPAs in $B$ are the secondary stakeholders of $a$, who could be affected by $a$'s actions in context $c$. 
-
-When a SIPA's stakeholder moves between places, or when new people (also stakeholders) join them, the context changes. For instance, the context changes when Harold joins Frank at Giordano's compared to when Frank is alone at Giordano's. 
-
-Each context $c$ includes a set of contextually relevant norms $Nc \subseteq N$ that govern the interaction of SIPAs in that context. For example, Frank's commitment to Grace may be relevant only when he is traveling. 
-
-\subsubsection{Values and Contextual Preference}
-% $V$ is a set of terminal values defined by \citet{rokeach1973nature}. \nsa{Instead of Rokeach values, it could be all values that are influenced in the current context.} 
-
-$V_c$ is a set of values that are influenced by a SIPA's actions in the current context $c$. 
-% 
-For example, when Frank is at Giordano's, $V_c$ = \{pleasure, privacy, recognition, security\}.
-
-%Each agent $a_i$ has a contextual preference $q_i$ over values,
-%represented by a set of tuples $\{(v_{i_x}^k, v_{i_y}^k, c_{k}) \mid v_{i_x}^k, v_{i_y}^k \in V, c_k
-%\in C\}$ such that $a_i$ prefers $v_{i_x}^k$ over $v_{i_y}^k$ in $c_k$.
-
-During each context $c$, each agent $a$ has a contextual preference $q$ over values,
-represented by a set of tuples \{$(v_j, v_k, c) \mid v_j, v_k \in V, c
-\in C$\} such that $a$ prefers $v_j$ over $v_k$ in $c$. Frank's preference for values of pleasure and recognition over privacy during 
-Olympiad can be represented as \{(pleasure, privacy, olympiad), (recognition, privacy, olympiad)\}
-
-% \item[Actions.]
-
-% In a society with \locationapp agents, as agents visit different places, they may share their context with
-% others in the society via a context check-in to help stakeholders bring about their goal of staying connected. They select one of the following three actions, $F$
-% = \{share with all, share with common friends, share only with
-% companions\} with each context check-in. When sharing their context, they also tag their companions. 
-
-In a decision-making episode, a SIPA determines
-\begin{enuminline}[label=(\arabic*)]
-\item the context it is in through the sensors the SIPA is equipped with,
-\item future state of the world for each action it can perform,
-\item the value preferences of its stakeholders, and
-\item the social experience its stakeholders will derive for each action it can perform.
-\end{enuminline}
-Then, based on the applicable norms in a given context and its
-stakeholders goals, a SIPA identifies the action to perform.
-%Each SIPA is equipped with sensors via which, first, it gains an
-%understanding of the environmental context and current state of the
-%world. Second, it determines the future state of the world for each
-%action it could perform. Third, given an understanding of the value
-%preferences of its stakeholders, the SIPA determines the social
-%experience its stakeholders will derive if it performs the selected
-%action. Fourth, based on the applicable norms in a given context and its
-%stakeholders goals, a SIPA identifies the action to perform.
+The complete interaction, including the selected plan and executed actions, observed and revealed context, applicable norms, and sanctions, is recorded in SIPAs history. 
+As SIPAs interact by acting and evaluating actions for norm compliance from interaction history, they understand the boundaries of applicable norms in different contexts, and thus promote emergence of robust social norms. 
 
 
-\subsection{Value Preferences}
+\section{Simulation Model}
+\label{sec:Poros-simulation-model}
 
-A SIPA's stakeholders may have different preferences over
-values in some context. Thus, a SIPA's actions based solely on one (e.g., primary)
-stakeholder's preference may conflict with its other stakeholders'
-preferences. For instance, in Example~\ref{ex:harold-privacy}, if
-Frank's SIPA shares publicly that Frank and Harold are having a pizza
-considering Frank's preference for \fsl{pleasure}, the selected action 
-conflicts with Harold's preference for \fsl{privacy}.
+We evaluate \frameworkB via a simulated 
+\emph{ringer environment} built using MASON \citep{Luke-2005-Mason}.
 
-\citet{Sotala2017HumanValues} proposes using a reward function for a
-human's values, which a value-respecting AI system can learn and try to
-maximize. If a SIPA maintains numeric representations of its
-stakeholder's preferences over different values, it can aggregate the gain
-of values promoted when choosing an action.
+\subsection{The Ringer Environment}
+The ringer environment contains shared places (home, party, meeting, library, and emergency room).
+Corresponding to each place, we define social circles such as family, friends, and coworkers. Each agent belongs to a family circle, a friend circle, and a coworker circle. Agents who do not share any of these circles are considered strangers. We define the social network or place network topology in a way such that there is only one type of relationship, i.e., family, friends, coworkers, or strangers, between any pair of agents. 
+In the ringer environment, there are (1) several homes, each corresponding to a family circle, (2) several parties, corresponding to multiple friend circles, and (3) multiple meetings, corresponding to multiple colleague circles. There is one library and one emergency room (ER). The numbers of homes, parties, and meetings follow the network setups specified in Table~\ref{tab:network-types}.
 
-\subsubsection{The VIKOR Method}
+%\paragraph{Moving between places}
+In the simulation, agents stay at each place for a random number of steps (averaging 60 steps) and then move. If an agent enters home, party, or meeting, it is more likely to enter the place that is associated with its own social circle than entering a place with strangers. For example, if an agent chooses to enter home, it is likelier to enter its own family's home than to enter a stranger's home. Therefore, when it is at home, an agent is usually surrounded by its family members with only a few strangers. 
 
-% \nsa{VIKOR takes as input payoffs for each alternative action and not pairwise preferences.} 
+%\paragraph{Actions}
+The agents in the ringer environment perform the following actions depending upon their roles:
+\begin{itemize}
+\item A caller initiates an urgent or a casual phone call.
+\item A callee answers or ignores a phone call.
+\item A callee shares context for answering or ignoring a call.
+\item A caller and neighbors respectively reason about context.
+\item A caller and neighbors respectively sanction a callee for answering or ignoring a phone call.
+\end{itemize}
 
-In \frameworkAinur, we use the VIKOR
-method \citep{opricovic2004compromise}, a multicriteria decision-making (MCDM) method to identify which
-actions to perform in situations where (1) actions prescribed by the norms
-conflict with actions that promote the values preferred by a SIPA's
-stakeholders, or (2) the stakeholders of a SIPA have different value
-preferences and thus prefer different actions.
-VIKOR's ranking method is based on closeness to the ideal solution, and provides an ethically appropriate solution that yields high social utility as against high individual utility.
+%\paragraph{Norms}
+Each place and each circle has predefined norms, as defined in Table~\ref{tab:norms-place}. For example, emergency room (ER) is conceptualized as a place where the default norm is to always answer calls, whereas the norm in a library is to ignore calls. Norms could conflict. For example, the norm to \fsl{answer an urgent phone call from a family member} conflicts with \fsl{ignore during a meeting}. We let the agents figure out contextually relevant norms in case of conflict. 
 
-We now summarize the VIKOR Method  \citep{opricovic2004compromise} below. 
-
-\begin{enumerate}
-\item Determine the best  and worst numeric payoffs, $f_x^*$ and $f_x^-$ for each value preference $x$ over the alternative actions $y$ to bring about a goal. That is, $f_x^* = {\max}_y f_{xy}$, $f_x^- = {\min}_y f_{xy}$.
-
-\item For each alternative action $y$, compute the weighted and normalized Manhattan distance \citep{krause1973taxicab}:
-
-$S_y$ = $\sum_{x=1}^{n} w_x(f_x^* - f_{xy})/(f_x^* - f_x^-)$, where $w_x$ is the weight for value preference $x$, which is subject to a stakeholder context and preferences over values. In particular, $S_y=0$ when $f_x^* = f_x^-$.
-
-\item Compute the weighted and normalized Chebyshev distance \citep{cantrell2000modern}: 
-
-$R_y ={\max}_x [w_x(f_x^* - f_{xy})/(f_x^* - f_x^-)]$, where $w_x$ is the weight for value preference $x$.
-
-\item Compute $Q_y = k(S_y - S^*)/(S^- - S^*) + (1-k)(R_y - R^*)/(R^- - R^*)$, where $S^* = {\min}_y S_y, S^- = {\max}_y S_y, R^* = {\min}_y R_y, R^- = {\max}_y R_y$, and $k$ is a weight of the strategy to maximum group or individual experience. We set $k = 0.5$ to select a consensus policy. 
-
-\item Rank alternative actions, sorting by the values $S$, $R$, and $Q$, in increasing order. The results are three ranked lists of actions. 
-
-\item Choose the alternative based on $\min{Q}$ as the compromise solution if it is better than the second best alternative by a certain threshold or also the best ranked as per $S$ and $R$. 
-\end{enumerate}
-
-Table~\ref{tbl:vikorcalculations} demonstrates possible numeric values of the value preferences and the calculated ranking of three alternative actions (share with all, share with common friends, and share only with Grace) that \locationapp can take when Frank is with Harold at Giordano's as described in Example~\ref{ex:harold-privacy}. As Harold is highly concerned about his privacy, we give a higher weight to Harold's privacy (3) and a lower but equal weight to other seven criteria including Harold's other values and Frank's values. We assume $k=0.5$ in this case, and find the alternative $y_3$, \fsl{share only with Grace} as the best solution.
-
-\begin{sidewaystable*}[ph!]
+\begin{table}[!tb]
 \centering
-\caption[Computing rankings for policy alternatives using VIKOR]{Computing rankings for policy alternatives using VIKOR for context \emph{Pizza at Giordano's} in Example~\ref{ex:harold-privacy}. Bold indicates the best alternative. }
-\label{tbl:vikorcalculations}
-%\begin{tabular}{l r@{~~}r@{~~}r@{~~}r r@{~~}r@{~~}r@{~~}r rrr}
-\begin{tabular}{l rrrr rrrr rrr}
+
+\caption[Norms for answering calls]{Norms for answering calls based on (left) place and (right) caller's social circle and casual or urgent call types.}
+\label{tab:norms-place}
+
+\begin{tabular}{@{} c @{~~~~} c @{}}
+
+\begin{tabular}{@{~~}l@{~} c@{}}
+\multicolumn{2}{c}{\fbf{By place}}\\
 \toprule
-\multirow{2}{*}{Policy Alternatives}&\multicolumn{4}{c}{Frank's Values} & \multicolumn{4}{c}{Harold's Values} & $S_y$ & $R_y$ & $Q_y$\\
-\cmidrule(lr){2-5} \cmidrule(lr){6-9}
-& Pleasure & Privacy & Recognition & Safety & Pleasure & Privacy & Recognition & Safety \\
-\midrule
-
-\rowcolor{lightgray!50!}
-$y_1$ Share with all & 10 & 5 & 10 & 5 & 5 & 0 & 5 & 5 & 3.5 & 3 & 0.75 \\
-$y_2$ Share with common & 5 & 5 & 5 & 10 & 5 & 0 & 5 & 5 & 0.4 & 3 & 1\\
-\rowcolor{lightgray!50!}
-$y_3$ Share only with Grace & 0 & 5 & 0 & 0 & 5 & 15 & 5 & 5 & \fbf{0.3} & \fbf{1} & \fbf{0}\\
-
-\cmidrule{1-12}
-$w_x$ & 1 & 1 & 1 & 1 & 1 & 3 & 1 & 1 & & & \\ 
-\rowcolor{lightgray!50!}
-$f_x^*$ & 1 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & & &  \\
-$f_x^-$ & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & & & \\ 
+Place & Response\\\midrule
+Emergency (ER) &Answer\\
+Home (H) & Answer \\
+Library (L) &Ignore\\
+Meeting (M) &Ignore\\
+Party (P) &Answer\\
 \bottomrule
-
 \end{tabular}
-\end{sidewaystable*}
-
-\section{Simulations}
-\label{sec:simulations}
-
-We use MASON \citep{Luke-2005-Mason} to develop a simulation environment containing a society of \locationapp SIPAs. 
-
-\subsection{Simulation Society Setup}
-\label{sec:simulation-setup}
-
-The society contains a social network of several SIPAs. 
-
-\begin{description}
-
-\item[SIPAs.] The society contains several SIPAs. Each SIPA has a primary stakeholder on whose behalf the SIPA acts.  
-
-\item[Relationships.] SIPA stakeholders are either socially related to other stakeholders---co-worker, family or friend, or are strangers. 
-
-\item[Goal.] Stakeholders have a goal to stay connected with their connections---co-workers, family and friends. 
-
-% Each agent has a goal that is associated with its preference over various values. For instance, an agent with a goal to \fsl{attain social recognition} may choose policy \fsl{share with all} when at a \fsl{graduation ceremony}. 
-
-\item[Actions.] To help bring about their stakeholders' goal of being connected, as stakeholders move, their SIPAs either \fsl{share their context publicly}, \fsl{share only among common friends of all companions}, or \fsl{share only with companions}. Context sharing actions are based on norms and stakeholders' value preferences.
-
-\item[Norm.] The society is governed by a privacy norm---\fsl{preserve privacy of all stakeholders}, i.e., stakeholders are committed to act in a privacy-preserving manner when sharing context while accompanying others. This commitment is directed from the primary stakeholders to the secondary stakeholders.  
-
-\item[Value preference.] For simplicity, we consider only four values---pleasure, privacy, recognition, and security, relevant to our problem domain.  
-
-\item[Places and Contexts.]
-
-Table~\ref{tab:places} lists the places we represent. Each place has two attributes---\fsl{how safe it is} and \fsl{how sensitive it is}. In the simulation, the combination of places where SIPA stakeholders are, and who accompanies them, define their context.
-
-\begin{table}[!htb]
-\centering
-\caption[List of places in the simulation environment]{List of places in the simulation environment, each marked safe or sensitive.}
-\label{tab:places}
-\begin{tabular}{lcc}
+&
+\begin{tabular}{@{}l @{~} c@{~} c@{~~}}
+\multicolumn{3}{c}{\fbf{By circle and call type}}\\
 \toprule
-Place & Safe & Sensitive \\\midrule
-\rowcolor{lightgray!50!}
-Attending graduation ceremony & -- & No \\
-Presenting a conference paper & -- & No \\
-\rowcolor{lightgray!50!}
-Studying in library & Yes & -- \\
-Visiting airport & Yes & -- \\
-\rowcolor{lightgray!50!}
-Hiking at night & No & -- \\
-Being stuck in a hurricane & No & -- \\
-\rowcolor{lightgray!50!}
-Visiting a bar with fake ID & -- & Yes \\
-Visiting a drug rehab center & -- & Yes \\
+Circle & Casual & Urgent\\
+\midrule
+Coworker&Answer&Answer\\
+Family&Answer&Answer\\
+Friend&Answer&Answer\\
+Stranger&Ignore&Answer\\
 \bottomrule
+\\
+\end{tabular}
 \end{tabular}
 \end{table}
 
-Stakeholders along with their SIPAs move between places. At each place in the context, a stakeholder is either alone, with companions---co-workers, family, or friends, or with crowd (several people are around but they are strangers). 
+%\paragraph{Payoffs}
+For each phone call, based on the callee's response of answering or ignoring, the caller, callee, and neighbors perceive a fixed payoff, as shown in Tables~\ref{tab:payoff-callee}--\ref{tab:payoff-neighbor}. 
 
-\item[Stakeholder types.] Stakeholders are of three types based on their different privacy attitudes \citet{westin2003social}. 
 
-A \fbf{privacy fundamentalist} stakeholder is most protective about his or her privacy. 
+\begin{table}[!tb]
+\centering
 
-A \fbf{privacy unconcerned} stakeholder is inclined to share information about himself or herself. He or she perceives more benefit from sharing information than holding it. 
+\caption[Payoff for callee]{Payoff for callee for casual or urgent call types.}
+\label{tab:payoff-callee}
 
-A \fbf{privacy pragmatist} stakeholder exhibits a pragmatic behavior, and weighs pro and cons of sharing information based on a given context. 
 
-\end{description}
+\begin{tabular}{@{}lcrr@{}}
+\toprule
+Caller's Relationship & Callee's Response & Casual & Urgent\\\midrule
+\multirow{2}{2.8cm}{Family, Friend, or Coworker}&Answer&0.50&1.00\\
+&Ignore&0.00&--0.50\\\midrule
+\multirow{2}{2.8cm}{Stranger}&Answer&0.00&0.50\\
+&Ignore&0.25&--0.25\\
+\bottomrule
+\end{tabular}
 
-\subsection{Human-Subject Study to Seed Simulation}
-\label{sec:survey}
 
-\citet{Naeini-SOUPS2017-PrivacyExpectations+IOT} conducted a human-subject study on privacy expectations in which 1,007 participants stated their preferences in the contexts of 380 IoT data collection and use scenarios. They suggest that users' preferences can be accurately predicted after observing their decisions in a few scenarios. We take insights from their findings in conducting our human-subject study. 
+\end{table}
 
-To seed the simulation environment with value preferences of real users, we conducted a human-subject study. Fifty eight students enrolled in a mixed graduate and undergraduate-level computer science course participated in our study. The study was approved by our university's Institutional Review Board (IRB). We obtained informed consent from each participant. 
+\begin{table}[!tb]
+\centering
 
-First, the participants completed a privacy attitude survey \citep{schnorf2014comparison} in which they answered questions on their level of comfort in sharing personal information on the Internet on a Likert scale of 1 (very comfortable) to 5 (very uncomfortable), and the extent sharing personal information causes (or could cause) them negative experience, again on a Likert scale of 1 (not at all) to 5 (to a very great extent). Figure~\ref{fig:participants-privacy-distribution} shows the distribution of privacy attitudes of the study participants. 
+\caption[Payoff for caller]{Payoff for caller for casual or urgent call types.}
+\label{tab:payoff-caller}
 
-%  \begin{figure}[!tb]
-%  \centering
-%   \begin{tikzpicture}
-%      \tikzstyle{every node}=[font=\small]
-%      \begin{axis}[
-%  	y=0.6cm,
-%  	ytick={1,2,3,4},
-%  	yticklabel style={align=center},
-%  	yticklabels={},
-%  	width=8cm,
-%  	xtick={1,3,5},
-%     xticklabels={Unconcerned,Pragmatist,Fundamentalist},
-%  	xlabel={Privacy Attitude},
-%  	xmin=1, xmax=5,
-% %     xticklabels = {Unconcerned,,,, Fundamentalist},
-%  	xlabel style={align=center},
-%  	boxplot/average=auto,
-%  	title style={align=center},
-%  	title={},
-%  	title style={yshift=-1ex,},
-%  	]
-%  	\addplot+[red,boxplot,mark options={fill=red}]
-%  	table[x expr=\coordindex, y index=0]
-%  	{privacy_profiles.csv};
-%      \end{axis}
-%  %     \addplot+[red,boxplot,mark options={fill=red}]
-%  % 	table[x=a, col sep=comma]
-%  % 	{user_profiles.csv};
-%  %     \end{axis} 
-    
-%   \end{tikzpicture}
-%   \caption{Privacy attitudes of the participants. \nsa{Replace with a bean plot that shows the distribution.}}
-%   \label{fig:participants-privacy-distribution}
-%  \end{figure}
- 
- \begin{figure}
-     \centering
-     \includegraphics[width=0.6\columnwidth]{./Chapter-4/fig/privacy-attitude-distribution.png}
-     \caption[Distribution of privacy attitudes]{Distribution of privacy attitudes of the human-subject study participants. }
-     \label{fig:participants-privacy-distribution}
- \end{figure}
+\begin{tabular}{@{}crr@{}}
+\toprule
+Callee's Response & Casual & Urgent\\\midrule
+Answer&0.50&1.00\\
+Ignore&--0.50&--1.00\\\bottomrule
+\end{tabular}
 
-Next, the participants completed two context-sharing surveys. 
-In the first survey, they were given a list of contexts, as listed in Table~\ref{tab:places}, and their companions (alone, co-worker, family, friend, or crowd) in the given context, and were asked to select a sharing policy (share with all, share only with common friends, or share only with companions). In the second survey, participants were additionally informed of the values that are promoted or demoted on sharing and on not sharing the context, and were asked to select a context sharing policy accordingly. We use the first survey to engage and immerse the participants in various contextual scenarios, and the second to help them make informed decisions according to the values promoted or demoted in each context.
+\end{table}
 
-We use the privacy attitudes of the participants and the context sharing policies selected by the participants to create multiple artificial societies of stakeholders and to seed the simulation experiments described in Chapter~\ref{sec:results}. 
+\begin{table}[!tb]
+\centering
+
+\caption[Payoff for neighbors]{Payoff for neighbors by place (ER, H, L, M, P).} 
+\label{tab:payoff-neighbor}
+
+\begin{tabular}{@{}crrrrr@{}}
+\toprule
+
+% Callee's Response & ER & H & L & M & P \\\midrule
+Callee's Response & Emergency & Home & Library & Meeting & Party \\\midrule
+Answer & 1.00 & 0.67 & --1.00 & --1.00 & --0.33\\
+Ignore & --1.00 & --0.33 & 1.00 & 1.00 & 0.67\\\bottomrule
+
+\end{tabular}
+
+\end{table}
+
+\subsection{Agent Types}
+\label{sec:agent-types}
+
+To evaluate effectiveness of \frameworkB, we define two baseline agent types---\emph{Fixed} and \emph{Sanctioning}, other than \frameworkB agents.
+
+\emph{Fixed agents} act according to the fixed set of norms listed in
+Table~\ref{tab:norms-place}. If the norms conflict, the agents toss a
+fair coin to choose between alternative actions. If Fixed agents
+perceive an action as a deviation, they sanction the deviant.
+
+\emph{Sanctioning agents} infer social norms from sanctions
+\citep{Andrighetto-2013-PunishVoice}. These
+agents start with the same strategy as Fixed agents. They continue to record 
+the interaction history. Once they have gained enough number of records in their
+history of sanctions, they decide their subsequent actions based on
+history. In our simulation, this number is empirically selected so that an
+agent visits each scenario at least once. As callees,
+when norms conflict, they select the action that provides a higher payoff, computed according to Tables~\ref{tab:payoff-callee}--\ref{tab:payoff-neighbor}. As callers
+and neighbors, these agents sanction callees as per fixed norms listed
+in Table~\ref{tab:norms-place}.
+
+\emph{\frameworkB agents} infer social norms by revealing and reasoning
+about context. They start with the same strategy as Fixed
+agents following norms listed in Table~\ref{tab:norms-place}. As
+callees, they reveal context, i.e., reveal the caller's relationship and
+the call's urgency to their neighbors, and reveal their place and 
+neighbors' relationships to the caller. As neighbors or callers, they
+understand the callee's revealed context and decide what action they would
+have performed were they in that context, and sanction
+accordingly. \frameworkB agents use Table~\ref{tab:payoff-neighbor-reason}'s payoffs.
+
+We employ a linear regression model over interaction history to
+choose actions based on sanctions by stakeholders.
+
+
+\begin{table}[!tb]
+\centering
+
+\caption[Payoffs based on reasoning about the shared context]{Payoff for a neighbor based on how callee acts and what the neighbor expects in the context revealed by callee.}
+
+\begin{tabular}{@{}c @{~~} c@{~~} r@{~~} r@{~~} r@{~~} r@{~~} r@{}}
+\toprule
+% Callee Action&Neighbor Expects
+%  & ER & H & L & M & P\\\midrule
+
+Callee Action&Neighbor Expects
+ & Emergency & Home & Library & Meeting & Party\\\midrule
+
+Answer&Answer & 1.00 & 0.67 & 1.00 & 1.00 & 0.67 \\
+Answer&Ignore & --1.00 & --0.33 & --1.00 & --1.00 & --0.33 \\
+Ignore&Answer & --1.00 & --0.33 & --1.00 & --1.00 & --0.33 \\
+Ignore&Ignore & 1.00 & 0.67 & 1.00 & 1.00 & 0.67\\\bottomrule
+
+\end{tabular}
+
+\label{tab:payoff-neighbor-reason}
+
+\end{table}
 
 \section{Experiments and Results}
-\label{sec:results}
+\label{sec:Poros-experiments}
 
-We evaluate our research question via two experiments in which we simulate societies of \locationapp SIPAs who visit different places and may share their context. First, we experiment with a society of stakeholders with mixed privacy attitudes representing the attitudes of participants collected in the human-subject study described in Chapter~\ref{sec:survey}. Second, we experiment with three societies with a majority of privacy fundamentalists, unconcerneds, or pragmatists, respectively.
-
-Our results are stable with changes in the network size and the connectedness of a SIPA society, 
-
-\subsection{Decision-Making Strategies}
-\label{sec:decision-making-strategies}
-
-As \locationapp SIPAs move between places and interact with each other, they make policy decisions that affect their stakeholders. To evaluate SIPAs designed via \frameworkAinur, we define four (\frameworkAinur and three baseline) policy decision-making strategies. 
+We evaluate our research questions via multiple experiments 
+on the ringer environment in which we
+simulate \np{1000} or 250 Fixed, Sanctioning, and \frameworkB agents in pragmatic, considerate, and selfish agent societies. The agents in societies use different schemes to aggregate payoffs. We run each
+simulation for \np{3000} steps and compute the following metrics.
 
 \begin{description}
-\item[S\fsub{\frameworkAinur}: \frameworkAinur.] The SIPA produces a context sharing policy using the VIKOR method rankings computed based on value preferences of its stakeholders.
-\item[S\fsub{primary}: Primary user's preference.] The SIPA produces a context sharing policy based only on its primary stakeholder's value preferences. This is representative of how location sharing works today in social networking websites such as Facebook. 
-\item[S\fsub{conservative}: Most privacy conservative policy.] The SIPA produces the least privacy violating, i.e., the most restrictive context sharing policy among the available alternatives based on its stakeholders' value preferences. It represents policy selection based on the least negative consequence. 
-\item[S\fsub{majority}: Majority policy.] The SIPA produces the most common context sharing policy based on its stakeholders' value preferences. It represents policy selection based on majority voting. 
+\item[Social cohesion] measures the proportion of agents that perceive actions
+as norm compliant. Higher the social cohesion, lower is the number of negative sanctions.
+
+\item[Social experience] measures the goal satisfaction delivered by an agent, 
+computed by aggregating payoffs for all stakeholders according to
+the payoff Tables~\ref{tab:payoff-callee}, \ref{tab:payoff-caller},
+\ref{tab:payoff-neighbor}, and \ref{tab:payoff-neighbor-reason}.
+
 \end{description}
 
-\subsection{Metrics}
-
-For each SIPA interaction, we compute these measures:
-
+To answer \fsl{Q$_1$} on norms, we consider the following hypotheses pertaining to specified agent types. For brevity, we omit 
+the corresponding null hypotheses indicating no gain. We test significance via the two-tailed paired $t$-test. 
 \begin{description}
-\item[Mean social experience,] the mean utility obtained by the society as a whole based on context sharing policy decisions. Higher is better.
-\item[Best individual experience,] the maximum utility obtained by one or more of the SIPA's stakeholders during a single interaction. Higher is better.
-\item[Worst individual experience,] the minimum utility obtained by one or more of the SIPA's stakeholders during a single interaction. The intuition behind choosing this measure to verify Maximin \citep{Leben2017Rawls}. Higher is better. 
-\item[Fairness,] the reciprocal of the difference between the best and the worst individual experience obtained by the SIPA's stakeholders during a single interaction. It is based on the spread of the experience yielded by SIPAs. Higher is better. \citep{rawls1985justice}
-% \item[Privacy violation] measures the extent to which a SIPA's policy violates its stakeholders' privacy. Lower is better.
-% \hg{maybe change to the value gain of privacy? it's easier}
-% \item[Social conflicts] measures the percentage of agents that find actions as compliant to their value preferences. 
+\item[H$_1$] \frameworkB yields greater \fsl{social cohesion} than Fixed.
+\item[H$_2$] \frameworkB yields greater \fsl{social cohesion} than Sanctioning.
 \end{description}
 
-\paragraph*{Computing Utility.} The utility that a SIPA obtains by a sharing policy in a certain context, whether to a primary or a secondary stakeholder, 
-is a weighted sum of four numeric utility payoffs that the stakeholder perceive with respect to the four types of values considered in our example. We preset these numbers in a utility matrix such that they reflect a human-subject's preferences over these values. We assume that a stakeholder receives the maximum utility when the chosen sharing policy is the preferred one, and the utility decreases linearly when the policy chosen by a SIPA deviates from it. Table~\ref{tab:utlitymatrix} lists the preferred policies and utility numbers for each value of one human-subject in different contexts. 
+To answer \fsl{Q$_2$} on goals, we consider these hypotheses:
+\begin{description}
+\item[H$_3$] \frameworkB yields greater \fsl{social experience} than Fixed.
+\item[H$_4$] \frameworkB yields greater \fsl{social experience} than Sanctioning.
+\end{description}
 
-\begin{table}[!htb]
+
+
+\subsection{Experiments with Pragmatic Agent Society and Varying Network Types}
+\label{sec:experiment1}
+
+We simulate Fixed, Sanctioning, and \frameworkB agents on four network types---large or small network with dense or sparse connectivity---as Table~\ref{tab:network-types} describes. The society in this experiment is pragmatic in that the agents perceive social experience as the average payoff (equally weighted) for all stakeholders in an interaction.
+%
+We summarize our results next.
+
+
+\begin{table}[!tb]
 \centering
-\caption[Example numeric utility matrix for a stakeholder]{Example numeric utility matrix for a stakeholder.}
-\label{tab:utlitymatrix}
-\begin{tabular}{lllcccc}
+
+\caption[Characteristics of network types studied]{Characteristics of network types studied.}
+\label{tab:network-types}
+
+\begin{tabular}{@{}crrrr@{}}
 \toprule
-\multirow{2}{*}{Place} & \multirow{2}{*}{Companion} & \multirow{2}{*}{Policy} & \multicolumn{4}{c}{Value}\\
-\cmidrule{4-7}
-& & & Pleasure & Privacy & Recognition & Security\\
+\multirow{2}{*}{\fbf{Network Type}} & \multirow{2}{*}{\fbf{Agents}} & \multicolumn{3}{c}{\fbf{Circles}}\\
+\cmidrule{3-5}
+&&Family&Coworker&Friend\\
 \midrule
-\rowcolor{lightgray!50!}
-Graduation & Family & All &1&0&1&0 \\ 
-Conference & Co-workers & None &0&1&0&0 \\
-\rowcolor{lightgray!50!}
-Library & Friends & All &1&0&0&0 \\
-Airport & Friends & Common &0&1&0&0 \\
-\rowcolor{lightgray!50!}
-Hiking & Alone & All &1&0&0&1 \\
-Hurricane & Family & All &1&0&0&1 \\
-\rowcolor{lightgray!50!}
-Bar & Alone & None &0&2&0&0 \\
-Rehab & Friends & None &0&2&0&0\\
-\bottomrule
-% \multicolumn{7}{p{8cm}}{Ple., Pri., Rec., and Sec. are pleasure, privacy, recognition, and security respectively.}
-\end{tabular}
-\end{table}
-
-\subsection{Hypotheses}
-
-We propose the following hypotheses to evaluate our research question. For each hypothesis, there is a null hypothesis, which we omit for brevity. 
-
-\begin{description}
-\item[H\fsub{social}.] \frameworkAinur yields better mean social experience than baseline strategies. 
-\item[H\fsub{best}.] \frameworkAinur yields higher best individual experience than baseline strategies. 
-\item[H\fsub{worst}.] \frameworkAinur yields higher worst individual experience than baseline strategies. 
-\item[H\fsub{fairness}.] \frameworkAinur yields higher fairness than baseline strategies. 
-% \item[H\fsub{privacy}.] Policy decisions made by \frameworkAinur are less privacy violating than baseline strategies. 
-% \item[H\fsub{conflict}.] Policy decisions made by \frameworkAinur are more compliant to value preferences of SIPA stakeholders compared to baseline strategies
-\end{description}
-
-
-\subsection{Experimental Setup}
-
-% \nsa{Include how social experience is computed. Include utility matrix.}
-
-We run simulations on a society of \locationapp SIPAs. All parameters described below are set empirically based on the human-subject study we conducted.
-
-Specifically, we experiment on a society of 690 SIPAs, ten per study participant, each of which assumes the properties, including preferred choices and privacy attitude, of an actual study participant. In the default setting, which we use in the experiment with a mixed agent society, the SIPAs are mapped evenly to the participants. For each pair of SIPAs, their relationships can be co-workers, friends, family, and strangers.
-% with the probabilities of 10\%, 10\%, 10\%, and 70\%, respectively. 
-Relationships are assigned at the beginning of the simulations such that they exhibit small world properties 
-% \mps{explain path length and clustering}
-% \nsa{}
-(degree: 10, rewiring prob: 0.05, edges: 3445, clustering coefficient: 0.56, density: 0.014, average distance: 4.71) 
-\citep{Watts+Strogatz-98}. Figure~\ref{fig:smallworld-69d10p50} shows our experimental social network.
-% \nsa{Replace with small world network}
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width=0.6\columnwidth]{./Chapter-4/fig/smallworld-69d10p50.jpg}
-    \caption[The \emph{small-world} network of SIPAs]{The \emph{small-world} network of SIPAs.}
-    \label{fig:smallworld-69d10p50}
-\end{figure}
-
-At each step in the simulation, the SIPA stakeholders are at one of the eight places listed in Table~\ref{tab:places}. They stay at each place for a certain period and then move to a random place. At each place, their SIPAs decide a context sharing policy. The context sharing policy is based on the SIPAs' stakeholders' privacy attitudes, value preferences, and decision-making strategy in Chapter~\ref{sec:decision-making-strategies}.  
-
-% In each step, each agent has the probability of 2\% to be a primary stakeholder and check-in at a random context (from eight contexts listed in Table~\ref{tab:places}). If an agent decides to share context, it either tags no one, only family, only friends, only co-workers, or acquaintances with equal probabilities. Each acquaintance has the probability of 3\% of being tagged. If only tagging colleagues, friends or family, each acquaintance has the probability of 9\% of being tagged. A check-in policy is based on an agent's personality type and its policy decision-making strategy. 
-% \nsa{Rewrite. From the above text it seems check-in and tagging actions are probabilistic and not deterministic based on VIKOR.}
-
-% The primary stakeholder chooses a context sharing policy based on one of the decision-making strategies in Chapter~\ref{sec:decision-making-strategies}, and the average utility of each involved agent is calculated based on this policy. The utility that an agent receives is the weighted value gain of the four value types. We choose the weights based on the users' privacy attitudes. 
-
-For each setting, we run the simulation 2,000 steps three times and report the mean social experience, the best individual experience, the worst individual experience, and fairness. We plot the mean social experience after every 100 steps in one run. 
-
-\subsection{Experiment with Mixed Agent Society}
-
-First, we experiment using the default settings as described above. Privacy attitude distribution of the mixed agent society mimics the privacy attitude distribution of our study participants  shown in Figure~\ref{fig:participants-privacy-distribution}.
-
-To evaluate hypothesis H\fsub{social}, we compare the \fsl{mean social experience} obtained by SIPAs built according to the four decision-making strategies---S\fsub{\frameworkAinur}, S\fsub{primary}, S\fsub{conservative}, and S\fsub{majority}. Similarly, for H\fsub{best}, H\fsub{worst}, and H\fsub{fairness}, we compare the \fsl{best individual experience}, \fsl{worst individual experience}, and \fsl{fairness}, respectively, as yielded by these decision-making strategies. 
-
-Table~\ref{tab:result-mixed} summarizes the results for the experiments with a mixed agent society.  It shows values for mean, best, and worst social experience, fairness, and p-values from the two-tailed paired t-tests comparing the mean social experience yielded by \frameworkAinur and by other strategies. Figure~\ref{fig:weighted-experience-plot} shows the mean social experience plots. 
-
-
-\begin{table}[!htb]
-\centering
-\caption[\frameworkAinur vs other strategies: Social experience and fairness]{Comparing social experience and fairness yielded by \frameworkAinur SIPAs using VIKOR vs other strategies.}
-\label{tab:result-mixed}
-\begin{tabular}{lrrrrr}
-\toprule
-Strategy & Mean & Best & Worst & Fairness & \fsl{p}\\%&Privacy\\
-\midrule
-\rowcolor{lightgray!50!}
-S\fsub{\frameworkAinur} & \fbf{1.361} & 1.715& \fbf{0.767} & \fbf{1.05} & --\\%& 0.581\\
-S\fsub{primary} & 1.286&1.789&0.579 & 0.83 & \textless0.01 \\%& 0.588\\
-\rowcolor{lightgray!50!}
-S\fsub{conservative} & 1.106&1.721&0.472 & 0.80 & \textless0.01 \\%& 0.682\\
-S\fsub{majority} & 1.339 &\fbf{1.836}&0.570 & 0.78 & \textless0.01 \\%& 0.621\\
+Large Dense & \np{1000} & 20 & 20 & 20\\
+Large Sparse& \np{1000} & 100 & 100 & 100\\
+Small Dense & 250 & 5 & 5 & 5\\
+Small Sparse& 250 & 25 & 25 & 25\\
 \bottomrule
 \end{tabular}
+
 \end{table}
 
+\begin{description} 
+\item[Fixed agents.] 
+The average social experience was found to be
+between 0.53 and 0.56, and the social cohesion to be about 52\% for the
+four network types.
 
+\item[Sanctioning agents.] 
+As expected, at around step \np{1000} we see Sanctioning agents offer a rise in
+social experience over Fixed agents. The rise
+is gradual as the agents start to infer from history. For the first \np{1000} steps, the
+average social experience is the same as Fixed agents. It later
+stabilizes between 1.11 and 1.21 for all four networks. The social cohesion
+values were between 61.2\% and 63.7\%.
 
-% \begin{figure}[!tb]
-%     \centering
-%     \begin{tikzpicture}
-%     \begin{axis}[
-%     title={},
-%     height=4cm,
-%     width=5cm,
-%     xlabel={Time in 100 steps},
-%     ylabel={Experience},
-%     xtick={500,1000,1500,2000},
-%     xticklabels={5,10,15,20},
-%     xmin=0,xmax=2100,
-%     ymin=0.3,ymax=1.7,
-% %     legend pos=south east,
-%     legend style={at={(1.7,0.3)}, anchor=east, font=\tiny},    
-%     ]
-%     \addplot +[mark=none] table [x=tick, y=ainur, col sep=comma]
-%     {basicresults.csv};
-%     \addplot +[mark=none] table [x=tick, y=primary, col sep=comma]
-%     {basicresults.csv};
-%     \addplot +[mark=none] table [x=tick, y=conservative, col sep=comma]
-%     {basicresults.csv};
-%     \addplot +[mark=none] table [x=tick, y=majority, col sep=comma]
-%     {basicresults.csv};
-%     \legend{S\fsub{\frameworkAinur},S\fsub{primary},S\fsub{conservative},S\fsub{majority}}
-%     \end{axis}
-%     \end{tikzpicture}
-%     \caption{\frameworkAinur vs other strategies' social experience}
-%     \label{fig:experience-plot}
-% \end{figure}
+\item[\frameworkB agents.] 
+At around step \np{1000}, as agents acquire confidence,
+we see a significant increase in social experience offered by \frameworkB
+agents. It stabilizes between 2.14 and 2.19 for the different networks.
+Social cohesion was found be significantly higher between 82.0\% and 83.2\%.
+For the first \np{1000} steps, \frameworkB agents yield the same average social
+experience as Fixed and Sanctioning agents. 
+\end{description}
+
+Social cohesion and experience offered by \frameworkB agents are 
+significantly greater than those offered by Fixed and Sanctioning agents;
+thus the null hypotheses corresponding to H$_1$, H$_2$, H$_3$,
+and H$_4$ are rejected. Figure~\ref{fig:experiment1-results} shows
+the social experience plots indicating the results are consistent across
+the four network types. Table~\ref{tab:experiment1-results} summarizes
+the findings of the experiment with pragmatic agents.
+It shows stabilized values for social experience and social cohesion, and p-values from the two-tailed paired $t$-tests.
 
 \begin{figure}[!tb]
     \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    title={},
-    height=7cm,
-    width=7cm,
-    xlabel={Time in 100 steps},
-    ylabel={Experience},
-    xtick={500,1000,1500,2000},
-    xticklabels={5,10,15,20},
-    xmin=0,xmax=2100,
-    ymin=0.7,ymax=1.7,
-%     legend pos=south east,
-    % legend style={at={(1.8,0.3)}, anchor=east},
-    legend style={at={(0.5,-0.2)},anchor=north,},
-    legend columns=4, 
-    ]
-    \addplot +[mark size=1,] table [x=tick, y=ainur, col sep=comma]
-    {./Chapter-4/data/weightedresults.csv};
-    \addplot +[mark size=1, densely dashed] table [x=tick, y=primary, col sep=comma]
-    {./Chapter-4/data/weightedresults.csv};
-    \addplot +[mark size=1, green!30!black, dashed] table [x=tick, y=conservative, col sep=comma]
-    {./Chapter-4/data/weightedresults.csv};
-    \addplot +[mark size=1, densely dashdotted] table [x=tick, y=majority, col sep=comma]
-    {./Chapter-4/data/weightedresults.csv};
-    \legend{S\fsub{\frameworkAinur},S\fsub{primary},S\fsub{conservative},S\fsub{majority}}
-    \end{axis}
-    \end{tikzpicture}
-    \caption[\frameworkAinur vs other strategies: Social experience]{\frameworkAinur vs other strategies' social experience.}
-    \label{fig:weighted-experience-plot}
-\end{figure}
 
+    \label{fig:experiment1-results}
 
-We observe that \frameworkAinur yields better mean social experience than  other decision-making strategies. Although the mean best individual experience obtained by \frameworkAinur SIPA stakeholders is not the largest, they yield the highest mean worst individual experience and fairness. 
-These results indicate that \frameworkAinur yields solutions such that each companion is treated fairly, and thus \frameworkAinur SIPAs act ethically. Thus, the null hypotheses corresponding to H\fsub{social}, H\fsub{best}, H\fsub{fairness} are rejected.
+\begin{tabular}{@{}cc@{}}
 
-
-\subsection{Experiments with Different Privacy Attitudes}
-Next, since our study sample may not be representative of privacy attitudes of the general population, we create three artificial societies with stakeholders having different distributions of privacy attitudes from the study data. 
-We experiment with societies that are dominated by privacy fundamentalists, pragmatists, and  unconcerneds. Boxplots in Figure~\ref{fig:privacy-distribution-experiment} show the distributions of privacy attitudes of the stakeholders in these societies. 
-
-\begin{figure}[!htb]
-\centering
-\begin{tikzpicture}
-% \begin{axis}[every axis plot post/.append style={
-%   mark=none,domain=0:5,samples=50,smooth}, % All plots: from -2:2, 50 samples, smooth, no marks
-% %   axis x line*=bottom, % no box around the plot, only x and y axis
-% %   axis y line*=left, % the * suppresses the arrow tips
-%   xtick={1,3,5},
-%   xticklabels={Unconcerneds, Pragmatists, Fundamentalists},
-%   ylabel={\# of Stakeholders},
-%   yticklabels={},
-%   xmin=1, xmax=5,
-%   ymin=0, ymax=1,
-%   height=6cm, width=6cm,
-% %   enlargelimits=upper,
-% %   legend style={at={(1.85,0.2)}, anchor=east},
-%   legend style={at={(0.5,-0.2)},anchor=north,},
-%   legend columns=3, 
-%   ] % extend the axes a bit to the right and top
-%   \addplot {gauss(3.0,0.5)};
-%   \addplot {gauss(2.0,0.5)};
-%   \addplot {gauss(4.0,0.5)};
-%   \legend{Fundamentalists, Pragmatists, Unconcerneds}
-% \end{axis}
-
-\begin{axis}[
-    % ybar,
-    % bar width=0.7,
-    % ymin=0,
-    xmin=1, xmax=5,
-    height=7cm, width=7cm,
-    xlabel={Privacy attitude},
-    % ylabel={Society},
-    xtick = {1,5},
-    xticklabels={Highly unconcerned, Highly concerned},
-    yticklabel style={rotate=45},
-    ytick={1,2,3},
-    yticklabels={Fundamentalists, Pragmatists, Unconcerneds},
-    enlarge x limits=0.03, % adjust space between axis edge and plot edge
-    ]
-    \addplot+[boxplot]
- 	table[y index=0]
- 	{./Chapter-4/privacy_attitude/fundamentalist_privacy_attitude.csv};
- 	\addplot+[boxplot]
- 	table[y index=0]
- 	{./Chapter-4/privacy_attitude/pragmatic_privacy_attitude.csv};
- 	\addplot+[boxplot]
- 	table[y index=0]
- 	{./Chapter-4/privacy_attitude/unconcerned_privacy_attitude.csv};
-\end{axis}
-\end{tikzpicture}
-\caption[Privacy attitude distributions for societies]{Privacy attitude distributions for societies of fundamentalists, pragmatists, and unconcerneds.}
-\label{fig:privacy-distribution-experiment}
-\end{figure}
-
-Table~\ref{tab:result-privacy} summarizes the results for the experiments with privacy fundamentalist, pragmatist, and unconcerned societies. Figure~\ref{fig:experience-plot+privacy} shows the social experience plots for these experiments.
-
-\begin{figure}[!htb]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-    legend columns=-1,
-    legend entries={S\fsub{\frameworkAinur},S\fsub{primary},S\fsub{conservative},S\fsub{majority}},
-    legend to name=named,
-    title={Privacy Fundamentalist Society},
-    height=5cm,
-    width=7cm,
-    xlabel={Time in 100 steps},
-    ylabel={Social Experience},
-    xtick={500,1000,1500,2000},
-    xticklabels={5,10,15,20},
-    xmin=0,xmax=2100,
-    ymin=0.7,ymax=1.7,
-    ]
-    \addplot +[mark size=1] table [x=tick, y=ainur, col sep=comma]
-    {./Chapter-4/data/funresults.csv};
-    \addplot +[mark size=1, densely dashed] table [x=tick, y=primary, col sep=comma]
-    {./Chapter-4/data/funresults.csv};
-    \addplot +[mark size=1, green!30!black, dashed] table [x=tick, y=conservative, col sep=comma]
-    {./Chapter-4/data/funresults.csv};
-    \addplot +[mark size=1, densely dashdotted] table [x=tick, y=majority, col sep=comma]
-    {./Chapter-4/data/funresults.csv};
-    \end{axis}
-    \end{tikzpicture}
-%
-
-%     
-    \begin{tikzpicture}
-    \begin{axis}[
-    title={Privacy Pragmatist Society},
-    height=5cm,
-    width=7cm,
-    xlabel={Time in 100 steps},
-%     ytick={},
-    ylabel={Social Experience},
-    xtick={500,1000,1500,2000},
-    xticklabels={5,10,15,20},
-    xmin=0,xmax=2100,    ymin=0.7,ymax=1.7,
-%     legend pos=south east,
-%     legend style={at={(0.5,-0.1)}, anchor=north, font=\tiny},
-    legend style={at={(0.5,-0.2)},anchor=north,},
-    legend columns=2 
-    ]
-    \addplot +[mark size=1] table [x=tick, y=ainur, col sep=comma]
-    {./Chapter-4/data/pragresults.csv};
-    \addplot +[mark size=1, densely dashed] table [x=tick, y=primary, col sep=comma]
-    {./Chapter-4/data/pragresults.csv};
-    \addplot +[mark size=1, green!30!black, dashed] table [x=tick, y=conservative, col sep=comma]
-    {./Chapter-4/data/pragresults.csv};
-    \addplot +[mark size=1, densely dashdotted] table [x=tick, y=majority, col sep=comma]
-    {./Chapter-4/data/pragresults.csv};
-    % \legend{S\fsub{\frameworkAinur},S\fsub{primary},S\fsub{conservative},S\fsub{majority}}
-    \end{axis}
-    \end{tikzpicture}
-%
-
-%
-    \begin{tikzpicture}
-    \begin{axis}[
-    title={Privacy Unconcerned Society},
-    height=5cm,
-    width=7cm,
-    xlabel={Time in 100 steps},
-%     ytick={},
-    ylabel={Social Experience},
-    xtick={500,1000,1500,2000},
-    xticklabels={5,10,15,20},
-    xmin=0,xmax=2100,
-    ymin=0.7,ymax=1.7,
-%     legend pos=south east,
-    % legend style={at={(1.8,0.3)}, anchor=east},  
-    legend style={at={(0.5,-0.2)},anchor=north,},
-    legend columns=4 
-    ]
-    \addplot +[mark size=1] table [x=tick, y=ainur, col sep=comma]
-    {./Chapter-4/data/unconcernedresults.csv};
-    \addplot +[mark size=1, densely dashed] table [x=tick, y=primary, col sep=comma]
-    {./Chapter-4/data/unconcernedresults.csv};
-    \addplot +[mark size=1, green!30!black, dashed] table [x=tick, y=conservative, col sep=comma]
-    {./Chapter-4/data/unconcernedresults.csv};
-    \addplot +[mark size=1, densely dashdotted] table [x=tick, y=majority, col sep=comma]
-    {./Chapter-4/data/unconcernedresults.csv};
-    % \legend{S\fsub{\frameworkAinur},S\fsub{primary},S\fsub{conservative},S\fsub{majority}}
-    \end{axis}
-    \end{tikzpicture}
-    \\
-    \ref{named}
-    \caption[\frameworkAinur vs other strategies: Social experience in different societies]{Comparing \frameworkAinur with other strategies with respect to social experience in societies based on privacy attitudes.}
-    \label{fig:experience-plot+privacy}
-
-\end{figure}
-
-
-\begin{sidewaystable*}[ph!]
-\centering
-\caption[\frameworkAinur vs other strategies: Social experience and fairness in different societies]{Comparing social experience, best and worst individual experience, and fairness yielded by \frameworkAinur SIPAs using VIKOR with other decision-making strategies in societies based on privacy attitudes.}
-\label{tab:result-privacy}
-%% \begin{tabular}{lr@{~~}r@{~~}r@{~~}r@{~~}r@{~~}r@{~~}r@{~~}r@{~~}r@{~~}r@{~~}r@{~~}r@{~~}}
-\begin{tabular}{l r r r r r r r r r r r r}
-\toprule
-\multirow{2}{*}{Strategy}& \multicolumn{4}{c}{Fundamentalist} & \multicolumn{4}{c}{Pragmatist} &\multicolumn{4}{c}{Unconcerned}\\
-\cmidrule(lr){2-5} \cmidrule(lr){6-9} \cmidrule(lr){10-13}
-& Mean & Best & Worst & Fairness & Mean & Best & Worst & Fairness & Mean & Best & Worst & Fairness\\
-\midrule
-\rowcolor{lightgray!50!}
-S\fsub{\frameworkAinur} & 1.535 & 1.664 & \fbf{1.233} & \fbf{2.27} & \fbf{1.329} & 1.531 & \fbf{0.867} & \fbf{1.51} & \textbf{1.242} & 1.457 & \fbf{0.768} & \fbf{1.45}\\
-S\fsub{primary} & 1.506 & 1.766  & 1.082 & 1.46 & 1.253 & 1.592 & 0.679 & 1.10 & 1.129 & 1.466 & 0.584 & 1.13\\
-\rowcolor{lightgray!50!}
-S\fsub{conservative} & 1.366 & 1.745 & 1.059 & 1.46 & 1.093 & 1.519 & 0.608 & 1.10 & 0.870 & 1.338 & 0.454 & 1.34\\
-S\fsub{majority} & \fbf{1.551} & \fbf{1.858} & 1.007 & 1.18 & 1.318 & \fbf{1.699} & 0.575 & 0.89 & 1.176 & \fbf{1.534} & 0.518 & 0.98\\
-\bottomrule
+\includegraphics[width=0.40\columnwidth]{poros-nsa-v18-figure2.pdf}
+&
+\includegraphics[width=0.35\columnwidth]{poros-nsa-v18-figure3.pdf}
+\\
+\includegraphics[width=0.40\columnwidth]{poros-nsa-v18-figure4.pdf}
+&
+\includegraphics[width=0.35\columnwidth]{poros-nsa-v18-figure5.pdf}
 \end{tabular}
-\end{sidewaystable*}
 
-\subsubsection{Privacy Fundamentalist Society}
+\caption[Social experience plots for different networks]{Social experience yielded by Poros, Sanctioning, and Fixed agents (per phone call for a window size of $200$ steps) in pragmatic agent societies of different network sizes and densities.
+}
 
-We find that, although \frameworkAinur yields the second best mean social experience next to the majority strategy, the worst individual experience yielded by \frameworkAinur is the maximum. For fairness, \frameworkAinur has the highest outcome. Thus the null hypotheses related to H\fsub{worst} and H\fsub{fairness} are rejected. 
+\end{figure}
 
-\subsubsection{Privacy Pragmatic Society}
 
-Here, \frameworkAinur yields the best mean social experience and maximizes the worst individual experience while giving the fairest solutions. Hence, the null hypotheses related to H\fsub{worst} and H\fsub{fairness} are rejected.
+\begin{table}[!tb]
+\centering
 
-\subsubsection{Privacy Unconcerned Society}
+\caption[Effectiveness of \frameworkB in a pragmatic society]{Effectiveness of \frameworkB in a pragmatic society.}
+\label{tab:experiment1-results}
 
-Again, \frameworkAinur yields the best mean social experience while giving the fairest solutions with the highest worst individual experience; thus the null hypotheses related to H\fsub{worst} and H\fsub{fairness} are rejected. 
+\begin{tabular}{@{~~~} c@{~~~~} l@{~~~} r@{~~~} r@{~~~} r@{~~~}}
 
-\subsection{Threats and Mitigation}
-
-We identify and mitigate three threats. 
+\toprule
+& Agent Type & Experience & Cohesion & $p$\\
+\midrule
+\multirow{3}{*}{\rotatebox[origin=c]{90}{\parbox[c]{33pt}{\centering Large Dense}}}
+&Fixed & 0.56 & 52.7\% & $<$ 0.01\\
 %
-The first threat concerns simulation as an evaluation methodology. Obtaining data with actual human users' preferences and attitudes is challenging. And more so, testing a SIPA's adaptation
-in all possible social contexts would be infeasible. Simulation provides an excellent avenue to overcome that challenge. Our simulation results are grounded in data from users. 
+&Sanctioning & 1.21 & 63.5\%  & $<$ 0.01\\
+%
+&\frameworkB & 2.19 & 83.2\%  & -- \\
+\midrule
+\multirow{3}{*}{\rotatebox[origin=c]{90}{\parbox[c]{33pt}{\centering Large Sparse}}}
+&Fixed & 0.55   & 52.5\%  & $<$ 0.01 \\
+&Sanctioning & 1.21   & 63.5\%  & $<$ 0.01 \\
+&\frameworkB & 2.19  & 83.2\%  & --\\
+\midrule
+\multirow{3}{*}{\rotatebox[origin=c]{90}{\parbox[c]{33pt}{\centering Small Dense}}}
+&Fixed & 0.53   & 52.1\%  & $<$ 0.01 \\
+&Sanctioning & 1.11   & 61.2\%  & $<$ 0.01 \\
+&\frameworkB & 2.14  & 82.0\%  & --\\
+\midrule
+\multirow{3}{*}{\rotatebox[origin=c]{90}{\parbox[c]{33pt}{\centering Small Sparse}}}
+&Fixed & 0.54  & 52.5\%  & $<$ 0.01 \\
+&Sanctioning & 1.22   & 63.7\%  & $<$ 0.01 \\
+&\frameworkB & 2.14  & 82.1\% & --\\
+\bottomrule
+\addlinespace
+\end{tabular}
 
-Second, in reality users may perceive social experience differently than when completing a survey. Self-reported attitudes are unreliable and indirect methods may yield better quality data. To mitigate the threat associated with self-reported attitudes, we employ context check-in scenarios in which participants immerse themselves and accordingly provide check-in policies.
+\end{table}
 
-Third, the privacy attitudes in our survey sample may not be representative actual population. Even with a survey on a larger scale, imagining all possible contexts is challenging. To mitigate this threat, we conduct multiple experiments with societies having different privacy attitudes. 
+\subsection{Experiment with Considerate Agent Society} 
+We experiment with a considerate agent society where agents give a larger weight to their neighbors' payoffs 
+than to their own payoffs when computing social experience and deciding the actions to perform when norms
+conflict. These agents continue to sanction based on their history.
 
-\section{Discussion}
-\label{sec:discussion}
-We advance the science of privacy by tackling nuanced notions of privacy---understood as an ethical human value. We envision a society of socially intelligent agents participating in creative processes while they serve as technical components of a social machine. We borrow principles from operational research to guide these agents in ethical decision-making.
+%\paragraph{Results} 
+Figure~\ref{fig:experiment2-considerate-selfish}
+shows the social experience for considerate Sanctioning and \frameworkB
+agents in a Small-Dense network. The average social experience drops for
+Sanctioning and \frameworkB agents after they have gained enough
+confidence. We attribute this decline to the fact that these agents
+value the neighbors' experience more than their own, and thus
+ignore calls they should have answered. \frameworkB agents
+offer higher social cohesion and experience than Sanctioning agents because the
+secondary stakeholders give smaller negative sanctions when they reason about
+context. The results for the other three network types are similar.
+Table~\ref{tab:experiment2-results} summarizes these results.
 
-Specifically, we address the problem of designing an ethical personal agent that can understand the value (including privacy and security) preferences of all its stakeholders (and not just its primary human user), and reasons about those preferences when acting on behalf of or suggesting actions to its user. We propose \frameworkAinur, an approach to design such ethical personal agents. \frameworkAinur incorporates the VIKOR method to produce ethically fair actions in scenarios where norms or value preferences of multiple stakeholders conflict. We evaluate \frameworkAinur via simulation experiments seeded using crowdsourced data and find that \frameworkAinur yields a fair  social experience to all its stakeholders.
+\begin{table}[!tb]
+\centering
 
-\subsection{Other Related Works}
+\caption[Effectiveness of \frameworkB in considerate and selfish societies]{Effectiveness of \frameworkB in considerate and selfish societies.}
+\label{tab:experiment2-results}
 
-We now discuss some other relevant related works. 
+\begin{tabular}{@{~~~} c@{~~~~} l@{~~~} r@{~~~} r@{~~~} r@{~~~}}
 
-% \citet{Langheinrich-01:privacy} \nsa{TBD}
+\toprule
+& Agent Type & Experience & Cohesion & $p$\\
+\midrule
+\multirow{2}{*}{\rotatebox[origin=c]{90}{\parbox[c]{22pt}{\centering\small Consi-derate}}}
+&Sanctioning & --0.33   & 41.3\%  & $<$ 0.01 \\
+&\frameworkB & --0.14  & 48.4\% & --\\
 
-\subsubsection{Norms, Values, and Privacy in Multiagent Systems}
-The contributions of this chapter relate to the extensive work on norms and values, as well as privacy in the multiagent systems community.
+\midrule
+\multirow{2}{*}{\rotatebox[origin=c]{90}{\parbox[c]{22pt}{\centering\small Selfish}}}
+&Sanctioning & 1.22   & 63.5\%  & $<$ 0.01 \\
+&\frameworkB & 2.13  & 82.0\% & --\\
 
-\citet{Cranefield+16:norm-identification} provide a machine learning approach through which agents in a society can identify its norms based on their observations of behavior and sanction. 
-\citet{IJCAI-18:Poros} develop socially intelligent agents who apply norms to provide privacy assistance to their users. They take into account an expansive notion of privacy that implicitly incorporates values by considering not only confidentiality but higher-level concerns such as disapprobation and avoiding infringing into another's space. 
-The focus in \citet{IJCAI-18:Poros}'s work is to maximize the social experience of its users. Maximizing social experience may not translate to fairness as we observed in experiments with privacy fundamentalist society where S\fsub{majority} yields maximum social experience but least fairness. 
-% \mps{meaning?} \nsa{like resource starvation in OS; maximizing total may result in some stakeholders always receiving lowest utility? For example, S-majority in Fundamentalist society gets highest mean social experience but the fairness is low.} 
-% \frameworkAinur's focus is on fairness in choosing ethically appropriate actions.
-\frameworkAinur's focus is to balance the needs of both primary and secondary users. 
+\bottomrule
+\addlinespace
 
-\citet{Ajmeri-AAMAS17-Arnor} provide an approach for engineering agents who promote privacy. Their approach lacks constructs to model stakeholders' values. Our approach, \frameworkAinur, including understanding of value preferences to aid decision-making, and its evaluation are novel.
-% 
-Additionally, in contrast to all these works, the present work is focused on values. It is empirically grounded in data from users, and it takes into account group decision-making.
+\end{tabular}
 
-\citet{Borning-CHI2012-VSD} address the increasing interest in human values in information technology as well as concerns in the development of Value Sensitive Design. They suggest that researchers should be aware of the fact that people's views on human values may differ widely across cultures and contexts. They advise that researchers should not pose their own voice as the universal one when designing information technology products. 
+\end{table}
 
-\citet{anderson-2015-ethical}, however, assert that autonomous systems should be guided by ethical consensus determined by ethicists in different areas, and the systems that behave otherwise should not be tolerated. Therefore, they propose a case-supported principle-based behavior paradigm to help ensure ethical behaviors of current and future autonomous systems, which should only make decisions when there is a consensus on what is ethically correct. \frameworkAinur SIPAs select ethically appropriate actions by aggregating value preferences of all its users.
+\subsection{Experiment with Selfish Agent Society} 
+In a selfish agent society, agents give a very large weight to their own payoffs 
+when computing social experience. Agents here may not always negatively sanction 
+others who disturb them. As in other societies, agents in a selfish society sanction a deviant based on their history.
 
-% may need rephrasing
-\citet{Bench-Capon-ail2017} argue for the need of value-based reasoning in agents, especially when norms should be violated. They propose that agents keep track of the preference ordering of values. However, they posit that rules are made to be broken, and consider only the circumstances where norms should be violated. We argue that agents should model and resolve conflicts among norms based on stakeholders' views on values as well as social contexts. Under different social contexts, stakeholders' preferences of values may also vary. 
+%\paragraph{Results}
+Figure~\ref{fig:experiment2-considerate-selfish}
+shows the social experience plot for selfish Sanctioning and \frameworkB agents
+in a Small-Dense network. The plots resemble those in the
+experiment with pragmatic agents, but with slightly lower stabilized
+values. Here, agents tend to answer all calls, which benefits both
+caller and callee most of the time. We observe similar results for the
+other three networks. Table~\ref{tab:experiment2-results} summarizes
+these results. 
 
-\citet{Cranefield-ijcai17-value+bdi} describe a mechanism of value-based reasoning for BDI (Belief-Desire-Intention) agents. They argue that decision-making by agents in normative systems, such as the selection of norms, is indirectly influenced by the value system, and therefore do not model norms in their approach. 
-%\hg{we argue that norms should be kept} 
-However, without norms, agents would need a complete understanding of human values to make morally correct decisions, which is difficult to realize. 
+\begin{figure}[!tb]
+\centering
+    
+\begin{tabular}{@{}cc@{}}
 
-\citet{dignum-ijcai17-responsible} argues for the need for AI reasoning to take into account societal values because autonomous AI systems increasingly affect our lives. Dignum proposes several approaches to responsibility in AI design considering human values. 
-% \hg{no experiments or evaluations. This paper is more like an argument than research. Maybe move to introduction}
+\includegraphics[width=0.40\columnwidth]{poros-nsa-v18-figure6.pdf}
+&
+\includegraphics[width=0.35\columnwidth]{poros-nsa-v18-figure7.pdf}
+\end{tabular}
+\caption[Social experience plots for considerate and selfish agents]{Social experience (averaged over a window size of 200 steps)
+yielded by Poros and Sanctioning agents in considerate and selfish agent societies simulated in a Small-Dense network.}
+\label{fig:experiment2-considerate-selfish}
 
-\citet{Kayal-TOIT18} propose an automatic value-based model for resolving conflicts between norms, especially social commitments, in multiagent systems. Their empirical results from a user study provide evidence that values can influence, and therefore could be used to predict, users' preferences when resolving conflicts. Kayal {\etal}'s \citep{Kayal-TOIT18} model can be a good supplement to \frameworkAinur, which provides constructs and mechanisms to develop value-driven ethical SIPAs and thus goes beyond conflict resolution. 
-\citet{Serramia+18:values} show how to incorporate values along with norms in a heuristic decision-making framework.
+\end{figure}
 
-\subsubsection{Value Alignment in Artificial Intelligence}
+\subsection{Threats to Validity}
 
-Some recent works focus on value alignment of artificial intelligence systems and how agents can learn human values correctly. 
-\citet{RiedlHarrison2016Stories} argue that it is not easy for developers to exhaustively enumerate human values, and propose that agents use sociocultural knowledge embedded in stories, such as crowdsourced narratives, to learn human values. 
-\citet{arnold-2017-value} address how inverse reinforcement learning (IRL) can be used in value alignment, and propose a hybrid approach for reasoning about moral norms combining IRL and logical representations of norms. \frameworkAinur SIPAs can adopt such approaches to learn value preferences of its users. 
-% \hg{They do not explicitly talk about values. more in the ``thou shalt be good'' sense}
-% Soares \citep{Soares2016ValueLearning} argues for the difficulty of the value learning problem, and that agents should model and act according to the preferences of their stakeholders. 
+%\paragraph{Threats Mitigated}
+We identified and mitigated two threats. The first concerns
+a differences in how users perceive experience.
+In reality, not all users perceive social experience the same way, and thus aggregating with only one scheme introduces the threat of difference in perceiving social experience. To mitigate this threat, we conduct experiments with three agent societies with different experience aggregation schemes.
+%
+The second threat concerns scalability. Since we simulate agent actions and interactions, a threat is whether our results scale to a large number of agents. To mitigate this threat, we evaluate \frameworkB considering varying network sizes and types. 
 
-\subsubsection{Understanding Privacy Preservation}
+%\paragraph{Threats Remaining}
+However, some threats remain. In particular, first, our results are based on simulation. Testing a SIPA's adaptability with end-users across contexts is challenging, as is reliably eliciting user attitudes and preferences. 
 
-Many researchers focus on understanding the growing aspects of privacy, especially with new information technologies being constantly developed. 
-% 
-\citet{smith2007privacy} surveyed the history and development of privacy in e-commerce, and addressed the importance of protecting individual privacy in the area. \citet{Acquisti-2017-Nudges+Privacy+Security} reviewed research on assisting individuals' online privacy and security choices. They discussed the merits and limits of interventions that nudge users toward making the ``right'' choices, balancing revelation and protection of data. 
+Second, \frameworkB agents always reveal context, which may pose a privacy threat. Ideally SIPAs should reveal context selectively. We leave this reasoning for future studies. 
 
-\subsubsection{Privacy-Preserving Applications}
+\section{Conclusion and Future Directions}
+\label{sec:Poros-discussion}
 
-Other recent studies focus on the designing privacy-preserving applications.
-% , which are relevant to our work.\mps{how?} 
-% 
-\citet{Campagna-WWW2017-Almond} present an architecture of a privacy-preserving virtual assistant for online services and the Internet of Things (IoT) that follows natural language commands for trigger-action tasks. They state that virtual assistants need to handle all of the users' personal information in order to comprehensively serve them. To preserve privacy, they propose a system that can run locally to store the information. 
-Whereas \citet{Campagna-WWW2017-Almond}'s treatment of privacy is limited to information disclosure, we tackle nuanced notions of privacy understood as a human value.
+In \frameworkB, SIPAs reveal and reason about context to understand the boundary of applicable norms and infer contextually relevant social norms. 
+We find that \frameworkB agents deliver significantly higher (1) social cohesion and (2) social experience than other agents. These findings are stable under changes to network size and characteristics of agents.
 
-\citet{Barry-CHI2017-EthicalDesign} propose a framework that adopts an Aristotelian virtue ethics concept, phronesis, for developing ethical mobile health apps. Phronesis describes the practical wisdom of gathering experience in a specific context. \citet{Barry-CHI2017-EthicalDesign} claim that applications with phronesis learn contextual client knowledge, and therefore make right choices that inherently involve ethical reflection. However, their design does not address conflicts of different choices and priorities, which are common in social settings. 
+Being sensitive to norms, \frameworkB SIPAs can naturally address challenges in engineering software tools for privacy.  A SIPA would need data about its user's sharing preferences, privacy attitudes, and values and ethics \citep{Ajmeri-IC18-Ethical} to make effective recommendations. A SIPA can learn its user's preferences and attitudes, but it would be helpful to bootstrap a SIPA via crowdsourced data about diverse user classes \citep{TOCHI-17:Multiuser,IC-17:SoSharP}. To better support privacy-respecting SIPAs, \frameworkB could incorporate characteristics suggested by Such \shortcite{Such-IJCAI17-Privacy} and adopt argumentation as in K{\"o}kciyan and Yolum's \shortcite{Kokciyan-IJCAI17-Privacy} work when deciding the subset of context to reveal.
 
-\subsection{Future Directions}
-% \nsa{redo}
-A first significant direction is to empirically evaluate the effectiveness of
-\frameworkAinur via a developer study. 
-% A second direction is to crowdsource data about values and decision-making about sharing policies on a much larger scale. 
-A second direction is to employ machine learning to assist
-SIPAs in learning value preferences of their stakeholders, 
-and accordingly select action.
-
-% \subsection*{Acknowledgements}
-% Withheld.
-
-% \mps{George Vouros,
-%   Julian Padget,
-% %  Marco Montali,
-%   Michael Rovatsos,
-% %  Stefania Costantini,
-% %  Marco Alberti,
-% }
-
-% \mps{
-%   Birna, 
-%   Brian Logan,
-%   Natasha Alechina,
-%   Juan Antonio Rodriguez Aguilar,
-% %  Gita Sukthankar,
-% %  Marina de Vos,
-%   Leon van der Torre,
-%   Stephen Cranefield,
-%   Virginia Dignum,
-%   Eva Onaindia,
-% %  Simon Parsons,
-% %  Hasan Davulcu,
-% %  Thomas  Agotnes,
-%   Kiran  Lakkaraju,
-% %  Kobi  Gal,
-% %  Wlodek  Zadrozny,
-% %  Yves  Lesperance,
-%   Franziska Klugl,
-% %  Federico Cerutti, 
-% %  Francois Schwarzentruber,
-% %  Frans Oliehoek,
-% %    Renata  Wasserman,
-% }
-
-% \mps{Kayal's bib entry is incomplete}
-
-%\mps{Has Pasotti appeared (2016)?} \nsa{Can't find a formal proceedings of NorMAS where this appeared.}
-%\mps{The proc is here \url{https://link.springer.com/book/10.1007\%2F978-3-319-66595-5} (remove backslash) but no Pasotti}\mps{remove the "to appear" and remove mention of Springer; you can ask Birna too but time is tight now and this is a low priority action} \nsa{Updated}
-
-% \clearpage
-
-% \bibliography{Munindar,Nirav,Pradeep}
-% \bibliographystyle{ACM-Reference-Format}
-
-% \balance
-% \end{document}
+Other future directions are incorporating affect in relation to norms
+\citep{Ferreira-AAAI13-GroupRelations} 
+and supporting white lies to promote privacy (and social cohesion). For example, Bob may say his son is in hospital, instead of drug rehab. It would be instructive to study how such deception modulates 
+effects on norms and goals.

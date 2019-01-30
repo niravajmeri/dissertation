@@ -239,7 +239,7 @@
 %%---------------------------- Content Options -------------------------------%%
 %%----------------------------------------------------------------------------%%
 %% Size of committee: 3, 4, 5, or 6 -- this number includes the chair
-\committeesize{6}
+\committeesize{5}
 
 %% Members of committee
 %%  Each of the following member commands takes an optional argument
@@ -251,9 +251,10 @@
 \chair{Dr. Munindar P.~Singh}
 \memberI{Dr. Jon Doyle}
 \memberII{Dr. William H.~Enck}
-\memberIII{Dr. Christopher B.~Mayhorn}
-\memberIV{Dr. Jessica N.~Staddon}
-\memberV{Dr. Laurie A.~Williams}
+\memberIII{Dr. Jessica N.~Staddon}
+\memberIV{Dr. Laurie A.~Williams}
+
+% \memberIII{Dr. Christopher B.~Mayhorn} GSR
 
 %% Student writing thesis, \student{First Middle}{Last}
 \student{Nirav}{Ajmeri} % a full middle name
@@ -452,7 +453,7 @@ $}}
 
 
 %This makes it so that you can add short paths in your .tex by including the folders where you store your images in the search path
-\graphicspath{{./Chapter-1/figs/}{./Chapter-2/figs/}{./Chapter-3/fig/}{./Chapter-4/fig}{./Chapter-4/data}}%{./Chapter-5/figs/}{./Chapter-6/figs/}}
+\graphicspath{{./Chapter-2/figs/}{./Chapter-3/figs/}{./Chapter-4/fig/}{./Chapter-5/fig}{./Chapter-5/data}}%{./Chapter-5/figs/}{./Chapter-6/figs/}}
 
 
 %%---------------------------------------------------------------------------%%
@@ -510,14 +511,14 @@ $}}
 
 
 \pagestyle{plain}
-\newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
+% \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
 \include{Chapter-1/Chapter-1}
 \include{Chapter-2/Chapter-2}
 \include{Chapter-3/Chapter-3}
 \include{Chapter-4/Chapter-4}
-%\include{Chapter-5/Chapter-5}
-%\include{Chapter-6/Chapter-6}
-%\restoregeometry
+\include{Chapter-5/Chapter-5}
+\include{Chapter-6/Chapter-6}
+\restoregeometry
 
 
 %%---------------------------------------------------------------------------%%
@@ -554,12 +555,13 @@ $}}
 % \titleformat{\chapter}[display]{\bf\filcenter
 % }{\chaptertitlename\ \thechapter}{11pt}{\bf\filcenter}
 % \titlespacing*{\chapter}{0pt}{-0.5in-9pt}{22pt}
+\titlespacing*{\chapter}{0pt}{0.5in-9pt}{22pt}
 
 % \printbibliography[heading=myheading]
 % \end{spacing}
 
-\bibliographystyle{plainnat}
-% \bibliographystyle{ACM-Reference-Format}
+% \bibliographystyle{plainnat}
+\bibliographystyle{ACM-Reference-Format}
 \bibliography{Nirav,Munindar}
 % \ensureoddstart
 
