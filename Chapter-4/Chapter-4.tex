@@ -196,7 +196,7 @@ We define social experience ($E$) as the weighted aggregation of payoffs perceiv
 A SIPA's aggregation method reflects its primary user's preferences and privacy attitudes. For instance, a pragmatic user's SIPA may aggregate payoffs by giving equal weight to all stakeholders, whereas a selfish user's SIPA may give a smaller weight to secondary stakeholders.
 
 % Was \paragraph
-\subsubsection{\frameworkB Explained with an Example SIPA} 
+\subsection{\frameworkB Explained with an Example SIPA} 
 %
 We now describe \frameworkB, a framework to build SIPAs, using \ringer, an example SIPA who answers or ignores phone calls on behalf of its primary stakeholder by ringing the phone or keeping it silent. \ringer is a privacy-enhancing technology that acts on behalf of its primary stakeholder; it determines when to allow intrusions, and when to risk being overheard in a phone call (and thus when to intrude on others' solitude).
 
@@ -223,6 +223,14 @@ A SIPA's behaviors include acting on behalf of its stakeholder, deciding whether
 The complete interaction, including the selected plan and executed actions, observed and revealed context, applicable norms, and sanctions, is recorded in SIPAs history. 
 As SIPAs interact by acting and evaluating actions for norm compliance from interaction history, they understand the boundaries of applicable norms in different contexts, and thus promote emergence of robust social norms. 
 
+Figure~\ref{fig:poros-interaction} summarizes the interaction, learning and inferring norms by revealing context in \frameworkB. 
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics{poros-interaction-v1.pdf}
+    \caption{Interaction and inferring norms in \frameworkB}
+    \label{fig:poros-interaction}
+\end{figure}
 
 \section{Simulation Model}
 \label{sec:Poros-simulation-model}
@@ -254,13 +262,14 @@ Each place and each circle has predefined norms, as defined in Table~\ref{tab:no
 \begin{table}[!tb]
 \centering
 
-\caption[Norms for answering calls]{Norms for answering calls based on (left) place and (right) caller's social circle and casual or urgent call types.}
+\caption[Norms for answering calls]{Norms for answering calls based on (top) place and (bottom) caller's social circle and casual or urgent call types.}
 \label{tab:norms-place}
 
-\begin{tabular}{@{} c @{~~~~} c @{}}
+% \begin{tabular}{@{} c @{~~~~} c @{}}
+\begin{tabular}{@{} c @{}}
 
 \begin{tabular}{@{~~}l@{~} c@{}}
-\multicolumn{2}{c}{\fbf{By place}}\\
+\multicolumn{2}{c}{\fbf{Norms by place}}\\
 \toprule
 Place & Response\\\midrule
 Emergency (ER) &Answer\\
@@ -270,9 +279,11 @@ Meeting (M) &Ignore\\
 Party (P) &Answer\\
 \bottomrule
 \end{tabular}
-&
+% &
+\\
+\\
 \begin{tabular}{@{}l @{~} c@{~} c@{~~}}
-\multicolumn{3}{c}{\fbf{By circle and call type}}\\
+\multicolumn{3}{c}{\fbf{Norms by circle and call type}}\\
 \toprule
 Circle & Casual & Urgent\\
 \midrule
@@ -500,8 +511,6 @@ It shows stabilized values for social experience and social cohesion, and p-valu
 \begin{figure}[!tb]
     \centering
 
-    \label{fig:experiment1-results}
-
 \begin{tabular}{@{}cc@{}}
 
 \includegraphics[width=0.40\columnwidth]{poros-nsa-v18-figure2.pdf}
@@ -513,8 +522,8 @@ It shows stabilized values for social experience and social cohesion, and p-valu
 \includegraphics[width=0.35\columnwidth]{poros-nsa-v18-figure5.pdf}
 \end{tabular}
 
-\caption[Social experience plots for different networks]{Social experience yielded by Poros, Sanctioning, and Fixed agents (per phone call for a window size of $200$ steps) in pragmatic agent societies of different network sizes and densities.
-}
+\caption[Social experience plots for different networks]{Social experience yielded by Poros, Sanctioning, and Fixed agents (per phone call for a window size of $200$ steps) in pragmatic agent societies of different network sizes and densities.}
+\label{fig:experiment1-results}
 
 \end{figure}
 
