@@ -5,39 +5,69 @@
 
 \section{Conclusions}
 
-\begin{itemize}
-\item Seeking to advance the science of privacy by tackling nuanced
-notions of privacy (understood as an ethical value) in personal agents
-\item Contributions:
-\begin{description}[nosep]
-\item[Modeling social intelligence:] \frameworkA, a software engineering method to engineer privacy-aware personal agents 
-(\fbf{Fairness}; \fbf{Accountability})
-\item[Understanding social context:] \frameworkB, an approach that enables personal agents to infer contextually relevant social norms that preserve privacy (\fbf{Accountability}; \fbf{Transparency})
-\item[Understanding value preferences:] \frameworkAinur, a decision-making framework to design personal agents that can reason about values and act ethically (\fbf{Fairness}; \fbf{Ethics})
-\end{description}
-\end{itemize}
+We tackle nuanced notion of privacy, understood as an ethical value, from a sociotechnical viewpoint. 
+Specifically we address the challenges of understanding social reality---understanding social expectations, social context, values, and ethics.
+
+\frameworkA assists software developers to engineer personal agents by capturing stakeholders' social expectations, goals, and plans, and how these influence each other.  
+Social expectation modeling via social norms in \frameworkA enables capturing accountability,
+and social experience modeling in \frameworkA helps incorporating fairness in decision-making.
+
+\frameworkB enables personal agents to understand social context, and infer contextually relevant social norms that respect stakeholders' privacy. 
+Revealing and reasoning about social contexts to infer contextually relevant norms yields both transparency and accountability.
+
+\frameworkAinur provides personal agents with a decision-making ability to understand and reason about stakeholders' value preferences, 
+and accordingly select ethically appropriate actions, thereby yields fairness.  
+
+%\begin{itemize}
+%\item Seeking to advance the science of privacy by tackling nuanced
+%notions of privacy (understood as an ethical value) in personal agents
+%\item Contributions:
+%\begin{description}[nosep]
+%\item[Modeling social intelligence:] \frameworkA, a software engineering method to engineer privacy-aware personal agents 
+%(\fbf{Fairness}; \fbf{Accountability})
+%\item[Understanding social context:] \frameworkB, an approach that enables personal agents to infer contextually relevant social norms that preserve privacy (\fbf{Accountability}; \fbf{Transparency})
+%\item[Understanding value preferences:] \frameworkAinur, a decision-making framework to design personal agents that can reason about values and act ethically (\fbf{Fairness}; \fbf{Ethics})
+%\end{description}
+%\end{itemize}
 
 \section{Possible Directions for Future Dissertations}
+Future dissertations can be pursued in three dimensions---artificial intelligence, software engineering, and privacy.
 
-\begin{itemize}
-    \item Artificial Intelligence
-    \begin{description}[nosep]
-        \item[Social reality:] White lies and affect in personal agents (building on IJCAI 2018 and Trust 2014 works)
-        \item[Formal specification:] Argumentation and value-based reasoning (building on Computer 2017 and IJCAI 2016 works)
-    \end{description}
-    
-    \item Software Engineering
-    
-    \begin{description}[nosep]
-        \item[Creativity:] CrowdRE for privacy requirements (building on RE 2016 and RE 2018 works)
-        \item[Social reality:] RE for ethical systems (building on AAMAS 2017)
-    \end{description}
-    
-    \item Privacy
-    
-    \begin{description}[nosep]
-        \item[Social reality:] Middleware based on \frameworkAinur as a privacy-enhancing technology to support ethical decision-making 
-        \item[Social reality:] Usable privacy and ethics
-        
-    \end{description}
-\end{itemize}
+\paragraph*{Artificial Intelligence}
+In the artificial intelligence dimension, support to model white lies when revealing context and incorporating affect in personal agents to promote social cohesion and privacy is a promising future direction \cite{IJCAI-18:Poros}.
+Adopting argumentation and value-based reasoning to model and to infer preferences among values is another future direction \cite{Ajmeri-IJCAI16-Coco}.
+
+\paragraph*{Software Engineering}
+CrowdRE is a promising avenue for engaging crowd in human-intensive tasks such as capturing requirements for a personal agent like the Ringer SIPA described in Chapters~\ref{chap:arnor} and \ref{chap:poros}, and the Pichu SIPA described in Chapter~\ref{chap:ainur}. 
+A first direction in the software engineering dimension is developing new techniques that incorporate creativity in the CrowdRE process to capture privacy requirements from stakeholders \cite{Murukannaiah-RE16-Creative}. 
+A second direction is to design a requirements engineering approach to assist software developers in developing ethical social applications \cite{Ajmeri-AAMAS17-Arnor,Ajmeri-IC18-Ethical}. 
+
+
+\paragraph*{Privacy}
+
+A first direction in the privacy dimension is developing a privacy-enhancing middleware based on \frameworkB and \frameworkAinur to support ethical decisision-making in social applications \cite{Ajmeri-hotsos18-Ethics,Murukannaiah-TOSEM15-Platys}.
+A second direction is to develop recommendation systems around these frameworks to tackle usability issues in privacy, security, and ethics.
+ 
+
+%\begin{itemize}
+%    \item Artificial Intelligence
+%    \begin{description}[nosep]
+%        \item[Social reality:] White lies and affect in personal agents (building on IJCAI 2018 and Trust 2014 works)
+%        \item[Formal specification:] Argumentation and value-based reasoning (building on Computer 2017 and IJCAI 2016 works)
+%    \end{description}
+%    
+%    \item Software Engineering
+%    
+%    \begin{description}[nosep]
+%        \item[Creativity:] CrowdRE for privacy requirements (building on RE 2016 and RE 2018 works)
+%        \item[Social reality:] RE for ethical systems (building on AAMAS 2017)
+%    \end{description}
+%    
+%    \item Privacy
+%    
+%    \begin{description}[nosep]
+%        \item[Social reality:] Middleware based on \frameworkAinur as a privacy-enhancing technology to support ethical decision-making 
+%        \item[Social reality:] Usable privacy and ethics
+%        
+%    \end{description}
+%\end{itemize}

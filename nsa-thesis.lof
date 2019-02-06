@@ -1,31 +1,25 @@
-\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
-\defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Here is a sample figure\relax }}{7}{figure.caption.9}
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Here is a HUGE sample figure with a HUGE caption. Our goal is to make a caption that is so long that the caption spills into the lower margin, leading to an ETD error. The way to solve this problem in a systematic way is to calculate how many lines of text the caption will use, then adjust the size of the image, such that it leaves just enough space for your huge caption. How I am solving this problem is by providing a new variable called graphht that stores how tall the image should be. Then, to calculate how tall to make the figure, you use the new function that I am providing called calculategraphicstargetheight. This function has one argument. The argument of the function is how many lines of text you estimate that the caption occupies. You can always run your tex once, measure this number, and type it into the argument for the function. What the function will do (it is defined in the preamble) is take into account the size you give it, the spacing of the chapter and the footer at the bottom, and then calculate the total vertical space available. Thus, this function should be used for images that are taller than they are wide.\relax }}{8}{figure.caption.10}
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Here is a sample figure\relax }}{9}{figure.caption.11}
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Here are two floating subfigures\relax }}{9}{figure.caption.12}
-\defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{9}{subfigure.4.1}
-\defcounter {refsection}{0}\relax 
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{9}{subfigure.4.2}
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2.5}{\ignorespaces This figure has been turned sideways. With large figures, the author must ensure that there are at least two double spaces between the caption and the page number.\relax }}{11}{figure.caption.13}
-\defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.1}{\ignorespaces A figure at the top of the page.\relax }}{15}{figure.caption.14}
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.2}{\ignorespaces A figure in the middle of text.\relax }}{16}{figure.caption.15}
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3.3}{\ignorespaces A figure at the bottom of the page.\relax }}{17}{figure.caption.16}
-\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.1}{\ignorespaces A Tropos model of the ringer manager}}{12}{figure.caption.7}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Arnor\xspace 's conceptual model schematically}}{14}{figure.caption.8}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Experimental design}}{21}{figure.caption.9}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Arnor\xspace vs.\ Xipho: Development time}}{25}{figure.caption.10}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Arnor\xspace vs.\ Xipho: Development effort}}{26}{figure.caption.11}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Arnor\xspace vs.\ Xipho: Difficulty of development}}{26}{figure.caption.12}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Arnor\xspace vs.\ Xipho: Norm compliance}}{28}{figure.caption.13}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Arnor\xspace vs.\ Xipho: Sanction proportion}}{29}{figure.caption.14}
 \addvspace {10\p@ }
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {A.1}{\ignorespaces A figure in the appendix.\relax }}{23}{figure.caption.19}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces A society of SIPAs and stakeholders}}{36}{figure.caption.15}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Social experience plots for different networks}}{44}{figure.caption.22}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Social experience plots for considerate and selfish agents}}{46}{figure.caption.25}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces A conceptual model of an Ainur\xspace SIPA}}{54}{figure.caption.26}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Distribution of privacy attitudes}}{63}{figure.caption.29}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces The \emph {small-world} network of SIPAs}}{67}{figure.caption.31}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Ainur\xspace vs other strategies: Social experience}}{68}{figure.caption.33}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Privacy attitude distributions for societies}}{69}{figure.caption.34}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Ainur\xspace vs other strategies: Social experience in different societies}}{70}{figure.caption.35}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
