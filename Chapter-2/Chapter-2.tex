@@ -51,35 +51,13 @@ factors that influence the working of such personal agents.
 In this section we provide a background on values, privacy, and social norms in
 multiagent systems.
 
-\subsection{Social Norms and Multiagent Systems}
-
-The concept ``norm'' is used in different disciplines and thus has
-variant notions such as social expectations, legal laws, and linguistic
-imperatives \citep{Boella2009NormativeSystems}. We adopt the concept of
-social norms, which describe interactions between principals in terms of
-what they ought to be, or reactions to behaviors, including attempts to
-apply sanctions. Thus, social norms regulate the interactions of the
-principals involved. Norms and normative systems are gaining increasing
-interest in the computer science community. \citet{Meyer+Wieringa-93}
-define normative systems as ``systems in the behavior of which norms
-play a role and which need normative concepts in order to be described
-or specified.'' Normative multiagent systems as a research area can be
-defined as the intersection of normative systems and multiagent systems.
-Norms govern much of our social lives, and therefore are considered as a
-key element of artificial agents that are expected to behave comparably
-to humans \citep{boella2006normative}. We adopt Singh's
-\shortcite{Singh-2013-Norms} representation of social norms in which norms
-are classified as five types: commitment, authorization, prohibition,
-sanction and power.
-
-
 \subsection{Values}
 
 The concept of \fsl{value} has two main connotations: one is about economic worth of something and the other, more broadly, refers to what people consider important in their lives \citep{Friedman-2008-value-sensitive-design}. 
 We adopt the later connotation in this work.
 
 Values are mostly universal across human societies as stated by \citet{schwartz2012overview} and \citet{rokeach1973nature}. 
-The values in Schwartz's \citep{schwartz2012overview} work are broad motivational goals, such as stimulation, achievement, security, and benevolence. 
+The values in Schwartz's \citeyr{schwartz2012overview} work are broad motivational goals, such as stimulation, achievement, security, and benevolence. 
 \citet{rokeach1973nature} proposes two types of values---\fsl{terminal} and \fsl{instrumental}. 
 Terminal values, such as security, freedom, happiness, and recognition, refer to defined-end states of existence. 
 Instrumental values refer to modes of behavior or means to promote the terminal values. 
@@ -110,7 +88,7 @@ identifying information such as e-mail or physical address rather than
 revealing their interests. Profile-aware individuals worry more about
 sharing their hobbies, age, interests, or preferences.
 
-Privacy has always been a topic of debate and has no globally
+Privacy has been a topic of debate and has no globally
 agreed-upon definition \citep{smith2007privacy}. Theorists from the
 areas of law, philosophy, sociology, and computer science have all tried
 to define privacy in their own perspective.
@@ -138,13 +116,36 @@ In this research, we understand privacy as a value with an ethical import \citep
 We adopt the nuanced notions (specifically intrusion, appropriation, and disclosure) of privacy as defined in Solove's taxonomy \citep{solove-2006-taxonomy}. 
 
 
-\subsection{Values and Social Norms}
+\subsection{Social Norms and Multiagent Systems}
+
+The concept ``norm'' is used in different disciplines and thus has
+variant notions such as social expectations, legal laws, and linguistic
+imperatives \citep{Boella2009NormativeSystems}. We adopt the concept of
+social norms, which describe interactions between principals in terms of
+what they ought to be, or reactions to behaviors, including attempts to
+apply sanctions. Thus, social norms regulate the interactions of the
+principals involved. Norms and normative systems are gaining increasing
+interest in the computer science community. \citet{Meyer+Wieringa-93}
+define normative systems as ``systems in the behavior of which norms
+play a role and which need normative concepts in order to be described
+or specified.'' Normative multiagent systems as a research area can be
+defined as the intersection of normative systems and multiagent systems.
+Norms govern much of our social lives, and therefore are considered as a
+key element of artificial agents that are expected to behave comparably
+to humans \citep{boella2006normative}. 
+
+%We adopt Singh's
+%\shortcite{Singh-2013-Norms} representation of social norms in which norms
+%are classified as five types: commitment, authorization, prohibition,
+%sanction and power.
+
+%\subsection{Values and Social Norms}
 Representing and reasoning about social norms (in context) is essential to producing an ethical SIPA. 
 That is, an ethical SIPA acts in compliance with contextually relevant social norms (but it may choose to break some norms intentionally, e.g., when the norms conflict) \citep{Ajmeri-AAMAS17-Arnor}. 
 Even in the case of privacy, social norms are the centerpiece of privacy according to Nissenbaum's theory of \emph{contextual integrity} \citep{Nissenbaum-04:integrity,Nissenbaum-11:online}, where privacy violations occur when information flows do not respect contextual norms.
 
 In general terms, social norms describe interactions between a subject and an object in terms of what they ought to be, or as reactions to behaviors, including attempts to apply sanctions. 
-We adopt Singh's \citep{Singh-2013-Norms} representation of social norms, in which a norm is directed from a subject to an object and is constructed as a conditional relationship involving an antecedent (which brings an instance of the norm in force) and a consequent (which brings the norm instance to completion). 
+We adopt Singh's \citeyr{Singh-2013-Norms} representation of social norms, in which a norm is directed from a subject to an object and is constructed as a conditional relationship involving an antecedent (which brings an instance of the norm in force) and a consequent (which brings the norm instance to completion). 
 A norm generates a new instance each time it applies. 
 This representation yields clarity on who is accountable to whom, when, and for what. 
 We consider two main norm types in the present study: commitment and prohibition. 
@@ -265,11 +266,11 @@ to probe the following research questions:
 
 \begin{description}
 
-\item[RQ Social Intelligence.] How can modeling social intelligence in a SIPA help deliver a social experience and respect its stakeholders' privacy?
+\item[RQ\fsub{1} Social Intelligence.] How can modeling social intelligence in a SIPA help deliver a social experience and respect its stakeholders' privacy?
 
-\item[RQ Context.] How can SIPAs share and adapt to deviation contexts, and learn contextually relevant norms? 
+\item[RQ\fsub{2} Context.] How can SIPAs share and adapt to deviation contexts, and learn contextually relevant norms? 
 
-\item[RQ Values.] How can a SIPA reason about values promoted or demoted by its actions and understand preferences among these values?
+\item[RQ\fsub{3} Values.] How can a SIPA reason about values promoted or demoted by its actions and understand preferences among these values?
 % Does an ability to reason about values promoted or demoted by actions and an understanding of preferences among these values help a SIPA deliver a value-driven social experience to all its stakeholders?
 
 \end{description}
@@ -279,7 +280,7 @@ to probe the following research questions:
 
 To address the research questions of modeling social intelligence and
 enabling ability to reason about deviation contexts and values, we
-develop (1) \frameworkA, an AOSE method; (2) \frameworkB, a context
+develop (1) \frameworkA, a software engineering method; (2) \frameworkB, a context
 reasoning approach; and (3) \frameworkAinur, a value-based decision-making framework.
 
 \subsection[Modeling Social Intelligence via Norms]{\frameworkA: Modeling Social Intelligence via Norms}

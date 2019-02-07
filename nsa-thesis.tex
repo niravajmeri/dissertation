@@ -418,13 +418,13 @@ $}}
 
 
 \usepackage{xcolor}
-\newcounter{nsacount}
-\DeclareRobustCommand{\nsa}[1]{{\stepcounter{nsacount}\color{green!50!black} \textsf{NSA \thensacount: #1}}}
-%\newcommand{\nsa}[1]{\textcolor{green!50!black}{NSA:~~#1}}
-
-\newcounter{mpscount}
-\DeclareRobustCommand{\mps}[1]{\stepcounter{mpscount}\textcolor{blue!60!black}{\textsf{MPS \thempscount: #1}}}
-%% \newcommand{\mps}[1]{\textcolor{blue!70!black}{MPS:~~#1}}
+%\newcounter{nsacount}
+%\DeclareRobustCommand{\nsa}[1]{{\stepcounter{nsacount}\color{green!50!black} \textsf{NSA \thensacount: #1}}}
+%%\newcommand{\nsa}[1]{\textcolor{green!50!black}{NSA:~~#1}}
+%
+%\newcounter{mpscount}
+%\DeclareRobustCommand{\mps}[1]{\stepcounter{mpscount}\textcolor{blue!60!black}{\textsf{MPS \thempscount: #1}}}
+%%% \newcommand{\mps}[1]{\textcolor{blue!70!black}{MPS:~~#1}}
 
 % \newcommand{\hg}[1]{\textcolor{green!50!blue}{HG:~~#1}}
 % \newcommand{\pkm}[1]{\textcolor{magenta}{PKM:~~#1}}
@@ -450,7 +450,7 @@ $}}
 
 % % \newcommand{\citet}[1]{\citeauthor{#1} (\citeyear{#1})}
 
-
+\newcommand{\citeyr}[1]{[\citeyear{#1}]}
 
 %This makes it so that you can add short paths in your .tex by including the folders where you store your images in the search path
 \graphicspath{{./Chapter-2/figs/}{./Chapter-3/figs/}{./Chapter-4/fig/}{./Chapter-5/fig}{./Chapter-5/data}}%{./Chapter-5/figs/}{./Chapter-6/figs/}}
