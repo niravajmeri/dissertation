@@ -48,8 +48,46 @@ factors that influence the working of such personal agents.
 
 \section{Preliminaries}
 
-In this section we provide a background on privacy, and social norms in
+In this section we provide a background on values, privacy, and social norms in
 multiagent systems.
+
+\subsection{Social Norms and Multiagent Systems}
+
+The concept ``norm'' is used in different disciplines and thus has
+variant notions such as social expectations, legal laws, and linguistic
+imperatives \citep{Boella2009NormativeSystems}. We adopt the concept of
+social norms, which describe interactions between principals in terms of
+what they ought to be, or reactions to behaviors, including attempts to
+apply sanctions. Thus, social norms regulate the interactions of the
+principals involved. Norms and normative systems are gaining increasing
+interest in the computer science community. \citet{Meyer+Wieringa-93}
+define normative systems as ``systems in the behavior of which norms
+play a role and which need normative concepts in order to be described
+or specified.'' Normative multiagent systems as a research area can be
+defined as the intersection of normative systems and multiagent systems.
+Norms govern much of our social lives, and therefore are considered as a
+key element of artificial agents that are expected to behave comparably
+to humans \citep{boella2006normative}. We adopt Singh's
+\shortcite{Singh-2013-Norms} representation of social norms in which norms
+are classified as five types: commitment, authorization, prohibition,
+sanction and power.
+
+
+\subsection{Values}
+
+The concept of \fsl{value} has two main connotations: one is about economic worth of something and the other, more broadly, refers to what people consider important in their lives \citep{Friedman-2008-value-sensitive-design}. 
+We adopt the later connotation in this work.
+
+Values are mostly universal across human societies as stated by \citet{schwartz2012overview} and \citet{rokeach1973nature}. 
+The values in Schwartz's \citep{schwartz2012overview} work are broad motivational goals, such as stimulation, achievement, security, and benevolence. 
+\citet{rokeach1973nature} proposes two types of values---\fsl{terminal} and \fsl{instrumental}. 
+Terminal values, such as security, freedom, happiness, and recognition, refer to defined-end states of existence. 
+Instrumental values refer to modes of behavior or means to promote the terminal values. 
+%
+We recognize an ability to understand these values as an important aspect in a SIPA for it to deliver an ethical experience.
+\citet{Dechesne-AIL13-Norms+Values} define values as ideals worth pursuing and observe that these ideals could conflict since
+they may not be preferred equally by each individual (that is, each SIPA user, in our work).
+
 
 \subsection{Privacy}
 The concept of privacy encircles several areas. An individual's notion of
@@ -76,47 +114,64 @@ Privacy has always been a topic of debate and has no globally
 agreed-upon definition \citep{smith2007privacy}. Theorists from the
 areas of law, philosophy, sociology, and computer science have all tried
 to define privacy in their own perspective.
-%
-%\cite{schoeman1984philosophical}
-%categorizes these definitions into three main categories.
-%\begin{enumerate} 
-%\item The right an individual has in being able to
-%control access to personal information about themselves. 
-%\item The
-%measure of control an individual has over information about themselves,
-%or who has sensory access to them. 
-%\item The state of limited access to
-%an individual and their personal information. 
-%\end{enumerate}
-%
 The importance of privacy and what it brings to an individual is also
 debated. Although there is no single definition, researchers 
 acknowledge the idea of privacy, and view it as a
 collection of concepts instead of one specific concept
-\citep{smith2007privacy}. In this research, we adopt the nuanced notions
-(specifically intrusion, appropriation, and disclosure) of privacy as
-defined in Solove's taxonomy \citep{solove-2006-taxonomy}.
+\citep{smith2007privacy}. 
 
-\subsection{Social Norms and Multiagent Systems}
+Privacy has been considered a right, and is protected by regulations. 
+\citet{Prosser-60:Privacy} discusses the right of privacy from a legal perspective. 
+\citet{solove-2006-taxonomy} provides a taxonomy of activities that can violate privacy. 
+The purpose of this taxonomy is to aid the development of privacy laws, in protecting the right of privacy.
+\citet{Spiekermann-2012-Challenges+PrivacyDesign} lists the challenges of Privacy by Design, a proposed solution to the regulation of privacy, including the differentiation between privacy and security and detailed methods to incorporate privacy into system design. 
+\citet{westin2003social} dissects the values of privacy in modern societies from political, sociocultural, and personal dimensions.
+He defines privacy as a claim of an individual and, when recognized by law and social convention, a right, to determine the revelation of his or her information.
 
-The concept ``norm'' is used in different disciplines and thus has
-variant notions such as social expectations, legal laws, and linguistic
-imperatives \citep{Boella2009NormativeSystems}. We adopt the concept of
-social norms, which describe interactions between principals in terms of
-what they ought to be, or reactions to behaviors, including attempts to
-apply sanctions. Thus, social norms regulate the interactions of the
-principals involved. Norms and normative systems are gaining increasing
-interest in the computer science community. \citet{Meyer+Wieringa-93}
-define normative systems as ``systems in the behavior of which norms
-play a role and which need normative concepts in order to be described
-or specified.'' Normative multiagent systems as a research area can be
-defined as the intersection of normative systems and multiagent systems.
-Norms govern much of our social lives, and therefore are considered as a
-key element of artificial agents that are expected to behave comparably
-to humans \citep{boella2006normative}. We adopt Singh's
-\shortcite{Singh-2013-Norms} representation of social norms in which norms
-are classified as five types: commitment, authorization, prohibition,
-sanction and power.
+
+Privacy is inherently a human value \citep{spiekermann2009enggprivacy,smith2007privacy}. 
+Ethicists subsume ethics in the theory of values \citep{Friedman+08:value-sensitive-design}, and regard privacy as an ethical value \citep{Langheinrich-01:privacy,Taylor-2002-PrivacyAutonomy}. 
+
+
+\paragraph*{Privacy as an Ethical Value.}
+In this research, we understand privacy as a value with an ethical import \citep{Langheinrich-01:privacy,Taylor-2002-PrivacyAutonomy}. 
+We adopt the nuanced notions (specifically intrusion, appropriation, and disclosure) of privacy as defined in Solove's taxonomy \citep{solove-2006-taxonomy}. 
+
+
+\subsection{Values and Social Norms}
+Representing and reasoning about social norms (in context) is essential to producing an ethical SIPA. 
+That is, an ethical SIPA acts in compliance with contextually relevant social norms (but it may choose to break some norms intentionally, e.g., when the norms conflict) \citep{Ajmeri-AAMAS17-Arnor}. 
+Even in the case of privacy, social norms are the centerpiece of privacy according to Nissenbaum's theory of \emph{contextual integrity} \citep{Nissenbaum-04:integrity,Nissenbaum-11:online}, where privacy violations occur when information flows do not respect contextual norms.
+
+In general terms, social norms describe interactions between a subject and an object in terms of what they ought to be, or as reactions to behaviors, including attempts to apply sanctions. 
+We adopt Singh's \citep{Singh-2013-Norms} representation of social norms, in which a norm is directed from a subject to an object and is constructed as a conditional relationship involving an antecedent (which brings an instance of the norm in force) and a consequent (which brings the norm instance to completion). 
+A norm generates a new instance each time it applies. 
+This representation yields clarity on who is accountable to whom, when, and for what. 
+We consider two main norm types in the present study: commitment and prohibition. 
+A commitment norm means its subject is committed to its object to bring about a consequent if an antecedent holds, and a prohibition norm means its subject is forbidden by its object to bring about a consequent if an antecedent holds. 
+For instance, \fsl{Frank} (subject), a high school student is \fsl{committed} (norm) to \fsl{Grace} (object), his mother, that he \fsl{will keep Grace updated about his location} (consequent) when he is \fsl{away from home} (antecedent).
+
+%\subsection*{Values and Norms}
+Whereas norms require agents to perform or not perform certain actions, values provide a reason to pursue or not pursue those actions \citep{Dechesne-AIL13-Norms+Values}. 
+Each of a SIPA's actions promotes or demotes certain values. 
+For instance, in the phone ringer SIPA example described in \citet{Ajmeri-AAMAS17-Arnor}, a callee's action of answering an urgent phone call during a meeting may promote the value of safety (for the caller), but demote the value of privacy (of the meeting attendees).
+
+Only a few previous works have attempted to relate values with norms.
+\citet{Murukannaiah-IC16-Engineering} model actors, context, and social expectations via norms to engineer privacy respecting agents. 
+\citet{DaSilvaFigueiredo-COIN13} propose an algorithm to identify conflicts between norms based on values. 
+A conflict occurs when
+\begin{enumerate*}[label=(\arabic*)]
+\item a consequent action of a commitment norm demotes a value, or
+\item a consequent action of a prohibition norm promotes a value important to a SIPA user.
+\end{enumerate*}
+%
+\citet{Dechesne-AIL13-Norms+Values} develop a model of norms and culture,
+represented by values, to study compliance of norms. They concur that
+values are important in deciding whether or not a norm should be
+introduced. \citet{kayal13coin} present a model in which norms and 
+context are centered on values. Such a model could be employed
+to govern a SIPA by identifying value preferences of the SIPA's
+users.
 
 
 \section{Motivational Example}
@@ -210,18 +265,16 @@ to probe the following research questions:
 
 \begin{description}
 
-\item[RQ 1.] How can we model social intelligence in a SIPA such that it
-delivers a social experience but respects its stakeholders' privacy?
+\item[RQ Social Intelligence.] How can modeling social intelligence in a SIPA help deliver a social experience and respect its stakeholders' privacy?
 
-\item[RQ 2.] How can we enable a SIPA to share deviation contexts, and to
-reason about contexts shared by other SIPAs? 
+\item[RQ Context.] How can SIPAs share and adapt to deviation contexts, and learn contextually relevant norms? 
 
-\item[RQ 3.] Does a SIPA's ability to reason about \fsl{values} its actions could promote or demote, helps it in enriching the social
-experience delivered to its stakeholders?
+\item[RQ Values.] How can a SIPA reason about values promoted or demoted by its actions and understand preferences among these values?
+% Does an ability to reason about values promoted or demoted by actions and an understanding of preferences among these values help a SIPA deliver a value-driven social experience to all its stakeholders?
 
 \end{description}
 
-\section{Contributions and Organization}
+\section{Contributions}
 \label{sec:intro-contributions}
 
 To address the research questions of modeling social intelligence and
@@ -229,7 +282,7 @@ enabling ability to reason about deviation contexts and values, we
 develop (1) \frameworkA, an AOSE method; (2) \frameworkB, a context
 reasoning approach; and (3) \frameworkAinur, a value-based decision-making framework.
 
-\subsection[Modeling Soical Intelligence via Norms]{\frameworkA: Modeling Social Intelligence via Norms in Privacy-Aware Personal Agents}
+\subsection[Modeling Social Intelligence via Norms]{\frameworkA: Modeling Social Intelligence via Norms}
 
 To address the research question of modeling social intelligence, we
 develop \frameworkA \citep{Ajmeri-AAMAS17-Arnor}, a systematic 
@@ -265,9 +318,8 @@ compliance and sanction proportion measures. We find that SIPAs
 engineered using \frameworkA have greater adaptability correctness,
 similar norm compliance, and are prone to lesser sanctions.
 
-Chapter~\ref{chap:arnor} details \frameworkA, and discusses its evaluation. 
-
-\subsection[Enhancing Social Experience via Context Sharing]{\frameworkB: Enhancing Social Experience via Context Sharing}
+% \subsection[Enhancing Social Experience via Context Sharing]{\frameworkB: Enhancing Social Experience via Context Sharing}
+\subsection[Understanding Social Context]{\frameworkB: Understanding and Reasoning about Social Context}
 
 % As SIPAs act and interact, they need to be aware of their stakeholders'
 % contexts, and how each stakeholder perceive their actions. To address
@@ -295,7 +347,8 @@ a norm; the deviation being indicative of a specialized
 norm applying under a specific context. Existing
 approaches for norm emergence assume simplified
 interactions wherein deviations are negatively
-sanctioned. We develop \frameworkB, an approach for
+sanctioned. To address the research question of understanding
+social context, we develop \frameworkB, an approach for
 building SIPAs that carry out enriched interactions
 where deviating SIPAs share selected elements of there 
 context, and others respond appropriately.
@@ -310,10 +363,10 @@ their individual goals. These results are robust under
 societies of varying sizes and characteristics reflecting
 pragmatic, considerate, and selfish agents.
 
-Chapter~\ref{chap:poros} describes \frameworkB and its 
-evaluation via simulation experiments. 
 
-\subsection[Incorporating Values and Ethics]{\frameworkAinur: Incorporating Values and Ethics}
+
+% \subsection[Incorporating Values and Ethics]{\frameworkAinur: Incorporating Values and Ethics}
+\subsection[Reasoning about Values and Ethics]{\frameworkAinur: Reasoning about Values and Ethics}
 Privacy, values, and ethics are closely intertwined. 
 Preserving privacy presumes understanding of human values 
 and acting ethically. 
@@ -321,16 +374,18 @@ and acting ethically.
 If norms require agents to perform or not perform certain actions,
 values provide a reason to or not to pursue those actions
 \citep{Dechesne-AIL13-Norms+Values}. Each action a \frameworkB SIPA
-executes, promotes or demotes certain \fsl{values}
-\citep{pasotti-2016-normas}. For instance, a callee's action of
+executes, promotes or demotes certain \fsl{values}.
+For instance, a callee's action of
 answering an urgent phone call during a meeting may promote \fsl{safety}
 of the caller, but demote \fsl{privacy} of the meeting attendees'. 
 Being aware of these values and an ability to reason about them 
 helps a SIPA select ethical actions and yield pleasant experience.
 
-We propose \frameworkAinur, a framework to design such ethical SIPAs. We incorporate a multicriteria decision-making method in \frameworkAinur
-to aggregate value preferences of users and select an ethically 
-appropriate action. 
+To address the research question of reasoning about values, we 
+propose \frameworkAinur, a framework to design such ethical 
+SIPAs. We incorporate a multicriteria decision-making method 
+in \frameworkAinur to aggregate value preferences of users and 
+select an ethically appropriate action. 
 
 % \paragraph*{Simulation Experiment}
  
@@ -338,4 +393,9 @@ We empirically evaluate \frameworkAinur via multiple simulation
 experiments. We find that agents developed using \frameworkAinur produce ethical actions that exhibit the
 Rawlsian property of fairness and yield a pleasant social experience to its users.
 
-Chapter~\ref{chap:ainur} describes \frameworkAinur, and its empirical evaluation. 
+\section{Organization}
+Chapter~\ref{chap:arnor} details \frameworkA, and discusses its evaluation. 
+Chapter~\ref{chap:poros} describes \frameworkB and its 
+evaluation via simulation experiments. 
+Chapter~\ref{chap:ainur} describes \frameworkAinur, and its empirical evaluation.  
+Chapter~\ref{chap:conclusions} concludes with important future directions.
