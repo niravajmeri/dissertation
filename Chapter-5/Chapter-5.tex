@@ -778,8 +778,8 @@ S\fsub{majority} & 1.339 &\fbf{1.836}&0.570 & 0.78 & \textless0.01 \\%& 0.621\\
     \begin{tikzpicture}
     \begin{axis}[
     title={},
-    height=5cm,
-    width=5cm,
+    height=7cm,
+    width=7cm,
     xlabel={Time in 100 steps},
     ylabel={Social Experience},
     xtick={500,1000,1500,2000},
@@ -788,7 +788,7 @@ S\fsub{majority} & 1.339 &\fbf{1.836}&0.570 & 0.78 & \textless0.01 \\%& 0.621\\
     ymin=0.7,ymax=1.7,
 %     legend pos=south east,
     % legend style={at={(1.8,0.3)}, anchor=east},
-    legend style={at={(0.5,-0.2)},anchor=north,},
+    legend style={at={(0.5,-0.3)},anchor=north,},
     legend columns=4, 
     ]
     \addplot +[mark size=1,] table [x=tick, y=ainur, col sep=comma]
@@ -816,15 +816,15 @@ Next, since our study sample may not be representative of privacy attitudes of t
 We experiment with societies that are dominated by privacy casual, conscientious, and  cautious stakeholders. Boxplots in Figure~\ref{fig:privacy-distribution-experiment} show the distributions of privacy attitudes of the stakeholders in these artificial societies. 
 
 \begin{figure}[!htb]
+\centering
 \begin{tikzpicture}
-
 \begin{axis}[
     % title={Privacy attitude distribution of three societies},
     % ybar,
     % bar width=0.5,
     % ymin=0,
     xmin=1, xmax=5,
-    height=5cm, width=5cm,
+    height=7cm, width=7cm,
     xlabel={Privacy Attitude},
     % ylabel={Society},
     xtick = {1,5},
@@ -862,9 +862,9 @@ Table~\ref{tab:result-privacy} summarizes the results for the experiments with p
     legend entries={S\fsub{\frameworkAinur},S\fsub{primary},S\fsub{conservative},S\fsub{majority}},
     legend to name=named,
     title={Privacy Cautious Society},
-    height=5cm,
-    width=5cm,
-    xlabel={Time in 100 steps},
+    height=6cm,
+    width=7cm,
+    % xlabel={Time in 100 steps},
     ylabel={Social Experience},
     xtick={500,1000,1500,2000},
     xticklabels={5,10,15,20},
@@ -882,16 +882,16 @@ Table~\ref{tab:result-privacy} summarizes the results for the experiments with p
     \end{axis}
     \end{tikzpicture}
 %
-~
+
 %     
     \begin{tikzpicture}
     \begin{axis}[
     title={Privacy Conscientious Society},
-    height=5cm,
-    width=5cm,
-    xlabel={Time in 100 steps},
+    height=6cm,
+    width=7cm,
+    % xlabel={Time in 100 steps},
 %     ytick={},
-%     ylabel={Experience},
+    ylabel={Social Experience},
     xtick={500,1000,1500,2000},
     xticklabels={5,10,15,20},
     xmin=0,xmax=2100,    ymin=0.7,ymax=1.7,
@@ -912,16 +912,16 @@ Table~\ref{tab:result-privacy} summarizes the results for the experiments with p
     \end{axis}
     \end{tikzpicture}
 %
-~
+
 %
     \begin{tikzpicture}
     \begin{axis}[
     title={Privacy Casual Society},
-    height=5cm,
-    width=5cm,
+    height=6cm,
+    width=7cm,
     xlabel={Time in 100 steps},
 %     ytick={},
-%     ylabel={Experience},
+    ylabel={Social Experience},
     xtick={500,1000,1500,2000},
     xticklabels={5,10,15,20},
     xmin=0,xmax=2100,
@@ -1017,8 +1017,6 @@ Specifically, we address the problem of designing an ethical personal agent that
 \subsection{Other Related Works}
 
 We now discuss some other relevant related works. 
-
-% \citet{Langheinrich-01:privacy} \nsa{TBD}
 
 \subsubsection{Norms, Values, and Privacy in Multiagent Systems}
 The contributions of this paper relate to the extensive work on norms and values, as well as privacy in the multiagent systems community.
