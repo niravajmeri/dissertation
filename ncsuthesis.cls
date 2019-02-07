@@ -458,7 +458,7 @@
 {\clearpage}
 
 %%  Acknowledgements
-\newcommand{\acknowledgementstitle}{Acknowledgements}
+\newcommand{\acknowledgementstitle}{Acknowledgments} % Updated to the US spelling
 \newenvironment{acknowledgements}
 {\ncsu@dedbioack{\acknowledgementstitle}}
 {\clearpage}
