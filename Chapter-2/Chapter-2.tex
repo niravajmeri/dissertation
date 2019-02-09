@@ -15,43 +15,46 @@
     boxed title style={size=normal,colframe=white,boxrule=0pt},
     title={My Thesis},
     ]%%
-  \fit{Software developers can engineer personal agents that deliver an ethical and privacy-respecting social experience to stakeholders by modeling and reasoning about social norms, social contexts, and value preferences of the stakeholders.}
+  \fit{Software developers can engineer personal agents that deliver to its stakeholders an ethical and privacy-respecting social experience by modeling and reasoning about social norms, social contexts, and value preferences of the stakeholders.}
 \end{tcolorbox}
 
-Privacy encompasses both technical and technical aspects. But the
-literature in privacy research has focused on these aspects as two
-different goals.  One aims to design secured systems with the help of
-cryptographic protection. The other aims to protect personal information
+\nsa{Social Computing: Social Informatics to Social Intelligence \cite{wang2007social}}
+
+Privacy encompasses both technical and technical aspects. But much of the
+literature in privacy has focused on these aspects as two
+different goals.  Some research aims to design secured systems with the help of
+cryptographic protection. Other research aims to protect personal information
 by facilitating informed choice options to an individual and assume that
 policies and regulations are enforceable. This research tackles
 the science of privacy from a sociotechnical viewpoint that bridges the 
 two goals.
 
-Human interactions in a society are not merely driven by personal needs
-and expectations (defined later in Chapter~\ref{sec:arnor-framework}). 
+Human interactions in a society are driven not merely by personal needs
+and expectations as Chapter~\ref{chap:arnor} explains. 
 Others around us and their expectations play a
 prominent part on the way we act and interact. A personal agent acts and
 interacts on behalf of its human user. 
 
 A \emph{socially intelligent personal agent} (SIPA) adheres to
-\emph{social expectations} of multiple \emph{stakeholders}---both
-\emph{primary} and \emph{secondary} (defined later in
+\emph{social expectations} of its \emph{primary} and \emph{secondary} 
+\emph{stakeholders} (defined later in
 Chapter~\ref{chap:arnor}), adapts according to the circumstances or
 \emph{social context} \citep{Dey-2001-Context}, acts on behalf of its
-human user (primary stakeholder), and provides a pleasing social
+user (primary stakeholder), and provides a pleasing social
 experience to all of its stakeholders as opposed to an individual
-experience to its human user.
+experience to its user.
 
 %This dissertation addresses the research question of how can we
 %engineer social intelligence in personal agents to deliver a
 %privacy-preserving social experience. 
 
 The key objectives of this research are: (1) to engineer personal agents
-such that they deliver a pleasant social experience relative to the
-society, and yet preserve their stakeholders' privacy, and (2) to make
+such that they deliver a pleasant social experience, 
+and yet preserve their stakeholders' privacy, and (2) to make
 engineering of such personal agents efficient and effective for
-developers. We recognize social norms and social context as important
-factors that influence the working of such personal agents.
+developers. We recognize social norms, social context, and value preferences 
+of stakeholders as important factors that influence the working of 
+such personal agents.
 
 %A distinguishing feature of envisoned agents is that these agents 
 
@@ -63,30 +66,30 @@ factors that influence the working of such personal agents.
 
 \section{Preliminaries}
 
-In this section we provide a background on values, privacy, and social norms in
+We now provide some necessary background on values, privacy, and social norms in
 multiagent systems.
 
 \subsection{Values}
 
-The concept of \fsl{value} has two main connotations: one is about economic worth of something and the other, more broadly, refers to what people consider important in their lives \citep{Friedman-2008-value-sensitive-design}. 
+The concept of \fsl{value} has two main connotations: one is about the economic worth of something and the other, more broadly, refers to what people consider important in their lives \citep{Friedman-2008-value-sensitive-design}. 
 We adopt the later connotation in this work.
 
-Values are mostly universal across human societies as stated by \citet{schwartz2012overview} and \citet{rokeach1973nature}. 
+Values are mostly universal across human societies, as stated by \citet{schwartz2012overview} and \citet{rokeach1973nature}. 
 The values in Schwartz's \citeyr{schwartz2012overview} work are broad motivational goals, such as stimulation, achievement, security, and benevolence. 
 \citet{rokeach1973nature} proposes two types of values---\fsl{terminal} and \fsl{instrumental}. 
 Terminal values, such as security, freedom, happiness, and recognition, refer to defined-end states of existence. 
 Instrumental values refer to modes of behavior or means to promote the terminal values. 
 %
 We recognize an ability to understand these values as an important aspect in a SIPA for it to deliver an ethical experience.
-\citet{Dechesne-AIL13-Norms+Values} define values as ideals worth pursuing and observe that these ideals could conflict since
-they may not be preferred equally by each individual (that is, each SIPA user, in our work).
+\citet{Dechesne-AIL13-Norms+Values} define values as ideals worth pursuing. They observe that these ideals could conflict since
+they may not be preferred equally by each individual (that is, each SIPA stakeholder, in our work).
 
 
 \subsection{Privacy}
 The concept of privacy encircles several areas. An individual's notion of
 privacy is partly based upon the society's notion of privacy and partly
 based upon his or her personal experiences \citep{westin1967privacy,
-westin2003social}. The general attitude toward sharing personal
+westin2003social}. The attitude toward sharing personal
 information varies from one individual to other.
 \citet{westin1967privacy} classifies individuals based on their privacy
 preferences: \textit{privacy fundamentalists} are the individuals who
@@ -98,15 +101,15 @@ personal information when some benefit is expected; and,
 disclosing personal information \citep{westin1967privacy}. The
 pragmatists are further grouped into \emph{identity-aware} and \emph{profile-aware}
 individuals \citep{spiekermann2009enggprivacy}. Identity-aware
-individuals are the ones who are more concerned about revealing
+individuals are those who are more concerned about revealing
 identifying information such as e-mail or physical address rather than
 revealing their interests. Profile-aware individuals worry more about
 sharing their hobbies, age, interests, or preferences.
 
 Privacy has been a topic of debate and has no globally
 agreed-upon definition \citep{smith2007privacy}. Theorists from the
-areas of law, philosophy, sociology, and computer science have all tried
-to define privacy in their own perspective.
+areas of law, philosophy, sociology, and computer science have 
+defined privacy in their respective perspectives.
 The importance of privacy and what it brings to an individual is also
 debated. Although there is no single definition, researchers 
 acknowledge the idea of privacy, and view it as a
@@ -116,7 +119,7 @@ collection of concepts instead of one specific concept
 Privacy has been considered a right, and is protected by regulations. 
 \citet{Prosser-60:Privacy} discusses the right of privacy from a legal perspective. 
 \citet{solove-2006-taxonomy} provides a taxonomy of activities that can violate privacy. 
-The purpose of this taxonomy is to aid the development of privacy laws, in protecting the right of privacy.
+The purpose of Solove's taxonomy is to aid the development of privacy laws, in protecting the right of privacy.
 \citet{Spiekermann-2012-Challenges+PrivacyDesign} lists the challenges of Privacy by Design, a proposed solution to the regulation of privacy, including the differentiation between privacy and security and detailed methods to incorporate privacy into system design. 
 \citet{westin2003social} dissects the values of privacy in modern societies from political, sociocultural, and personal dimensions.
 He defines privacy as a claim of an individual and, when recognized by law and social convention, a right, to determine the revelation of his or her information.
@@ -156,7 +159,7 @@ to humans \citep{boella2006normative}.
 
 %\subsection{Values and Social Norms}
 Representing and reasoning about social norms (in context) is essential to producing an ethical SIPA. 
-That is, an ethical SIPA acts in compliance with contextually relevant social norms (but it may choose to break some norms intentionally, e.g., when the norms conflict) \citep{Ajmeri-AAMAS17-Arnor}. 
+That is, an ethical SIPA acts in compliance with contextually relevant social norms (but it may choose to break some norms intentionally, e.g., when the norms conflict) (Chapter~\ref{chap:arnor} explains). 
 Even in the case of privacy, social norms are the centerpiece of privacy according to Nissenbaum's theory of \emph{contextual integrity} \citep{Nissenbaum-04:integrity,Nissenbaum-11:online}, where privacy violations occur when information flows do not respect contextual norms.
 
 In general terms, social norms describe interactions between a subject and an object in terms of what they ought to be, or as reactions to behaviors, including attempts to apply sanctions. 
@@ -169,8 +172,8 @@ For instance, \fsl{Frank} (subject), a high school student is \fsl{committed} (n
 
 %\subsection*{Values and Norms}
 Whereas norms require agents to perform or not perform certain actions, values provide a reason to pursue or not pursue those actions \citep{Dechesne-AIL13-Norms+Values}. 
-Each of a SIPA's actions promotes or demotes certain values. 
-For instance, in the phone ringer SIPA example described in \citet{Ajmeri-AAMAS17-Arnor}, a callee's action of answering an urgent phone call during a meeting may promote the value of safety (for the caller), but demote the value of privacy (of the meeting attendees).
+In general, each action by a SIPA promote or demote one or more values. 
+For instance, in the phone ringer SIPA example described in Chapter~\ref{chap:arnor}, a callee's action of answering an urgent phone call during a meeting may promote the value of safety (for the caller), but demote the value of privacy (of the meeting attendees).
 
 Only a few previous works have attempted to relate values with norms.
 \citet{Murukannaiah-IC16-Engineering} model actors, context, and social expectations via norms to engineer privacy respecting agents. 
@@ -190,7 +193,9 @@ to govern a SIPA by identifying value preferences of the SIPA's
 users.
 
 
-\section{Motivational Example}
+\section{Motivating Example}
+\label{sec:intro-example}
+
 \begin{example}
 \label{ex:intro-ringer-meeting} 
 Consider a ringer manager as a SIPA. The ringer manager installed on 
@@ -227,13 +232,13 @@ left alone. Further, it is likely that meeting attendees frown at Alice
 Alice and Bob's conversation can gain knowledge about her and her
 interlocutor (\emph{information leak}). If Bob's call were urgent, Bob's
 SIPA could communicate the urgency to Alice's SIPA, and Alice's SIPA
-could deliver a different social experience, e.g., set phone on vibrate
-to notify Alice of urgency and yet not annoy other meeting attendees.
-Should Alice's phone stays silent for Bob's urgent call, it may affect
-their relationships.
+could deliver a different social experience, e.g., set the phone on vibrate
+to notify Alice of the urgent call and yet not annoy other meeting attendees.
+Should Alice's phone stay silent for Bob's urgent call, it may affect
+Alice's and Bob's social relationship.
 
 In the examples above, ringer manager SIPA makes nontrivial decisions
-influencing social experience of its stakeholders. Existing AOSE methods
+influencing social experience of its stakeholders. Existing software engineering methods
 \citep{Bresciani-JAAMAS04-Tropos,Winikoff-2004-DIA,Murukannaiah-AAMAS14-Xipho}
 are good starting point to engineer personal agents, however these
 methods do not guide developers with systematic steps to represent and
@@ -242,7 +247,7 @@ that adapt to evolving social contexts at runtime.
 
 Social norms inform personal agents about a set of reasonable actions in a social
 context \citep{vanRiemsdijk-AAMAS15-SociallyAdaptive}. Norm compliance in
-a social context is either achieved by (1) conveyance of norms, where
+a social context is achieved either by (1) conveyance of norms, where
 SIPAs are made aware of norms by direct communication, or (2) via
 (positive and negative) sanctions, where personal agents learn norms in the form
 of which actions are appropriate in a context
@@ -251,15 +256,15 @@ of which actions are appropriate in a context
 Under certain circumstances, we (as humans) may deviate from norms. When
 we deviate, we may offer an explanation typically revealing the context
 of the deviation. Revealing context may lessen the burden of deviation,
-and may help us avert sanction resulting from the deviation. Deviations
+and may help us avert sanctions resulting from the deviation. Deviations
 from norms often hint toward a different norm that is contextually
-relevant. For instance if Alice reveals to meeting attendees' that the
+more relevant. For instance, if Alice reveals to meeting attendees' that the
 call was from a sick friend who needs urgent care, the meeting
 attendees' (1) may not frown on Alice, and (2) may learn that although
 it is not appropriate to answer calls during meetings as it intrudes
 upon attendees' privacy, answering an emergency call is acceptable as it
 could ensure someone's well being or safety. An ability to reason about
-deviation context, and an understanding of values promoted or demoted by different
+the deviation context, and an understanding of the values promoted or demoted by different
 actions could assist SIPAs in providing a pleasing social experience to
 its stakeholders.
 
@@ -267,7 +272,7 @@ We recognize three key challenges. One, understanding what constitutes a
 social experience, and how SIPA's actions influence the social
 experience and privacy of its stakeholders? When SIPAs satisfy or violate
 norms, they might share certain contextual information related to
-satisfaction or violation. Social experience largely depends on how
+satisfaction or violation. Social experience depends largely on how
 SIPAs' stakeholders perceive shared information. Two, how and what
 contextual information should a SIPA disclose? When norms conflict,
 SIPAs must perform actions that promote richer social experience. Three,
@@ -276,8 +281,8 @@ how can we develop decision support to recommend actions?
 \section{Research Questions}
 \label{sec:intro-questions}
 
-Based on aforementioned challenges and nuances in the example, we seek 
-to probe the following research questions: 
+Based on the aforementioned challenges and nuances illustrated by the above example, we seek 
+to investigate the following research questions: 
 
 \begin{description}
 
@@ -300,9 +305,12 @@ reasoning approach; and (3) \frameworkAinur, a value-based decision-making frame
 
 \subsection[Modeling Social Intelligence via Norms]{\frameworkA: Modeling Social Intelligence via Norms}
 
+% It is based on a paper ``Arnor: Modeling Social Intelligence via Norms to Engineer Privacy-Aware Personal Agents'' 
+This work appears in Proceedings of the \emph{16th International Conference on Autonomous Agents and Multiagent Systems (AAMAS), 2017} as ``Arnor: Modeling Social Intelligence via Norms to Engineer Privacy-Aware Personal Agents.''
+
 To address the research question of modeling social intelligence, we
-develop \frameworkA \citep{Ajmeri-AAMAS17-Arnor}, a systematic 
-AOSE method. It facilitates developers to model stakeholders' actions
+develop \frameworkA (Chapter~\ref{chap:arnor}), a systematic 
+software engineering method. It facilitates developers to model stakeholders' actions
 and expectations, and how these influence each other. \frameworkA
 employs Singh's \shortcite{Singh-2013-Norms} model of (social) norms to
 capture social requirements, and incorporates argumentation constructs
@@ -320,8 +328,8 @@ the simulation testbed.
 
 % \paragraph*{Developer Study} 
 We hypothesize that the developers who follow \frameworkA (1) produce
-better models, (2) expend less time, (3) feel it is easier to develop a
-SIPA, and (4) expend less effort, than those who follow Xipho. We find
+better models, (2) expend less time during application development, (3) feel it is easier to develop a
+SIPA, and (4) expend less effort, than those who follow Xipho \cite{Murukannaiah-AAMAS14-Xipho}, an existing software engineering methodology geared toward engineering personal agents. We find
 that developers using \frameworkA spend less time and effort, and
 overall feel it is easier to engineer a SIPA using \frameworkA. No
 significant difference is found in the model quality.
@@ -336,6 +344,9 @@ similar norm compliance, and are prone to lesser sanctions.
 
 % \subsection[Enhancing Social Experience via Context Sharing]{\frameworkB: Enhancing Social Experience via Context Sharing}
 \subsection[Understanding Social Context]{\frameworkB: Understanding and Reasoning about Social Context}
+
+This work appears in Proceedings of the \emph{27th International Joint Conference on Artificial Intelligence (IJCAI), 2018}
+as a paper ``Robust Norm Emergence by Revealing and Reasoning about Context: Socially Intelligent Agents for Enhancing Privacy.''
 
 % As SIPAs act and interact, they need to be aware of their stakeholders'
 % contexts, and how each stakeholder perceive their actions. To address
@@ -356,6 +367,8 @@ similar norm compliance, and are prone to lesser sanctions.
 % (defined in Chapter~\ref{chap:poros}), and find that \frameworkB
 % SIPAs provide higher happiness, and experience payoff.
 
+
+
 Norms describe the social architecture of a society
 and govern the interactions of its member agents.
 It may be appropriate for an agent to deviate from
@@ -364,10 +377,10 @@ norm applying under a specific context. Existing
 approaches for norm emergence assume simplified
 interactions wherein deviations are negatively
 sanctioned. To address the research question of understanding
-social context, we develop \frameworkB, an approach for
+social context, we develop \frameworkB (Chapter~\ref{chap:poros}), an approach for
 building SIPAs that carry out enriched interactions
-where deviating SIPAs share selected elements of there 
-context, and others respond appropriately.
+where deviating SIPAs share selected elements of their 
+context, and other SIPAs respond appropriately to the deviations in light of the received information.
 
 % \paragraph*{Simulation Experiment}
 We investigate via simulation the benefits
@@ -390,11 +403,11 @@ and acting ethically.
 If norms require agents to perform or not perform certain actions,
 values provide a reason to or not to pursue those actions
 \citep{Dechesne-AIL13-Norms+Values}. Each action a \frameworkB SIPA
-executes, promotes or demotes certain \fsl{values}.
+executes potentially promotes or demotes one or more \fsl{values}.
 For instance, a callee's action of
 answering an urgent phone call during a meeting may promote \fsl{safety}
-of the caller, but demote \fsl{privacy} of the meeting attendees'. 
-Being aware of these values and an ability to reason about them 
+of the caller, but demote \fsl{privacy} of the meeting attendees. 
+Being aware of these values and having an ability to reason about them 
 helps a SIPA select ethical actions and yield pleasant experience.
 
 To address the research question of reasoning about values, we 
