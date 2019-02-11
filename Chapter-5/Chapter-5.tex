@@ -425,7 +425,7 @@ VIKOR's ranking method is based on closeness to the ideal solution, and provides
 
 We now summarize the VIKOR method  \citep{opricovic2004compromise} below. 
 VIKOR relies on numeric payoffs. 
-We can map preferences to payoffs by distributing a number into multiple buckets based on inverse of the preference order.
+We can map preferences to numeric payoffs by adopting techniques such as \emph{cumulative voting}---distributing a fixed number of points to each value preference over each available alternative action, or \emph{cardinal voting}---giving numeric payoff (ratings) on a fixed scale to each value for all available alternative actions \citep{pacuit-voting-methods}. 
 
 \begin{enumerate}
 \item Determine the best  and worst numeric payoffs, $f_x^*$ and $f_x^-$ for each value preference $x$ over the alternative actions $y$ to bring about a goal. That is, $f_x^* = {\max}_y f_{xy}$, $f_x^- = {\min}_y f_{xy}$.
@@ -1075,8 +1075,8 @@ However, without norms, agents would need a complete understanding of human valu
 \citet{dignum-ijcai17-responsible} argues for the need for AI reasoning to take into account societal values because autonomous AI systems increasingly affect our lives. Dignum proposes several approaches to responsibility in AI design considering human values. 
 % \hg{no experiments or evaluations. This paper is more like an argument than research. Maybe move to introduction}
 
-\citet{Kayal-TOIT18} propose an automatic value-based model for resolving conflicts between norms, especially social commitments, in multiagent systems. Their results from a user study provide evidence that values can influence, and therefore could be used to predict, users' preferences when resolving conflicts. \frameworkAinur supplements Kayal {\etal}'s model by providing constructs and mechanisms to develop value-driven ethical SIPAs and thus, goes beyond conflict resolution. 
 \citet{Serramia+18:values} show how to incorporate values along with norms in a heuristic decision-making framework.
+\citet{Kayal-TOIT18} propose an automatic value-based model for resolving conflicts between norms, especially social commitments, in multiagent systems. Their results from a user study provide evidence that values can influence, and therefore could be used to predict, users' preferences when resolving conflicts. \frameworkAinur supplements Kayal {\etal}'s model by providing constructs and mechanisms to develop value-driven ethical SIPAs and thus, goes beyond conflict resolution. 
 
 \subsubsection{Value Alignment in Artificial Intelligence}
 
