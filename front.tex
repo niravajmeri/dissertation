@@ -70,7 +70,7 @@
 % \end{abstract}
 
 \begin{abstract}
-A socially intelligent personal agent understands and helps its user navigate the norms governing the user's interaction in a society. This research seeks to advance the science of privacy by tackling nuanced notions of privacy in personal agents. It addresses the research question of how we can engineer social intelligence in a personal agent such that it selects ethically appropriate actions and delivers a pleasant and privacy-preserving social experience. Addressing this research question, we develop multiagent system techniques to engineer such socially intelligent and ethical personal agents.
+A socially intelligent personal agent understands and helps its user navigate the norms governing the user's interaction in a society. This research seeks to advance the science of privacy by tackling nuanced notions of privacy, understood as an ethical value, in personal agents. It addresses the research question of how we can engineer social intelligence in a personal agent such that it selects ethically appropriate actions and delivers a pleasant and privacy-respecting social experience. Addressing this research question, we develop multiagent system techniques to engineer such socially intelligent and ethical personal agents.
 
 This research develops (1) \frameworkA, a software engineering method to engineer privacy-aware personal agents by modeling social intelligence via norms, (2) \frameworkB, an approach that enables personal agents to reason about shared contexts and infer contextually relevant social norms that preserve privacy, and (3) \frameworkAinur, a decision-making framework to design personal agents that can reason about values and act ethically. 
 
@@ -104,7 +104,7 @@ Privacy, values, and ethics are closely intertwined. Preserving privacy presumes
 Nirav Ajmeri was born to Vina and Suresh Ajmeri in Vadodara, the cultural capital of the state of Gujarat, India. He grew up in the holy city of Mathura in Uttar Pradesh, India, and later lived in New Delhi, Vadodara, Thiruvananthapuram, and Pune in India. 
 
 He obtained a B.E. in Computer Engineering from Sardar Vallabhbhai Patel Institute of Technology, Gujarat University, 
-and an M.S. in Computer Science from North Carolina State University. 
+and an M.S. in Computer Science from NC State University. 
 Prior to joining North Carolina State University for his doctoral studies, Nirav worked as a researcher in Software Engineering Lab at Tata Research Design and Development Center, India. During his doctoral studies, Nirav interned at HERE Technologies (formerly Nokia Maps) with its CTO Research team as a research intern. 
 
 Nirav loves his family, likes cricket and arcade games, and follows infrastructure development forums. 
@@ -119,7 +119,7 @@ This work has benefited from collaborations with several people.
 First and foremost, I express my deepest gratitude to my advisor Dr. Munindar Singh for his astute guidance, support, and encouragement. 
 I am forever grateful to him for everything that I learned. 
 
-I am sincerely thankful to members of my advisory committee, Drs. Jon Doyle, Will Enck, Chris Mayhorn, Jessica Staddon, and Laurie Williams. 
+I am sincerely thankful to members of my advisory committee, Drs. Jon Doyle, William Enck, Chris Mayhorn, Jessica Staddon, and Laurie Williams. 
 My work has greatly benefited from the interactions with them and their valuable advice over the years. 
 
 Chapters~\ref{chap:arnor}, \ref{chap:poros}, and \ref{chap:ainur} are based on joint
@@ -178,11 +178,11 @@ I thank each of them.
 %\item agile requirements evolution with Smita Ghaisas, Preethu Rose, Manish Kumar, Manas Agarwal, Riddhima Sejpal, Kumar Vidhani, Manoj Bhat, Manish Motwani, and Shashikant Sharma.
 %\end{enumerate*}
 %
-Collaboration with Dr. Chung-Wei Hang and Dr. Simon Parsons introduced me to argumentation theory. 
+Collaboration with Drs. Chung-Wei Hang and Simon Parsons introduced me to argumentation theory. 
 Discussions with Dr. Shams Al-Amin, Dr. Tina Balke-Visser, Dr. Emily Berglund, Dr. Jon Doyle, Dr. Hongying Du, Shubham Goyal, Dr. Anup Kalia, Dr. Luis Gustavo Nardin, Bennett Naron, and Dr. Jaime Sichman helped in understanding nuances of sanctions. 
-Collaboration with Dr. Sibel Adal{\i}, Dr. Kevin Chan, Dr. Jin-Hee Cho, and Dr. Anup Kalia improved my understanding of norms, trust, and emotions in multiagent systems, and taught me how to conduct human subject studies. Work with Chris Allred, Dr. Mark Wilson, and Dr. Guangchao Yuan helped me learn conducting crowdsourcing studies. 
+Collaboration with Drs. Sibel Adal{\i}, Kevin Chan, Jin-Hee Cho, and Anup Kalia improved my understanding of norms, trust, and emotions in multiagent systems, and taught me how to conduct human subject studies. Work with Chris Allred, Dr. Mark Wilson, and Dr. Guangchao Yuan helped me learn conducting crowdsourcing studies. 
 Discussions with Dr. Pradeep Murukannaiah have influenced my understanding of software engineering, crowdsourcing and creativity.
-Discussions and works with Dr. Rada Chirkova, Dr. Jon Doyle, Jiaming Jiang, and Dr. {\"O}zg{\"u}r Kafal{\i} helped me learn formalization and improved my understanding of sociotechnical systems and cybersecurity. I thank Dr. Hongying Du, Dr. Shams Al-Amin, and Dr. Mehdi Masayekhi for helping me learn tooling multiagent simulations. 
+Discussions and works with Dr. Rada Chirkova, Dr. Jon Doyle, Jiaming Jiang, and Dr. {\"O}zg{\"u}r Kafal{\i} helped me learn formalization and improved my understanding of sociotechnical systems and cybersecurity. I thank Drs. Hongying Du, Shams Al-Amin, and Mehdi Masayekhi for helping me learn tooling multiagent simulations. 
 From Hui Guo and Dr. Zhe Zhang, I learned text mining and language processing. 
 Collaboration with Karthik Sheshadri and Dr. Jessica Staddon has influenced my understanding of privacy. 
 I learned various aspects of software requirements engineering and knowledge engineering while working at Tata Research Design and Development Center (TRDDC), India. I am grateful to my mentor Dr. Smita Ghaisas, and my colleagues Preethu Rose, Manish Kumar, Manas Agarwal, Riddhima Sejpal, Kumar Vidhani, Manoj Bhat, Manish Motwani, and Shashikant Sharma at TRDDC.
@@ -190,7 +190,7 @@ My internship at HERE Technologies introduced me to location and trajectory priv
 
 I am also thankful to my other colleagues at the Multiagent Systems and Service-Oriented Computing lab including Samuel Christie, Zhen Guo, Mu Zhu, and Shrey Anand. I have learned from each of them and sincerely appreciate their encouragement, discussions, and support. 
 
-My experience would not have been memorable without the friendship I have made throughout my undergraduate and graduate studies. 
+My experience would not have been memorable without the friendship I have made throughout my studies. 
 I thank (in no particular order) Keyur Patel, Hardik Amin, Hitesh Makwana, Gaurav Varshikar, Khushali Khadiwala, and Prachi Agarwal for being my constant source of inspiration. 
 They have patiently listened to my random ideas and have always given worthy feedback. 
 Raleigh would not have been lively for me without (in no particular order) Harsh Patel, Divya Mehta, Vandit Khamker, Abhinav Sarkar, Neeraj Badlani, Sarvesh Rangnekar, Arvind Telharkar, Ashwin Shashidharan, Aruni MK, Anup Kalia, Sweta Rout, Pradeep Murukannaiah, Indumathi Srinivasachari, Anant Raj, and Prerna Prateek.
@@ -202,7 +202,7 @@ My wife, Rucha, stood by me throughout my graduate school journey.
 I am forever grateful to her for her love, support, and encouragement. 
 I also thank my family, particularly, Baa, Dada, Nana, Hetal, and Arpit for their unconditional love and support. 
 Although, Dada and Nana are not with us anymore, I know they are proud. 
-I express sincere gratitude to my parents-in-law, Meenakshi and Haresh, for their well wishes and unwavering support. 
+I express sincere gratitude to my parents-in-law, Meenakshi and Haresh, and their family for their well wishes and unwavering support. 
 Special thanks to Aru for all the happiness. 
 This journey would have neither started nor concluded without all of their support. 
 
