@@ -4,7 +4,7 @@
 \label{chap:ainur}
 %------------------------------%
 
-This chapter describes \frameworkAinur, our approach for 
+This chapter addresses RQ\fsub{3} on values. It describes \frameworkAinur, our framework for 
 designing ethical socially intelligent personal agents (SIPAs) that understand value preferences and
 reason about them, and its empirical evaluation.
 
@@ -31,27 +31,28 @@ Such social mechanisms are of paramount importance in realizing privacy respecti
 
 As envisioned, social machines facilitate natural interactions among autonomous parties (humans and organizations) as opposed to the predominant style of supporting social interactions via centralized servers (ranging from email servers to social network sites).
 % \citet{schwartz2012overview} defines values as guiding principles of humans \mps{reads odd}. 
-Values are broad motivational goals or ideals worth pursuing for humans \citep{schwartz2012overview,Dechesne-AIL13-Norms+Values}.
-Ethicists subsume ethics in the theory of values \citep{Friedman-2008-value-sensitive-design}. 
-Privacy is regarded as a value with an ethical import \citep{Langheinrich-01:privacy,Taylor-2002-PrivacyAutonomy}. 
-% 
 
 % Privacy considerations will be\mps{redo the sentence} far more nuanced\mps{why?} than what they are today if we are to realize the web as a social machine.
 
 On the backdrop of privacy concerns and a rising number of privacy breach incidents, new regulations and standards such as the General Data Protection Regulation (GDPR) \citep{gdpr-18} are being introduced. 
 \citet{spiekermann2009enggprivacy} suggest that to ensure effective implementation of privacy standards, it is necessary for engineers to design privacy-preserving systems that enable their users to control access to their private information. 
 However, giving control to users raises two key concerns. 
-First, does the information the users share on the web accord with their values? 
-Second, does this sharing of information promote or demote any values for any other users concerned with the information? 
+First, does the information the users share on the web accord with their \fsl{values}? 
+Second, does this sharing of information promote or demote any \fsl{values} for any other users concerned with the information? 
 % 
 More often than not, these concerns are not addressed when users make sharing decisions today, because there is an excessive burden of decision making on them. 
 A \fsl{SIPA} can help a user in decision making and sometimes automate the decision making. 
 
 We seek to design a social machine in which each user is supported by an (artificial) personal agent \citep{Murukannaiah-AAMAS14-Xipho}. 
 These agents interact with each other to facilitate creativity in social machines. 
-We refer to such an agent as a socially intelligent personal agent (SIPA). 
+We refer to such an agent as a socially intelligent personal agent (SIPA).
+% 
+Values are broad motivational goals or ideals worth pursuing for humans \citep{schwartz2012overview,Dechesne-AIL13-Norms+Values}.
+Ethicists subsume ethics in the theory of values \citep{Friedman-2008-value-sensitive-design},  
+and regard privacy as a value with an ethical import \citep{Langheinrich-01:privacy,Taylor-2002-PrivacyAutonomy}. 
+% 
 Importantly, SIPAs in our setting understand values and act ethically. 
-We emphasize privacy as a value in our examples and experiments, since privacy has an ethical import \citep{Friedman-2008-value-sensitive-design}. 
+% We emphasize privacy as a value in our examples and experiments, since privacy has an ethical import \citep{Friedman-2008-value-sensitive-design}. 
 Whereas much of the existing literature on artificial intelligence focuses on rational decision-making by agents, we consider the problem of designing agents that act according to users' values and preferences among those values.
 
 %\subsection{Values}
@@ -79,46 +80,48 @@ Whereas much of the existing literature on artificial intelligence focuses on ra
 %The purpose of this taxonomy is to aid the development of privacy laws, in protecting the right of privacy.
 %\citet{Spiekermann-2012-Challenges+PrivacyDesign} lists the challenges of Privacy by Design, a proposed solution to the regulation of privacy, including the differentiation between privacy and security and detailed methods to incorporate privacy into system design. 
 %
-%\subsection{Values and Social Norms}
-%Representing and reasoning about social norms (in context) is essential to producing an ethical SIPA. 
-%That is, an ethical SIPA acts in compliance with contextually relevant social norms (but it may choose to break some norms intentionally, e.g., when the norms conflict) \citep{Ajmeri-AAMAS17-Arnor}. 
-%Even in the case of privacy, social norms are the centerpiece of privacy according to Nissenbaum's theory of \emph{contextual integrity} \citep{Nissenbaum-04:integrity,Nissenbaum-11:online}, where privacy violations occur when information flows do not respect contextual norms.
+
+\subsection{Values and Social Norms}
+Representing and reasoning about social norms (in context) is essential to producing an ethical SIPA. 
+That is, an ethical SIPA acts in compliance with contextually relevant social norms (but it may choose to break some norms intentionally, e.g., when the norms conflict) (Chapter~\ref{chap:arnor} explains). 
+Even in the case of privacy, social norms are the centerpiece of privacy according to Nissenbaum's theory of \emph{contextual integrity} \citep{Nissenbaum-04:integrity,Nissenbaum-11:online}, where privacy violations occur when information flows do not respect contextual norms.
+
+In general terms, social norms describe interactions between a subject and an object in terms of what they ought to be, or as reactions to behaviors, including attempts to apply sanctions. 
+We adopt Singh's \citeyr{Singh-2013-Norms} representation of social norms, in which a norm is directed from a subject to an object and is constructed as a conditional relationship involving an antecedent (which brings an instance of the norm in force) and a consequent (which brings the norm instance to completion). 
+A norm generates a new instance each time it applies. 
+This representation yields clarity on who is accountable to whom, when, and for what. 
+We consider two main norm types in the present study: commitment and prohibition. 
+A commitment norm means its subject is committed to its object to bring about a consequent if an antecedent holds, and a prohibition norm means its subject is forbidden by its object to bring about a consequent if an antecedent holds. 
+For instance, \fsl{Frank} (subject), a high school student is \fsl{committed} (norm) to \fsl{Grace} (object), his mother, that he \fsl{will keep Grace updated about his location} (consequent) when he is \fsl{away from home} (antecedent).
+
+%\subsection*{Values and Norms}
+Whereas norms require agents to perform or not perform certain actions, values provide a reason to pursue or not pursue those actions \citep{Dechesne-AIL13-Norms+Values}. 
+In general, each action by a SIPA promote or demote one or more values. 
+For instance, in the phone ringer SIPA example described in Chapter~\ref{chap:arnor}, a callee's action of answering an urgent phone call during a meeting may promote the value of safety (for the caller), but demote the value of privacy (of the meeting attendees).
+
+Only a few previous works have attempted to relate values with norms.
+\citet{Murukannaiah-IC16-Engineering} model actors, context, and social expectations via norms to engineer privacy respecting agents. 
+\citet{DaSilvaFigueiredo-COIN13} propose an algorithm to identify conflicts between norms based on values. 
+A conflict occurs when
+\begin{enumerate*}[label=(\arabic*)]
+\item a consequent action of a commitment norm demotes a value, or
+\item a consequent action of a prohibition norm promotes a value important to a SIPA user.
+\end{enumerate*}
 %
-%In general terms, social norms describe interactions between a subject and an object in terms of what they ought to be, or as reactions to behaviors, including attempts to apply sanctions. 
-%We adopt Singh's \citep{Singh-2013-Norms} representation of social norms, in which a norm is directed from a subject to an object and is constructed as a conditional relationship involving an antecedent (which brings an instance of the norm in force) and a consequent (which brings the norm instance to completion). 
-%A norm generates a new instance each time it applies. 
-%This representation yields clarity on who is accountable to whom, when, and for what. 
-%We consider two main norm types in the present study: commitment and prohibition. 
-%A commitment norm means its subject is committed to its object to bring about a consequent if an antecedent holds, and a prohibition norm means its subject is forbidden by its object to bring about a consequent if an antecedent holds. 
-%For instance, \fsl{Frank} (subject), a high school student is \fsl{committed} (norm) to \fsl{Grace} (object), his mother, that he \fsl{will keep Grace updated about his location} (consequent) when he is \fsl{away from home} (antecedent).
-%
-%%\subsection*{Values and Norms}
-%Whereas norms require agents to perform or not perform certain actions, values provide a reason to pursue or not pursue those actions \citep{Dechesne-AIL13-Norms+Values}. 
-%Each of a SIPA's actions promotes or demotes certain values. 
-%For instance, in the phone ringer SIPA example described in \citet{Ajmeri-AAMAS17-Arnor}, a callee's action of answering an urgent phone call during a meeting may promote the value of safety (for the caller), but demote the value of privacy (of the meeting attendees).
-%
-%Only a few previous works have attempted to relate values with norms.
-%\citet{Murukannaiah-IC16-Engineering} model actors, context, and social expectations via norms to engineer privacy respecting agents. 
-%\citet{DaSilvaFigueiredo-COIN13} propose an algorithm to identify conflicts between norms based on values. 
-%A conflict occurs when
-%\begin{enumerate*}[label=(\arabic*)]
-%\item a consequent action of a commitment norm demotes a value, or
-%\item a consequent action of a prohibition norm promotes a value important to a SIPA user.
-%\end{enumerate*}
-%%
-%\citet{Dechesne-AIL13-Norms+Values} develop a model of norms and culture,
-%represented by values, to study compliance of norms. They concur that
-%values are important in deciding whether or not a norm should be
-%introduced. \citet{kayal13coin} present a model in which norms and 
-%context are centered on values. Such a model could be employed
-%to govern a SIPA by identifying value preferences of the SIPA's
-%users.
+\citet{Dechesne-AIL13-Norms+Values} develop a model of norms and culture,
+represented by values, to study compliance of norms. They concur that
+values are important in deciding whether or not a norm should be
+introduced. \citet{kayal13coin} present a model in which norms and 
+context are centered on values. Such a model could be employed
+to govern a SIPA by identifying value preferences of the SIPA's
+users.
 
 \subsection{Contribution}
 A SIPA's actions may promote or demote certain values of its users. 
 Performing actions that promote values preferred by users is essential to providing a satisfactory experience. 
 %
-If a SIPA understands its users' value preferences and reasons about the values promoted or demoted by each of its actions, it could select ethically appropriate actions that provide a satisfactory social experience to its stakeholders.
+If a SIPA understands its users' value preferences and reasons about the values promoted or demoted by each of its actions, it could select ethically appropriate actions, such as setting a phone to ring loud for an urgent phone call during a meeting, that provide a satisfactory social experience to its stakeholders.
+% 
 Accordingly, we consider the following research question: 
 
 \begin{description}
