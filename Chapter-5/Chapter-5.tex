@@ -4,7 +4,7 @@
 \label{chap:ainur}
 %------------------------------%
 
-This chapter addresses RQ\fsub{3} on values. It describes \frameworkAinur, our framework for 
+This chapter addresses our third research question, RQ\fsub3 on values. It describes \frameworkAinur, our framework for 
 designing ethical socially intelligent personal agents (SIPAs) that understand value preferences and
 reason about them, and its empirical evaluation.
 
@@ -334,18 +334,22 @@ We now describe a SIPA society consisting of \locationapp SIPAs as introduced in
 % Each stakeholder $p$ $\in$ $P$ has a set of goals $G$, that $p$'s SIPA helps bring about via actions $f \subseteq F$. 
 
 % 
-A SIPA society in \frameworkAinur is defined as a tuple $\mathbb{S}$ = $(S, P, R)$, where 
-$S$ is the set of SIPAs $\{s_1, s_2, \ldots, s_n\}$ in the society;  
-$P$ is a set of their primary stakeholders $\{p_1, p_2, \ldots, p_n\}$ such that $f: A \rightarrow P$; and 
-$R$ is the set of relationships between the stakeholders in $P$. 
+A SIPA society in \frameworkAinur is defined as a tuple $\mathbb{S}$ = $(S, P, R, RT, f)$, where 
+$S=\{s_1,\ldots\}$ is the set of SIPAs  in the society;  
+$P=\{p_1\ldots\}$ is a set of their primary stakeholders; 
+$R$ is the set of relationships between the stakeholders such that $R$ $\subseteq S\times P \times RT$; 
+$RT$ is the set of type of relationships; 
+and $f: S \rightarrow P$ is the $\mathbb{S}$'s function that maps a SIPA $s_i$ to its primary stakeholder $p_i$.
 
-Each stakeholder $p \in P$ has a set of goals $G_p$ such that $f: P \rightarrow G \mid G_p \subseteq G$, and
-has a set of values $V_p$ such that $f: P \rightarrow V \mid V_p \subseteq V$. 
-% Each stakeholder is connected to other stakeholders with a relationship $r \in R$.
+% Each stakeholder $p \in P$ has a set of goals $G_p$ such that $f: P \rightarrow G \mid G_p \subseteq G$, and
+% has a set of values $V_p$ such that $f: P \rightarrow V \mid V_p \subseteq V$. 
+Each stakeholder is a tuple $p_i = (G_i, V_i)$ where $G_i$ are set of $p_i$'s goals and $V_i$ are set of values preferred by $p_i$.
 
-$C$ is the set of social contexts in which the SIPAs interact; 
-and $N$ is the set of norms such that $f: C \rightarrow N$ governing the SIPAs' interactions in these contexts. 
-A SIPA helps bring about its stakeholders goals via one or more actions $a \in A$ such that $f: G \rightarrow A$. 
+Each SIPA is a tuple $s_i = (p_i, A_i, f'_i)$ where $p_i$ is $s_i$'s primary stakeholder, $A_i$ is a set of $s_i$'s actions, and $f'_i:  G \rightarrow A$ is $s_i$'s planning function that maps $p_i$'s goals to $s_i$'s actions.  
+
+$C$ = $\{c_i, \ldots\}$ is the set of social contexts in which the SIPAs interact; 
+and $N$ is the set of norms such that $c_i \subseteq N$ governing the SIPAs' interactions in these contexts. 
+% A SIPA helps bring about its stakeholders goals via one or more actions $a \in A$ such that $f': G \rightarrow A$. 
 % 
 
 In a society of \locationapp SIPAs, when a stakeholder moves to a new place or meets new people, his or her SIPA may share the context in which the stakeholder is, to bring about the stakeholder's goal $g$ of \fsl{staying connected}. The stakeholder's (and the SIPA's) context includes the place where a stakeholder is and the people who he or she is with. 
@@ -375,7 +379,7 @@ $V_c$ is a set of values that are influenced by a SIPA's actions in the current 
 % 
 For example, when Frank is at Giordano's, $V_c$ = \{pleasure, privacy, recognition, security\}.
 
-Each agent $a$ has a preference $q$ over values that depends on context $c$,
+Each agent $s$ has a preference $q$ over values that depends on context $c$,
 represented by a set of tuples \{$(v_j, v_k, c) \mid v_j, v_k \in V, c \in C$\} such that $s$ prefers $v_j$ over $v_k$ in $c$. Frank's preference for values of pleasure and recognition over privacy during the 
 Olympiad can be represented as \{(pleasure, privacy, olympiad), (recognition, privacy, olympiad)\}
 
