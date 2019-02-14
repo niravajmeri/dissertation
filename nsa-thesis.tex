@@ -514,9 +514,10 @@ $}}
 \mainmatter
 
 
-
 \pagestyle{plain}
-\newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
+% \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
+% \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip}
+\newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip}
 % \include{Chapter-1/Chapter-1}
 \include{Chapter-2/Chapter-2}
 \include{Chapter-3/Chapter-3}
@@ -560,7 +561,8 @@ $}}
 % \titleformat{\chapter}[display]{\bf\filcenter
 % }{\chaptertitlename\ \thechapter}{11pt}{\bf\filcenter}
 % \titlespacing*{\chapter}{0pt}{-0.5in-9pt}{22pt}
-\titlespacing*{\chapter}{0pt}{0.5in-9pt}{22pt}
+% \titlespacing*{\chapter}{0pt}{0.5in-9pt}{22pt}
+\titlespacing*{\chapter}{0pt}{0in-9pt}{22pt}
 
 % \printbibliography[heading=myheading]
 % \end{spacing}
@@ -576,7 +578,6 @@ $}}
 \restoregeometry
 \appendix
 \newgeometry{margin=1in,lmargin=1.25in,footskip=\chapterfootskip, includehead, includefoot}
-
 
 \include{Appendix-A/Appendix-A}
 \include{Appendix-Ainur/Appendix-Ainur}

@@ -461,9 +461,13 @@ Table~\ref{tbl:vikorcalculations} demonstrates possible numeric values of the va
 
 % Rotate page solution by loved.by.Jesus on StackExchange: https://tex.stackexchange.com/questions/337/how-to-change-certain-pages-into-landscape-portrait-mode
 
-\newpage
-\KOMAoptions{paper=landscape,pagesize}
-\recalctypearea
+\begin{lscapenum}
+
+% \begin{landscape}
+
+% \newpage
+% \KOMAoptions{paper=landscape,pagesize}
+% \recalctypearea
 
 % \begin{sidewaystable*}[ph!]
 \begin{table}[!ht]
@@ -495,9 +499,13 @@ $f_x^-$ & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & & & \\
 % \end{sidewaystable*}
 \end{table}
 
-\newpage
-\KOMAoptions{paper=portrait,pagesize}
-\recalctypearea
+% \newpage
+% \KOMAoptions{paper=portrait,pagesize}
+% \recalctypearea
+
+% \end{landscape}
+
+\end{lscapenum}
 
 \section{Simulations}
 \label{sec:simulations}
@@ -987,11 +995,12 @@ Table~\ref{tab:result-privacy} summarizes the results for the experiments with p
 
 \end{figure}
 
+\begin{lscapenum}
 
-\clearpage
-\newpage
-\KOMAoptions{paper=landscape,pagesize}
-\recalctypearea
+% \clearpage
+% \newpage
+% \KOMAoptions{paper=landscape,pagesize}
+% \recalctypearea
 
 % \begin{sidewaystable*}[ph!]
 \begin{table}[ht!]
@@ -1016,10 +1025,12 @@ S\fsub{majority} & \fbf{1.551} & \fbf{1.858} & 1.007 & 1.18 & 1.318 & \fbf{1.699
 % \end{sidewaystable*}
 \end{table}
 
-\clearpage
-\newpage
-\KOMAoptions{paper=portrait,pagesize}
-\recalctypearea
+% \clearpage
+% \newpage
+% \KOMAoptions{paper=portrait,pagesize}
+% \recalctypearea
+
+\end{lscapenum}
 
 \subsubsection{Privacy Cautious Society}
 

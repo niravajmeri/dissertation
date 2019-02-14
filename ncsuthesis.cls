@@ -84,6 +84,7 @@
                 lmargin=1.25in,
                 footskip=\ncsu@footskip]{geometry}
 
+
 %% -------------------------------------------------------------------------- %%
 %% Disposition format -- any titles, headings, section titles
 \newcommand{\ncsu@dispositionformat}{}
@@ -564,7 +565,8 @@
        %% standard LaTeX.
        \setlength{\unitlength}{\portraittextheight}
        \begin{picture}(0,0)
-           \put(0.055,0.557){\begin{sideways}\thepage\end{sideways}} % page number
+        %   \put(0.055,0.557){\begin{sideways}\thepage\end{sideways}} % page number
+        \put(-0.045,0.557){\begin{sideways}\thepage\end{sideways}} % page number
        \end{picture}
      }
 
